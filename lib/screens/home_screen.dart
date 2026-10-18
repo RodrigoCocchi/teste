@@ -54,10 +54,11 @@ class HomeScreen extends StatelessWidget {
                   color: AppColors.gold.withValues(alpha: 0.15),
                   child: ListTile(
                     leading: const Icon(Icons.file_upload_outlined),
-                    title: const Text('Importe seus documentos'),
+                    title: const Text('Baixar a Bíblia e o Hinário'),
                     subtitle: const Text(
-                        'Selecione no celular os PDFs da Bíblia e do Hinário 5 para usar o app offline.'),
-                    onTap: () => push(context, const DocumentsScreen()),
+                        'Toque para baixar os PDFs das fontes indicadas (precisa de internet só agora).'),
+                    trailing: const Icon(Icons.download),
+                    onTap: () => push(context, const DocumentsScreen(autoDownload: true)),
                   ),
                 ),
               ],

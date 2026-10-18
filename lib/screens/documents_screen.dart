@@ -4,16 +4,21 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../services/app_services.dart';
 import '../services/documents.dart';
 import '../services/pdf_text_service.dart';
+import '../services/source_downloader.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 
 /// Importação manual dos PDFs (Bíblia e Hinário) e indexação da Bíblia.
 class DocumentsScreen extends StatefulWidget {
-  const DocumentsScreen({super.key});
+  const DocumentsScreen({super.key, this.autoDownload = false});
+
+  /// Inicia o download de todos os documentos ao abrir a tela.
+  final bool autoDownload;
   @override
   State<DocumentsScreen> createState() => _DocumentsScreenState();
 }
@@ -22,6 +27,78 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
   String? _status;
   double? _progress;
   bool get _busy => _status != null;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoDownload) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _downloadAll());
+    }
+  }
+
+  /// Baixa o documento da fonte indicada. Retorna true se deu certo.
+  Future<bool> _download(DocKind kind, {bool ask = true}) async {
+    final url = officialSources[kind]!;
+    final tmpDir = await getTemporaryDirectory();
+    final dest = '${tmpDir.path}/${kind.key}_download.pdf';
+    final downloader = SourceDownloader();
+    _set('${kind.label}: conectando…');
+    try {
+      final from = await downloader.download(url, dest,
+          prefer: kind == DocKind.hymnalOrgao ? 'orgao' : null,
+          onProgress: (p) => _set('${kind.label}: ${p.message}', p.fraction));
+      final name = Uri.parse(from).pathSegments.isNotEmpty &&
+              Uri.parse(from).pathSegments.last.toLowerCase().endsWith('.pdf')
+          ? Uri.decodeComponent(Uri.parse(from).pathSegments.last)
+          : '${kind.label}.pdf';
+      await App.I.documents.import(kind, dest, name);
+      await File(dest).delete();
+      _set(null);
+      return true;
+    } on Object catch (e) {
+      _set(null);
+      if (!mounted) return false;
+      if (ask) {
+        final open = await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('Não foi possível baixar: ${kind.label}'),
+            content: Text('$e\n\nVocê pode abrir a página no navegador, baixar o PDF e depois '
+                'usar "Importar PDF".'),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Fechar')),
+              FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Abrir página')),
+            ],
+          ),
+        );
+        if (open == true) await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      } else {
+        showSnack(context, '${kind.label}: $e');
+      }
+      return false;
+    } finally {
+      downloader.close();
+    }
+  }
+
+  Future<void> _downloadAll() async {
+    final results = <String>[];
+    for (final kind in DocKind.values) {
+      if (App.I.documents.has(kind)) {
+        results.add('${kind.label}: já importado');
+        continue;
+      }
+      final ok = await _download(kind, ask: false);
+      results.add('${kind.label}: ${ok ? 'baixado' : 'falhou'}');
+    }
+    if (!mounted) return;
+    final bibleNow = App.I.documents.has(DocKind.bible) && !App.I.hasBibleText;
+    await _showReport('Download dos documentos', results.join('\n') +
+        (results.any((r) => r.endsWith('falhou'))
+            ? '\n\nPara os que falharam, use "Baixar" de novo ou "Importar PDF".'
+            : ''));
+    if (bibleNow && mounted) await _indexBible();
+  }
 
   void _set(String? status, [double? progress]) {
     if (mounted) {
@@ -158,10 +235,21 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
                     },
               child: const Text('Remover'),
             ),
-          FilledButton.tonal(
+          TextButton(
             onPressed: _busy ? null : () => _importPdf(kind),
-            child: Text(info == null ? 'Importar PDF' : 'Substituir'),
+            child: Text(info == null ? 'Importar do celular' : 'Substituir'),
           ),
+          if (info == null)
+            FilledButton.tonal(
+              onPressed: _busy
+                  ? null
+                  : () async {
+                      if (await _download(kind) && kind == DocKind.bible && mounted) {
+                        await _indexBible();
+                      }
+                    },
+              child: const Text('Baixar'),
+            ),
           const SizedBox(width: 8),
         ]),
       ]),
@@ -190,9 +278,17 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
             ),
           const Padding(
             padding: EdgeInsets.fromLTRB(16, 16, 16, 4),
-            child: Text('Os PDFs não acompanham o aplicativo. Baixe-os das fontes oficiais ou '
-                'autorizadas e selecione-os aqui. Os arquivos são copiados para a área privada do '
-                'app e funcionam offline.'),
+            child: Text('Os PDFs não acompanham o aplicativo: são baixados das fontes indicadas '
+                'direto para o celular (ou importados de um arquivo seu) e depois funcionam offline.'),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: FilledButton.icon(
+              style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+              icon: const Icon(Icons.download),
+              label: const Text('Baixar todos os documentos'),
+              onPressed: _busy ? null : _downloadAll,
+            ),
           ),
           const SectionTitle('Bíblia'),
           _docTile(DocKind.bible),
