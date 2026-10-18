@@ -42,6 +42,11 @@ class HomeScreen extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.asset('assets/images/logo_dark.png', fit: BoxFit.cover),
+              ),
+              const SizedBox(height: 12),
               _SearchBox(onTap: () => push(context, const SearchScreen())),
               if (noDocs) ...[
                 const SizedBox(height: 12),

@@ -47,7 +47,7 @@ class App {
   static Future<App> init({AssetBundle? bundle, String? dbPath, DatabaseFactory? factory,
       SharedPreferences? prefs, String? dataDir}) async {
     final b = bundle ?? rootBundle;
-    final dir = dataDir ?? (await getApplicationDocumentsDirectory()).path;
+    final dir = dataDir ?? await _dataDir();
     final sp = prefs ?? await SharedPreferences.getInstance();
     final db = await AppDatabase.open(dbPath ?? p.join(dir, 'biblia_hinos.db'), factory: factory);
     final app = App._(
@@ -62,6 +62,15 @@ class App {
     await app._seed();
     app.verseCount = await app.bible.verseCount();
     return app;
+  }
+
+  /// Pasta privada do app; se o path_provider falhar, usa a pasta do sqflite.
+  static Future<String> _dataDir() async {
+    try {
+      return (await getApplicationDocumentsDirectory()).path;
+    } on Object {
+      return getDatabasesPath();
+    }
   }
 
   Future<void> _seed() async {
