@@ -26,13 +26,18 @@ jobs:
       - run: flutter analyze
       - run: flutter test
       - run: flutter build apk --release
-      - run: flutter build apk --debug
+      - run: flutter build apk --release --split-per-abi
+      - name: Empacotar alternativas de download
+        run: |
+          cd build/app/outputs/flutter-apk
+          cp app-arm64-v8a-release.apk biblia-hinos-arm64.apk
+          zip -9 biblia-hinos-apk.zip app-release.apk
       - uses: actions/upload-artifact@v4
         with:
           name: biblia-hinos-apk
           path: |
             build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/biblia-hinos-arm64.apk
       - name: Publicar release para download
         uses: softprops/action-gh-release@v2
         with:
@@ -42,7 +47,10 @@ jobs:
           make_latest: false
           body: |
             APK gerado automaticamente a partir do commit ${{ github.sha }}.
-            Baixe **app-release.apk** no celular e permita "instalar apps desconhecidos".
+            - **biblia-hinos-arm64.apk**: menor, para celulares atuais (recomendado).
+            - **app-release.apk**: universal.
+            - **biblia-hinos-apk.zip**: o APK universal dentro de um .zip (use se o navegador travar no download do .apk).
           files: |
+            build/app/outputs/flutter-apk/biblia-hinos-arm64.apk
             build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/biblia-hinos-apk.zip
