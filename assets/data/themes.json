@@ -1,0 +1,236 @@
+{
+ "version": 1,
+ "themes": [
+  {
+   "name": "Amor",
+   "description": "O amor de Deus e o amor ao próximo.",
+   "refs": [
+    "Jo 3:16",
+    "1Co 13:4-7",
+    "1Jo 4:7-8",
+    "Rm 5:8",
+    "Jo 15:12-13"
+   ]
+  },
+  {
+   "name": "Fé",
+   "description": "Confiança em Deus e nas suas promessas.",
+   "refs": [
+    "Hb 11:1",
+    "Hb 11:6",
+    "Rm 10:17",
+    "Ef 2:8-9",
+    "Mc 11:22-24"
+   ]
+  },
+  {
+   "name": "Esperança",
+   "description": "A expectativa firme no que Deus prometeu.",
+   "refs": [
+    "Rm 15:13",
+    "Lm 3:21-23",
+    "Rm 5:5",
+    "Hb 6:19",
+    "Sl 42:11"
+   ]
+  },
+  {
+   "name": "Salvação",
+   "description": "A obra de Deus para salvar o pecador.",
+   "refs": [
+    "At 4:12",
+    "Rm 10:9-10",
+    "Ef 2:8",
+    "Jo 14:6",
+    "Tt 2:11"
+   ]
+  },
+  {
+   "name": "Perdão",
+   "description": "O perdão de Deus e o perdão entre irmãos.",
+   "refs": [
+    "1Jo 1:9",
+    "Mt 6:14-15",
+    "Ef 4:32",
+    "Cl 3:13",
+    "Sl 103:12"
+   ]
+  },
+  {
+   "name": "Oração",
+   "description": "Falar com Deus em todo tempo.",
+   "refs": [
+    "Mt 6:6",
+    "Fp 4:6-7",
+    "1Ts 5:17",
+    "Tg 5:16",
+    "Mt 7:7-8"
+   ]
+  },
+  {
+   "name": "Família",
+   "description": "A casa e a família diante de Deus.",
+   "refs": [
+    "Js 24:15",
+    "Sl 127:1",
+    "Ef 6:1-4",
+    "1Tm 5:8",
+    "Cl 3:18-21"
+   ]
+  },
+  {
+   "name": "Casamento",
+   "description": "A união entre marido e mulher.",
+   "refs": [
+    "Gn 2:24",
+    "Mt 19:4-6",
+    "Ef 5:25",
+    "Hb 13:4",
+    "Pv 18:22"
+   ]
+  },
+  {
+   "name": "Filhos",
+   "description": "Os filhos como herança do Senhor e a sua instrução.",
+   "refs": [
+    "Sl 127:3",
+    "Pv 22:6",
+    "Ef 6:4",
+    "Mc 10:14",
+    "Dt 6:6-7"
+   ]
+  },
+  {
+   "name": "Sabedoria",
+   "description": "A sabedoria que vem de Deus.",
+   "refs": [
+    "Tg 1:5",
+    "Pv 9:10",
+    "Pv 3:5-6",
+    "Pv 4:7",
+    "Sl 90:12"
+   ]
+  },
+  {
+   "name": "Obediência",
+   "description": "Ouvir e praticar a Palavra de Deus.",
+   "refs": [
+    "Jo 14:15",
+    "1Sm 15:22",
+    "Tg 1:22",
+    "Dt 28:1",
+    "At 5:29"
+   ]
+  },
+  {
+   "name": "Humildade",
+   "description": "Humilhar-se diante de Deus e dos homens.",
+   "refs": [
+    "Tg 4:10",
+    "Fp 2:3-8",
+    "Mq 6:8",
+    "1Pe 5:5-6",
+    "Pv 22:4"
+   ]
+  },
+  {
+   "name": "Arrependimento",
+   "description": "Converter-se dos pecados a Deus.",
+   "refs": [
+    "At 3:19",
+    "2Cr 7:14",
+    "Lc 15:7",
+    "2Pe 3:9",
+    "At 2:38"
+   ]
+  },
+  {
+   "name": "Batismo",
+   "description": "O batismo nas Escrituras.",
+   "refs": [
+    "Mt 28:19",
+    "Mc 16:16",
+    "At 2:38",
+    "Rm 6:3-4",
+    "Jo 3:5"
+   ]
+  },
+  {
+   "name": "Espírito Santo",
+   "description": "A promessa e a obra do Espírito Santo.",
+   "refs": [
+    "Jo 14:26",
+    "At 1:8",
+    "At 2:1-4",
+    "Gl 5:22-23",
+    "Rm 8:26"
+   ]
+  },
+  {
+   "name": "Ressurreição",
+   "description": "A ressurreição de Cristo e dos mortos.",
+   "refs": [
+    "Jo 11:25",
+    "1Co 15:20-22",
+    "Mt 28:5-6",
+    "1Ts 4:16",
+    "Rm 6:5"
+   ]
+  },
+  {
+   "name": "Vida Eterna",
+   "description": "A promessa da vida eterna.",
+   "refs": [
+    "Jo 3:16",
+    "Jo 10:27-28",
+    "Rm 6:23",
+    "1Jo 5:11-12",
+    "Jo 17:3"
+   ]
+  },
+  {
+   "name": "Consolação",
+   "description": "O conforto de Deus nas aflições.",
+   "refs": [
+    "Mt 11:28",
+    "2Co 1:3-4",
+    "Sl 23:4",
+    "Jo 14:1",
+    "Is 41:10"
+   ]
+  },
+  {
+   "name": "Gratidão",
+   "description": "Dar graças a Deus em tudo.",
+   "refs": [
+    "1Ts 5:18",
+    "Sl 100:4",
+    "Cl 3:17",
+    "Sl 107:1",
+    "Ef 5:20"
+   ]
+  },
+  {
+   "name": "Paz",
+   "description": "A paz que vem de Deus.",
+   "refs": [
+    "Jo 14:27",
+    "Fp 4:7",
+    "Is 26:3",
+    "Rm 5:1",
+    "Mt 5:9"
+   ]
+  },
+  {
+   "name": "Santificação",
+   "description": "Uma vida separada para Deus.",
+   "refs": [
+    "1Ts 4:3",
+    "Hb 12:14",
+    "1Pe 1:15-16",
+    "Rm 12:1-2",
+    "2Co 7:1"
+   ]
+  }
+ ]
+}

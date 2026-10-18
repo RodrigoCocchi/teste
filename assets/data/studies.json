@@ -1,0 +1,580 @@
+{
+ "version": 1,
+ "note": "Contexto, reflexão e perguntas são textos autorais deste aplicativo, não ensinamentos oficiais de nenhuma igreja. O texto bíblico é lido da Bíblia importada.",
+ "studies": [
+  {
+   "id": 1,
+   "title": "No princípio, Deus",
+   "theme": "Criação",
+   "refs": [
+    "Gn 1:1-5"
+   ],
+   "context": "O primeiro capítulo da Bíblia apresenta Deus como Criador de todas as coisas. Antes de qualquer outra coisa existir, Deus já estava presente e agiu pela sua palavra, trazendo luz e ordem.",
+   "reflection": "Começar o dia lembrando que Deus é o Criador muda a forma como olhamos para a vida. Aquele que trouxe luz às trevas no princípio também pode trazer clareza aos nossos dias confusos. Antes das tarefas e preocupações, vale reconhecer que tudo começa nEle.",
+   "questions": [
+    "O que estes versículos ensinam sobre o poder da palavra de Deus?",
+    "Que áreas da sua vida precisam da \"luz\" de Deus hoje?",
+    "Como lembrar diariamente que Deus é o Criador pode mudar suas atitudes?"
+   ]
+  },
+  {
+   "id": 2,
+   "title": "Andar com Deus",
+   "theme": "Fé",
+   "refs": [
+    "Gn 5:21-24",
+    "Hb 11:5-6"
+   ],
+   "context": "Em meio a uma longa lista de gerações, Enoque se destaca por uma frase: ele andou com Deus. A carta aos Hebreus retoma seu exemplo para falar da fé que agrada a Deus.",
+   "reflection": "Andar com alguém pressupõe caminhar na mesma direção, no mesmo ritmo, por muito tempo. A vida de fé não é feita apenas de grandes momentos, mas de uma caminhada constante. Pequenas escolhas diárias de obediência e oração formam esse caminhar.",
+   "questions": [
+    "O que significa, na prática, \"andar com Deus\"?",
+    "Segundo Hebreus 11:6, o que é necessário para agradar a Deus?",
+    "Que hábito diário pode ajudar você a caminhar mais perto de Deus?"
+   ]
+  },
+  {
+   "id": 3,
+   "title": "Sair pela fé",
+   "theme": "Fé",
+   "refs": [
+    "Gn 12:1-4",
+    "Hb 11:8"
+   ],
+   "context": "Deus chamou Abrão para deixar sua terra e sua parentela e ir para uma terra que Ele mostraria. Abrão obedeceu sem conhecer todos os detalhes do caminho.",
+   "reflection": "A fé muitas vezes nos pede o primeiro passo antes de vermos o caminho inteiro. Abrão não tinha um mapa completo, mas tinha a promessa de Deus. Confiar não elimina as dúvidas, mas nos move a obedecer apesar delas.",
+   "questions": [
+    "Que promessas Deus fez a Abrão nestes versículos?",
+    "Por que é difícil obedecer sem conhecer todo o caminho?",
+    "Existe algum \"primeiro passo\" de obediência que você tem adiado?"
+   ]
+  },
+  {
+   "id": 4,
+   "title": "Deus proverá",
+   "theme": "Confiança",
+   "refs": [
+    "Gn 22:1-14"
+   ],
+   "context": "Deus provou Abraão pedindo que oferecesse Isaque. No momento decisivo, Deus impediu o sacrifício e proveu um carneiro. Abraão chamou aquele lugar de \"o Senhor proverá\".",
+   "reflection": "Há momentos em que não entendemos o que Deus está fazendo. A história de Abraão mostra que Deus vê adiante e cuida do que nos falta. Confiar na provisão de Deus é entregar a Ele aquilo que mais amamos.",
+   "questions": [
+    "Como Abraão demonstrou confiança em Deus durante a subida ao monte?",
+    "O que o nome \"o Senhor proverá\" ensina sobre o caráter de Deus?",
+    "Em que situação atual você precisa confiar na provisão de Deus?"
+   ]
+  },
+  {
+   "id": 5,
+   "title": "José e o perdão",
+   "theme": "Perdão",
+   "refs": [
+    "Gn 50:15-21"
+   ],
+   "context": "Após a morte de Jacó, os irmãos de José temeram que ele se vingasse do mal que lhe fizeram. José chorou, tranquilizou-os e reconheceu que Deus havia transformado o mal em bem.",
+   "reflection": "José tinha poder para se vingar, mas escolheu perdoar e cuidar dos irmãos. O perdão não nega o mal sofrido, mas entrega o julgamento a Deus. Reconhecer a mão de Deus na própria história ajuda a liberar ressentimentos.",
+   "questions": [
+    "Por que os irmãos de José estavam com medo?",
+    "O que José quis dizer ao afirmar que Deus tornou o mal em bem?",
+    "Há alguém a quem você precisa estender perdão?"
+   ]
+  },
+  {
+   "id": 6,
+   "title": "A sarça que ardia",
+   "theme": "Chamado",
+   "refs": [
+    "Êx 3:1-12"
+   ],
+   "context": "Enquanto apascentava o rebanho de seu sogro, Moisés viu uma sarça que ardia sem se consumir. Ali Deus o chamou para libertar Israel do Egito e prometeu estar com ele.",
+   "reflection": "Moisés se sentia incapaz, mas a resposta de Deus não foi falar das qualidades de Moisés, e sim da Sua presença: \"Certamente eu serei contigo\". Quando Deus chama, Ele também acompanha.",
+   "questions": [
+    "O que chamou a atenção de Moisés no monte?",
+    "Qual foi a principal objeção de Moisés e como Deus respondeu?",
+    "Em que tarefa você precisa lembrar que Deus está com você?"
+   ]
+  },
+  {
+   "id": 7,
+   "title": "Os mandamentos do Senhor",
+   "theme": "Obediência",
+   "refs": [
+    "Êx 20:1-17"
+   ],
+   "context": "No monte Sinai, Deus entregou ao povo os Dez Mandamentos. Antes dos mandamentos, Deus lembra que Ele é quem tirou o povo da servidão do Egito.",
+   "reflection": "A obediência a Deus nasce da gratidão pelo que Ele já fez. Os mandamentos tratam do relacionamento com Deus e com o próximo. Eles revelam o caráter santo de Deus e nos mostram o caminho de uma vida justa.",
+   "questions": [
+    "Por que Deus começa lembrando a libertação do Egito?",
+    "Quais mandamentos tratam do relacionamento com o próximo?",
+    "Qual destes mandamentos você sente que precisa observar com mais cuidado?"
+   ]
+  },
+  {
+   "id": 8,
+   "title": "Esforça-te e tem bom ânimo",
+   "theme": "Coragem",
+   "refs": [
+    "Js 1:1-9"
+   ],
+   "context": "Depois da morte de Moisés, Josué recebeu a missão de conduzir o povo à terra prometida. Deus o encorajou a ser forte, a meditar na lei e a não temer.",
+   "reflection": "A coragem que Deus pede a Josué está ligada à Sua presença e à Sua palavra. Não é uma coragem baseada em força própria, mas na promessa: \"o Senhor, teu Deus, é contigo, por onde quer que andares\".",
+   "questions": [
+    "Quantas vezes Deus encoraja Josué nestes versículos?",
+    "Qual é a relação entre meditar na lei e ter sucesso no caminho?",
+    "Que medo você precisa entregar a Deus hoje?"
+   ]
+  },
+  {
+   "id": 9,
+   "title": "Para onde fores, irei eu",
+   "theme": "Família",
+   "refs": [
+    "Rt 1:15-18"
+   ],
+   "context": "Noemi, viúva e sem filhos, decidiu voltar a Belém. Sua nora Rute, moabita, recusou-se a deixá-la e declarou fidelidade a ela e ao seu Deus.",
+   "reflection": "A decisão de Rute mostra lealdade em tempo de perda. Ela escolheu cuidar de quem estava fragilizado, mesmo sem garantias. A fidelidade nas relações familiares é uma forma concreta de viver a fé.",
+   "questions": [
+    "O que Rute deixou para trás ao acompanhar Noemi?",
+    "Como a escolha de Rute revela a sua fé?",
+    "Quem na sua família precisa da sua presença e fidelidade nesta fase?"
+   ]
+  },
+  {
+   "id": 10,
+   "title": "Fala, porque o teu servo ouve",
+   "theme": "Oração",
+   "refs": [
+    "1Sm 3:1-10"
+   ],
+   "context": "O menino Samuel servia no templo diante de Eli. Deus o chamou várias vezes durante a noite, e, orientado por Eli, Samuel respondeu: \"Fala, porque o teu servo ouve\".",
+   "reflection": "A oração não é apenas falar com Deus, mas também se dispor a ouvi-Lo. Samuel precisou aprender a reconhecer a voz de Deus. Um coração disponível é a primeira resposta a qualquer chamado.",
+   "questions": [
+    "Por que Samuel não reconheceu a voz de Deus nas primeiras vezes?",
+    "Qual foi o papel de Eli nesta história?",
+    "Como você pode separar momentos para ouvir a Palavra de Deus?"
+   ]
+  },
+  {
+   "id": 11,
+   "title": "O Senhor olha para o coração",
+   "theme": "Humildade",
+   "refs": [
+    "1Sm 16:6-13"
+   ],
+   "context": "Samuel foi à casa de Jessé para ungir um novo rei. Ao ver os filhos mais velhos, achou que um deles seria o escolhido, mas Deus escolheu Davi, o mais novo, que estava cuidando das ovelhas.",
+   "reflection": "Os critérios humanos costumam valorizar a aparência e a posição. Deus vê o interior. Isso nos consola quando somos desconsiderados e nos alerta a não julgar pelas aparências.",
+   "questions": [
+    "Por que Samuel se enganou ao olhar para Eliabe?",
+    "O que significa dizer que o Senhor olha para o coração?",
+    "Em que situações você costuma julgar pelas aparências?"
+   ]
+  },
+  {
+   "id": 12,
+   "title": "O Senhor é o meu pastor",
+   "theme": "Consolação",
+   "refs": [
+    "Sl 23:1-6"
+   ],
+   "context": "O Salmo 23, atribuído a Davi, descreve Deus como um pastor que guia, alimenta, protege e acompanha suas ovelhas, inclusive no vale da sombra da morte.",
+   "reflection": "A imagem do pastor fala de cuidado pessoal e constante. O salmo não promete ausência de vales escuros, mas a presença de Deus neles. Quem é guiado pelo Pastor pode descansar mesmo em tempos difíceis.",
+   "questions": [
+    "Que cuidados do pastor são descritos neste salmo?",
+    "O que muda saber que Deus está conosco no \"vale da sombra da morte\"?",
+    "Que versículo deste salmo você pode guardar no coração hoje?"
+   ]
+  },
+  {
+   "id": 13,
+   "title": "Cria em mim um coração puro",
+   "theme": "Arrependimento",
+   "refs": [
+    "Sl 51:1-12"
+   ],
+   "context": "Este salmo é uma oração de arrependimento. O salmista reconhece o seu pecado sem desculpas e pede a Deus misericórdia, purificação e um espírito reto.",
+   "reflection": "O verdadeiro arrependimento começa com a sinceridade diante de Deus. Não se trata apenas de remorso, mas do desejo de ser transformado. Deus não despreza o coração quebrantado que O busca.",
+   "questions": [
+    "Que pedidos o salmista faz a Deus nestes versículos?",
+    "Qual a diferença entre remorso e arrependimento?",
+    "O que você precisa confessar a Deus com sinceridade?"
+   ]
+  },
+  {
+   "id": 14,
+   "title": "Confia no Senhor de todo o coração",
+   "theme": "Sabedoria",
+   "refs": [
+    "Pv 3:1-8"
+   ],
+   "context": "O livro de Provérbios reúne ensinos de sabedoria para a vida diária. Neste trecho, o pai aconselha o filho a guardar os mandamentos e a confiar no Senhor, e não no próprio entendimento.",
+   "reflection": "Confiar em Deus de todo o coração significa reconhecê-Lo em todos os caminhos, inclusive nas decisões comuns. A sabedoria bíblica começa com humildade: admitir que não sabemos tudo.",
+   "questions": [
+    "O que significa não se estribar no próprio entendimento?",
+    "Como reconhecer a Deus em \"todos os teus caminhos\" no dia a dia?",
+    "Que decisão atual você precisa entregar a Deus?"
+   ]
+  },
+  {
+   "id": 15,
+   "title": "Tudo tem o seu tempo",
+   "theme": "Sabedoria",
+   "refs": [
+    "Ec 3:1-8"
+   ],
+   "context": "O pregador observa que há tempo determinado para cada propósito debaixo do céu: nascer e morrer, chorar e rir, calar e falar.",
+   "reflection": "Aceitar que a vida tem estações nos ajuda a viver cada fase com serenidade. Nem toda tristeza é definitiva, nem toda alegria é permanente. Discernir o tempo certo para cada atitude é sabedoria.",
+   "questions": [
+    "Qual destes \"tempos\" descreve melhor a fase atual da sua vida?",
+    "Por que é importante saber o tempo de calar e o tempo de falar?",
+    "Como confiar em Deus nas mudanças de estação da vida?"
+   ]
+  },
+  {
+   "id": 16,
+   "title": "Forças renovadas",
+   "theme": "Esperança",
+   "refs": [
+    "Is 40:28-31"
+   ],
+   "context": "O profeta lembra ao povo cansado que o Senhor é eterno, não se cansa nem se fatiga, e dá força ao cansado. Os que esperam no Senhor renovam as suas forças.",
+   "reflection": "O cansaço faz parte da vida humana, até dos mais jovens. A promessa não é que nunca nos cansaremos, mas que Deus renova as forças de quem espera nEle. Esperar em Deus é depender dEle ativamente.",
+   "questions": [
+    "O que estes versículos dizem sobre o caráter de Deus?",
+    "O que significa \"esperar no Senhor\"?",
+    "Em que área você se sente cansado e precisa de forças renovadas?"
+   ]
+  },
+  {
+   "id": 17,
+   "title": "Ferido pelas nossas transgressões",
+   "theme": "Salvação",
+   "refs": [
+    "Is 53:1-6"
+   ],
+   "context": "O profeta descreve o Servo do Senhor, desprezado e rejeitado, que levou sobre si as dores e os pecados de outros. O Novo Testamento aplica esta profecia a Jesus Cristo (veja Atos 8:32-35).",
+   "reflection": "Este texto mostra a profundidade do amor de Deus: o castigo que nos traz a paz foi sobre Ele. Reconhecer que \"todos nós andamos desgarrados como ovelhas\" nos leva à gratidão pela salvação.",
+   "questions": [
+    "Que expressões do texto descrevem o sofrimento do Servo?",
+    "O que significa \"pelas suas pisaduras fomos sarados\"?",
+    "Como esta passagem aumenta sua gratidão a Deus?"
+   ]
+  },
+  {
+   "id": 18,
+   "title": "As misericórdias se renovam",
+   "theme": "Esperança",
+   "refs": [
+    "Lm 3:21-26"
+   ],
+   "context": "Lamentações chora a destruição de Jerusalém. No meio da dor, o autor traz à memória a misericórdia do Senhor, que se renova a cada manhã.",
+   "reflection": "A esperança, aqui, nasce de uma decisão: trazer à memória quem Deus é. Mesmo quando as circunstâncias não mudam de imediato, a fidelidade de Deus permanece. Cada manhã é um lembrete da Sua misericórdia.",
+   "questions": [
+    "O que o autor decidiu \"trazer à memória\"?",
+    "Por que o versículo 26 diz que é bom ter esperança e aguardar a salvação do Senhor?",
+    "Que misericórdias de Deus você pode reconhecer nesta manhã?"
+   ]
+  },
+  {
+   "id": 19,
+   "title": "Fiel em qualquer circunstância",
+   "theme": "Fidelidade",
+   "refs": [
+    "Dn 6:10-23"
+   ],
+   "context": "Mesmo sabendo do decreto que proibia orações a qualquer deus além do rei, Daniel continuou orando três vezes ao dia. Foi lançado na cova dos leões, e Deus o livrou.",
+   "reflection": "A fidelidade de Daniel não começou na cova, mas nos hábitos diários de oração. Quando a prova chegou, ele manteve a mesma prática. Constância nas pequenas coisas prepara para as grandes provas.",
+   "questions": [
+    "O que Daniel fez ao saber do decreto?",
+    "Como o rei reagiu ao que aconteceu com Daniel?",
+    "Que hábito espiritual você deseja manter com mais constância?"
+   ]
+  },
+  {
+   "id": 20,
+   "title": "Bem-aventurados",
+   "theme": "Santificação",
+   "refs": [
+    "Mt 5:1-12"
+   ],
+   "context": "No início do Sermão do Monte, Jesus declara bem-aventurados os pobres de espírito, os que choram, os mansos, os que têm fome e sede de justiça, os misericordiosos, os limpos de coração e os pacificadores.",
+   "reflection": "As bem-aventuranças invertem os valores do mundo. A verdadeira felicidade, segundo Jesus, está ligada ao caráter e ao relacionamento com Deus, e não às circunstâncias. Elas descrevem a vida de quem pertence ao Reino.",
+   "questions": [
+    "Qual bem-aventurança mais chama a sua atenção? Por quê?",
+    "Por que Jesus chama de bem-aventurados os que choram?",
+    "Como ser um pacificador em casa ou no trabalho?"
+   ]
+  },
+  {
+   "id": 21,
+   "title": "Quando orares",
+   "theme": "Oração",
+   "refs": [
+    "Mt 6:5-15"
+   ],
+   "context": "Jesus ensina a orar sem ostentação, em secreto, sem vãs repetições, e apresenta um modelo de oração. Ao final, destaca a importância de perdoar.",
+   "reflection": "A oração ensinada por Jesus começa com Deus — o Seu nome, o Seu reino, a Sua vontade — e só depois passa às nossas necessidades. Ela também nos lembra que o perdão recebido deve ser estendido aos outros.",
+   "questions": [
+    "O que Jesus critica na forma de orar dos hipócritas?",
+    "Qual é a ordem dos pedidos na oração que Jesus ensinou?",
+    "Por que Jesus relaciona oração e perdão?"
+   ]
+  },
+  {
+   "id": 22,
+   "title": "A casa sobre a rocha",
+   "theme": "Obediência",
+   "refs": [
+    "Mt 7:24-27"
+   ],
+   "context": "Ao concluir o Sermão do Monte, Jesus compara quem ouve e pratica as suas palavras a um homem prudente que edificou a casa sobre a rocha.",
+   "reflection": "As duas casas enfrentaram a mesma tempestade; a diferença estava no fundamento. Ouvir a Palavra é importante, mas é a prática que dá firmeza à vida. A obediência é o alicerce que resiste às crises.",
+   "questions": [
+    "O que diferencia o homem prudente do insensato?",
+    "Que \"tempestades\" testam o fundamento da vida?",
+    "Que ensino de Jesus você ouviu e ainda não colocou em prática?"
+   ]
+  },
+  {
+   "id": 23,
+   "title": "Vinde a mim",
+   "theme": "Consolação",
+   "refs": [
+    "Mt 11:28-30"
+   ],
+   "context": "Jesus convida os cansados e oprimidos a irem a Ele, prometendo descanso. Ele se apresenta como manso e humilde de coração.",
+   "reflection": "O convite de Jesus é pessoal e acolhedor. Ele não exige que estejamos bem para nos aproximarmos; chama justamente os cansados. Tomar o seu jugo é aprender com Ele a viver de outra maneira.",
+   "questions": [
+    "A quem Jesus dirige este convite?",
+    "O que significa tomar sobre si o jugo de Jesus?",
+    "Que peso você precisa entregar a Jesus hoje?"
+   ]
+  },
+  {
+   "id": 24,
+   "title": "O filho que voltou",
+   "theme": "Arrependimento",
+   "refs": [
+    "Lc 15:11-24"
+   ],
+   "context": "Jesus conta a parábola de um filho que pediu sua herança, desperdiçou tudo e, arrependido, voltou para casa. O pai o viu de longe, correu, abraçou-o e fez festa.",
+   "reflection": "A parábola mostra o arrependimento do filho, mas destaca ainda mais o amor do pai. O caminho de volta começou quando o filho caiu em si e reconheceu sua condição. E a recepção do pai revela a disposição de Deus em receber quem retorna.",
+   "questions": [
+    "O que levou o filho a decidir voltar?",
+    "Como o pai reagiu ao ver o filho?",
+    "O que esta parábola ensina sobre o coração de Deus?"
+   ]
+  },
+  {
+   "id": 25,
+   "title": "Quem é o meu próximo?",
+   "theme": "Amor",
+   "refs": [
+    "Lc 10:25-37"
+   ],
+   "context": "Um doutor da lei perguntou a Jesus quem era o seu próximo. Jesus respondeu com a parábola do samaritano que socorreu um homem ferido, enquanto um sacerdote e um levita passaram de largo.",
+   "reflection": "Jesus muda a pergunta: em vez de \"quem é o meu próximo?\", pergunta \"quem se fez próximo?\". O amor ao próximo se mostra em atitudes concretas, sobretudo para com quem não pode retribuir.",
+   "questions": [
+    "Por que o sacerdote e o levita podem ter passado de largo?",
+    "O que o samaritano fez de concreto pelo ferido?",
+    "Quem precisa que você \"se faça próximo\" nesta semana?"
+   ]
+  },
+  {
+   "id": 26,
+   "title": "Necessário vos é nascer de novo",
+   "theme": "Salvação",
+   "refs": [
+    "Jo 3:1-16"
+   ],
+   "context": "Nicodemos, mestre em Israel, foi ter com Jesus de noite. Jesus lhe disse que é necessário nascer de novo e revelou o amor de Deus, que deu o seu Filho unigênito.",
+   "reflection": "O novo nascimento é obra de Deus, não fruto de esforço humano ou posição religiosa. Nicodemos era respeitado, mas precisava de uma vida nova. O amor de Deus oferece essa vida a todo aquele que crê.",
+   "questions": [
+    "O que Jesus quis dizer com \"nascer de novo\"?",
+    "Por que Nicodemos teve dificuldade em entender?",
+    "Como João 3:16 resume a mensagem do Evangelho?"
+   ]
+  },
+  {
+   "id": 27,
+   "title": "O caminho, a verdade e a vida",
+   "theme": "Vida Eterna",
+   "refs": [
+    "Jo 14:1-6"
+   ],
+   "context": "Na véspera da crucificação, Jesus conforta os discípulos falando das muitas moradas na casa do Pai. Diante da pergunta de Tomé, Jesus declara ser o caminho, a verdade e a vida.",
+   "reflection": "Jesus começa com \"não se turbe o vosso coração\". A esperança da vida eterna não é uma ideia vaga, mas uma pessoa: o próprio Cristo. Conhecer o caminho é conhecer Jesus.",
+   "questions": [
+    "Que promessa Jesus faz aos discípulos nos versículos 2 e 3?",
+    "Qual foi a pergunta de Tomé e qual foi a resposta de Jesus?",
+    "Como esta passagem pode consolar alguém que está aflito?"
+   ]
+  },
+  {
+   "id": 28,
+   "title": "O Consolador prometido",
+   "theme": "Espírito Santo",
+   "refs": [
+    "Jo 14:15-27"
+   ],
+   "context": "Jesus promete aos discípulos outro Consolador, o Espírito da verdade, que estaria com eles para sempre, ensinaria todas as coisas e os faria lembrar das suas palavras.",
+   "reflection": "Jesus não deixou os discípulos órfãos. A promessa do Espírito Santo está ligada ao amor e à obediência às palavras de Cristo. Junto com o Consolador, Jesus deixa a sua paz.",
+   "questions": [
+    "Que nomes Jesus usa para se referir ao Espírito Santo?",
+    "Qual é a relação entre amar a Jesus e guardar os seus mandamentos?",
+    "Que diferença há entre a paz de Cristo e a paz do mundo?"
+   ]
+  },
+  {
+   "id": 29,
+   "title": "O dia de Pentecostes",
+   "theme": "Espírito Santo",
+   "refs": [
+    "At 2:1-4",
+    "At 2:37-41"
+   ],
+   "context": "No dia de Pentecostes, os discípulos foram cheios do Espírito Santo. Após a pregação de Pedro, muitos se compungiram, receberam a palavra e foram batizados.",
+   "reflection": "O Espírito Santo transformou discípulos temerosos em testemunhas corajosas. A resposta dos ouvintes — \"que faremos?\" — mostra uma palavra que toca o coração e leva à decisão.",
+   "questions": [
+    "O que aconteceu quando o Espírito Santo desceu sobre os discípulos?",
+    "O que Pedro respondeu à pergunta \"que faremos\"?",
+    "Como você tem respondido à Palavra que ouve?"
+   ]
+  },
+  {
+   "id": 30,
+   "title": "O amor nunca falha",
+   "theme": "Amor",
+   "refs": [
+    "1Co 13:1-13"
+   ],
+   "context": "Escrevendo a uma igreja que valorizava muito os dons espirituais, Paulo mostra que, sem amor, até os maiores dons nada valem. Ele descreve as características do amor.",
+   "reflection": "O amor descrito por Paulo é prático: é paciente, é benigno, não se ensoberbece, não busca os seus interesses. É menos um sentimento e mais uma forma de agir. A fé, a esperança e o amor permanecem, mas o maior é o amor.",
+   "questions": [
+    "Por que os dons sem amor \"nada aproveitam\"?",
+    "Qual característica do amor você acha mais difícil de praticar?",
+    "Como aplicar este capítulo na convivência familiar?"
+   ]
+  },
+  {
+   "id": 31,
+   "title": "O fruto do Espírito",
+   "theme": "Santificação",
+   "refs": [
+    "Gl 5:22-26"
+   ],
+   "context": "Paulo contrasta as obras da carne com o fruto do Espírito: amor, gozo, paz, longanimidade, benignidade, bondade, fé, mansidão e temperança.",
+   "reflection": "Fruto não se fabrica, cresce. O caráter cristão é resultado de uma vida conduzida pelo Espírito. Andar no Espírito envolve abandonar a vanglória, as provocações e a inveja.",
+   "questions": [
+    "Quais características do fruto do Espírito são citadas?",
+    "Por que Paulo usa a palavra \"fruto\" e não \"frutos\"?",
+    "Que aspecto deste fruto você deseja ver crescer em sua vida?"
+   ]
+  },
+  {
+   "id": 32,
+   "title": "Revesti-vos de toda a armadura",
+   "theme": "Fé",
+   "refs": [
+    "Ef 6:10-18"
+   ],
+   "context": "Paulo encerra a carta aos Efésios exortando os crentes a se fortalecerem no Senhor e a vestirem toda a armadura de Deus para resistirem no dia mau.",
+   "reflection": "A luta espiritual exige recursos espirituais: verdade, justiça, o evangelho da paz, a fé, a salvação e a Palavra de Deus. A passagem termina com a oração, que acompanha todas as outras peças.",
+   "questions": [
+    "Quais peças da armadura são mencionadas?",
+    "Por que Paulo diz que a nossa luta não é contra carne e sangue?",
+    "Como a oração se relaciona com toda a armadura?"
+   ]
+  },
+  {
+   "id": 33,
+   "title": "A paz que excede o entendimento",
+   "theme": "Paz",
+   "refs": [
+    "Fp 4:4-9"
+   ],
+   "context": "Escrevendo da prisão, Paulo exorta os filipenses a se alegrarem no Senhor, a apresentarem seus pedidos a Deus com ações de graças e a ocuparem a mente com o que é verdadeiro e bom.",
+   "reflection": "A paz de Deus guarda o coração e a mente de quem leva tudo a Ele em oração. Paulo também mostra que aquilo em que pensamos influencia nossa paz. Gratidão e bons pensamentos caminham juntos.",
+   "questions": [
+    "Que atitude Paulo recomenda no lugar da inquietação?",
+    "Que coisas devemos ocupar nossos pensamentos, segundo o versículo 8?",
+    "Que preocupação você pode transformar em oração hoje?"
+   ]
+  },
+  {
+   "id": 34,
+   "title": "A fé que agrada a Deus",
+   "theme": "Fé",
+   "refs": [
+    "Hb 11:1-6"
+   ],
+   "context": "O capítulo 11 de Hebreus define a fé e apresenta exemplos de homens e mulheres que viveram pela fé, começando por Abel, Enoque e Noé.",
+   "reflection": "A fé olha além do que se vê e confia no que Deus prometeu. Ela não é um salto no escuro, mas confiança no caráter de Deus, que é galardoador dos que o buscam.",
+   "questions": [
+    "Como o versículo 1 define a fé?",
+    "Que exemplos de fé aparecem nestes versículos?",
+    "O que significa buscar a Deus \"diligentemente\"?"
+   ]
+  },
+  {
+   "id": 35,
+   "title": "A fé que se mostra nas obras",
+   "theme": "Obediência",
+   "refs": [
+    "Tg 2:14-18"
+   ],
+   "context": "Tiago pergunta de que aproveita dizer que tem fé sem obras e dá o exemplo de quem deseja o bem ao necessitado, mas não lhe dá o necessário.",
+   "reflection": "Tiago não contradiz a salvação pela graça; ele mostra que a fé verdadeira se manifesta em atitudes. A fé viva se vê no cuidado com o próximo.",
+   "questions": [
+    "Que exemplo Tiago usa para falar da fé sem obras?",
+    "Como a fé pode ser \"mostrada\"?",
+    "Que obra concreta de amor você pode realizar nesta semana?"
+   ]
+  },
+  {
+   "id": 36,
+   "title": "Deus é amor",
+   "theme": "Amor",
+   "refs": [
+    "1Jo 4:7-12"
+   ],
+   "context": "João exorta os irmãos a amarem uns aos outros, porque o amor é de Deus. Ele mostra que o amor de Deus se manifestou ao enviar o seu Filho.",
+   "reflection": "O amor cristão nasce de Deus e responde ao amor que Ele demonstrou primeiro. Quando nos amamos uns aos outros, o amor de Deus se torna visível entre nós.",
+   "questions": [
+    "Como o amor de Deus se manifestou, segundo o versículo 9?",
+    "Segundo o versículo 19 do mesmo capítulo, por que nós amamos a Deus?",
+    "Como o amor entre irmãos torna Deus visível?"
+   ]
+  },
+  {
+   "id": 37,
+   "title": "Cristo ressuscitou",
+   "theme": "Ressurreição",
+   "refs": [
+    "1Co 15:1-8",
+    "1Co 15:20"
+   ],
+   "context": "Paulo relembra o evangelho que pregou: Cristo morreu pelos nossos pecados, foi sepultado e ressuscitou ao terceiro dia, aparecendo a muitas testemunhas.",
+   "reflection": "A ressurreição é o centro da esperança cristã. Paulo cita testemunhas para mostrar que não se trata de lenda. Cristo ressuscitado é as primícias dos que dormem, garantia da ressurreição futura.",
+   "questions": [
+    "Quais são os pontos centrais do evangelho nos versículos 3 e 4?",
+    "Por que Paulo menciona tantas testemunhas?",
+    "Como a ressurreição de Cristo afeta a forma de encarar a morte?"
+   ]
+  },
+  {
+   "id": 38,
+   "title": "Todas as coisas novas",
+   "theme": "Esperança",
+   "refs": [
+    "Ap 21:1-5"
+   ],
+   "context": "João vê um novo céu e uma nova terra, e a santa cidade descendo do céu. Ouve que Deus habitará com os homens e enxugará toda lágrima.",
+   "reflection": "A Bíblia termina com esperança: o sofrimento não terá a última palavra. A promessa de Deus de fazer novas todas as coisas sustenta os que perseveram. Essa esperança também nos motiva a viver hoje com fidelidade.",
+   "questions": [
+    "O que deixará de existir, segundo o versículo 4?",
+    "O que significa Deus habitar com os homens?",
+    "Como essa esperança pode ajudar alguém que está sofrendo?"
+   ]
+  }
+ ]
+}

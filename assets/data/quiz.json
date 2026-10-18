@@ -1,0 +1,2532 @@
+{
+ "version": 1,
+ "source": "Perguntas elaboradas para este aplicativo; respostas conferíveis pelas referências citadas.",
+ "questions": [
+  {
+   "id": "F01",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Quem construiu a arca para escapar do dilúvio?",
+   "options": [
+    "Abraão",
+    "Noé",
+    "Moisés",
+    "Jacó"
+   ],
+   "answer": 1,
+   "explanation": "Deus ordenou a Noé que fizesse uma arca de madeira de gofer, e Noé fez conforme tudo o que Deus lhe mandou.",
+   "refs": [
+    "Gn 6:13-22"
+   ],
+   "keywords": [
+    "Noé",
+    "arca"
+   ]
+  },
+  {
+   "id": "F02",
+   "difficulty": "facil",
+   "category": "Números na Bíblia",
+   "question": "Por quantos dias e quantas noites choveu sobre a terra no dilúvio?",
+   "options": [
+    "7",
+    "12",
+    "40",
+    "100"
+   ],
+   "answer": 2,
+   "explanation": "A chuva caiu sobre a terra quarenta dias e quarenta noites.",
+   "refs": [
+    "Gn 7:12"
+   ],
+   "keywords": [
+    "quarenta",
+    "dias",
+    "noites"
+   ]
+  },
+  {
+   "id": "F03",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Que nome Adão deu à sua mulher?",
+   "options": [
+    "Sara",
+    "Eva",
+    "Raquel",
+    "Ana"
+   ],
+   "answer": 1,
+   "explanation": "Adão chamou o nome de sua mulher Eva, porque ela era a mãe de todos os viventes.",
+   "refs": [
+    "Gn 3:20"
+   ],
+   "keywords": [
+    "Adão",
+    "Eva"
+   ]
+  },
+  {
+   "id": "F04",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Quem matou o seu irmão Abel?",
+   "options": [
+    "Caim",
+    "Sete",
+    "Esaú",
+    "Ló"
+   ],
+   "answer": 0,
+   "explanation": "Estando no campo, Caim se levantou contra o seu irmão Abel e o matou.",
+   "refs": [
+    "Gn 4:8"
+   ],
+   "keywords": [
+    "Caim",
+    "Abel"
+   ]
+  },
+  {
+   "id": "F05",
+   "difficulty": "facil",
+   "category": "Reis e profetas",
+   "question": "Quem foi lançado na cova dos leões por continuar orando a Deus?",
+   "options": [
+    "Daniel",
+    "José",
+    "Jeremias",
+    "Elias"
+   ],
+   "answer": 0,
+   "explanation": "Por ordem do rei, Daniel foi lançado na cova dos leões, e Deus o livrou.",
+   "refs": [
+    "Dn 6:16"
+   ],
+   "keywords": [
+    "Daniel",
+    "leões"
+   ]
+  },
+  {
+   "id": "F06",
+   "difficulty": "facil",
+   "category": "Reis e profetas",
+   "question": "Qual profeta foi engolido por um grande peixe?",
+   "options": [
+    "Pedro",
+    "Jonas",
+    "Paulo",
+    "Elias"
+   ],
+   "answer": 1,
+   "explanation": "O Senhor preparou um grande peixe para tragar Jonas, que ficou no ventre do peixe três dias e três noites.",
+   "refs": [
+    "Jn 1:17"
+   ],
+   "keywords": [
+    "Jonas",
+    "peixe"
+   ]
+  },
+  {
+   "id": "F07",
+   "difficulty": "facil",
+   "category": "Reis e profetas",
+   "question": "Quem venceu o gigante filisteu Golias com uma funda e uma pedra?",
+   "options": [
+    "Saul",
+    "Jônatas",
+    "Davi",
+    "Sansão"
+   ],
+   "answer": 2,
+   "explanation": "Davi prevaleceu contra o filisteu com uma funda e com uma pedra.",
+   "refs": [
+    "1Sm 17:49-50"
+   ],
+   "keywords": [
+    "Davi",
+    "funda",
+    "pedra"
+   ]
+  },
+  {
+   "id": "F08",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Em que cidade Jesus nasceu?",
+   "options": [
+    "Nazaré",
+    "Jerusalém",
+    "Belém",
+    "Cafarnaum"
+   ],
+   "answer": 2,
+   "explanation": "Jesus nasceu em Belém de Judéia, no tempo do rei Herodes.",
+   "refs": [
+    "Mt 2:1"
+   ],
+   "keywords": [
+    "Jesus",
+    "Belém"
+   ]
+  },
+  {
+   "id": "F09",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Onde Maria deitou o menino Jesus logo após o nascimento?",
+   "options": [
+    "Numa manjedoura",
+    "Num berço de madeira",
+    "No templo",
+    "Numa tenda"
+   ],
+   "answer": 0,
+   "explanation": "Maria envolveu o menino em panos e o deitou numa manjedoura, porque não havia lugar para eles na estalagem.",
+   "refs": [
+    "Lc 2:7"
+   ],
+   "keywords": [
+    "manjedoura"
+   ]
+  },
+  {
+   "id": "F10",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Em que rio Jesus foi batizado por João?",
+   "options": [
+    "Nilo",
+    "Eufrates",
+    "Jordão",
+    "Tigre"
+   ],
+   "answer": 2,
+   "explanation": "Jesus veio da Galiléia ter com João, junto do Jordão, para ser batizado por ele.",
+   "refs": [
+    "Mt 3:13"
+   ],
+   "keywords": [
+    "Jordão",
+    "João"
+   ]
+  },
+  {
+   "id": "F11",
+   "difficulty": "facil",
+   "category": "Números na Bíblia",
+   "question": "Quantos discípulos Jesus escolheu e chamou de apóstolos?",
+   "options": [
+    "7",
+    "10",
+    "12",
+    "70"
+   ],
+   "answer": 2,
+   "explanation": "Jesus escolheu doze dentre os discípulos, aos quais também deu o nome de apóstolos.",
+   "refs": [
+    "Lc 6:13"
+   ],
+   "keywords": [
+    "doze",
+    "apóstolos"
+   ]
+  },
+  {
+   "id": "F12",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Qual discípulo negou Jesus três vezes antes de o galo cantar?",
+   "options": [
+    "Pedro",
+    "João",
+    "Tomé",
+    "André"
+   ],
+   "answer": 0,
+   "explanation": "Pedro negou três vezes conhecer Jesus e, ao cantar o galo, lembrou-se das palavras do Senhor e chorou amargamente.",
+   "refs": [
+    "Mt 26:69-75"
+   ],
+   "keywords": [
+    "Pedro",
+    "galo"
+   ]
+  },
+  {
+   "id": "F13",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Qual discípulo traiu Jesus?",
+   "options": [
+    "Judas Iscariotes",
+    "Tiago",
+    "Filipe",
+    "Bartolomeu"
+   ],
+   "answer": 0,
+   "explanation": "Judas Iscariotes, um dos doze, foi aos príncipes dos sacerdotes para entregar Jesus.",
+   "refs": [
+    "Mt 26:14-16"
+   ],
+   "keywords": [
+    "Judas",
+    "Iscariotes"
+   ]
+  },
+  {
+   "id": "F14",
+   "difficulty": "facil",
+   "category": "Números na Bíblia",
+   "question": "Por quantas moedas de prata Judas combinou entregar Jesus?",
+   "options": [
+    "10",
+    "20",
+    "30",
+    "40"
+   ],
+   "answer": 2,
+   "explanation": "Os príncipes dos sacerdotes pesaram-lhe trinta moedas de prata.",
+   "refs": [
+    "Mt 26:15"
+   ],
+   "keywords": [
+    "trinta",
+    "prata"
+   ]
+  },
+  {
+   "id": "F15",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem recebeu de Deus as tábuas do Testemunho no monte Sinai?",
+   "options": [
+    "Moisés",
+    "Arão",
+    "Josué",
+    "Samuel"
+   ],
+   "answer": 0,
+   "explanation": "Deus deu a Moisés, no monte Sinai, as duas tábuas do Testemunho, escritas pelo dedo de Deus.",
+   "refs": [
+    "Êx 31:18"
+   ],
+   "keywords": [
+    "Moisés",
+    "Sinai",
+    "tábuas"
+   ]
+  },
+  {
+   "id": "F16",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Qual filho de Jacó foi vendido pelos irmãos e levado ao Egito?",
+   "options": [
+    "Rúben",
+    "José",
+    "Benjamim",
+    "Judá"
+   ],
+   "answer": 1,
+   "explanation": "Os irmãos venderam José aos ismaelitas, que o levaram ao Egito.",
+   "refs": [
+    "Gn 37:28"
+   ],
+   "keywords": [
+    "José",
+    "Egito"
+   ]
+  },
+  {
+   "id": "F17",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Qual era o nome da mulher de Abraão, mãe de Isaque?",
+   "options": [
+    "Sara",
+    "Rebeca",
+    "Lia",
+    "Agar"
+   ],
+   "answer": 0,
+   "explanation": "Sara deu a Abraão um filho na sua velhice, e Abraão o chamou Isaque.",
+   "refs": [
+    "Gn 21:2-3"
+   ],
+   "keywords": [
+    "Sara",
+    "Isaque"
+   ]
+  },
+  {
+   "id": "F18",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual juiz de Israel perdeu a força quando lhe rasparam o cabelo?",
+   "options": [
+    "Sansão",
+    "Gideão",
+    "Davi",
+    "Saul"
+   ],
+   "answer": 0,
+   "explanation": "Sansão revelou que nunca passara navalha em sua cabeça; quando o rasparam, a sua força se retirou dele.",
+   "refs": [
+    "Jz 16:17-20"
+   ],
+   "keywords": [
+    "Sansão",
+    "navalha"
+   ]
+  },
+  {
+   "id": "F19",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual mulher persuadiu Sansão a revelar o segredo da sua força?",
+   "options": [
+    "Dalila",
+    "Jezabel",
+    "Mical",
+    "Rute"
+   ],
+   "answer": 0,
+   "explanation": "Sansão amou uma mulher do vale de Soreque chamada Dalila.",
+   "refs": [
+    "Jz 16:4"
+   ],
+   "keywords": [
+    "Dalila"
+   ]
+  },
+  {
+   "id": "F20",
+   "difficulty": "facil",
+   "category": "Milagres e sinais",
+   "question": "Que alimento Deus deu ao povo de Israel no deserto, chamado pela casa de Israel por um nome próprio?",
+   "options": [
+    "Maná",
+    "Trigo",
+    "Figos",
+    "Mel silvestre"
+   ],
+   "answer": 0,
+   "explanation": "A casa de Israel chamou aquele alimento de maná; era como semente de coentro, branco, e o seu sabor como bolos de mel.",
+   "refs": [
+    "Êx 16:31"
+   ],
+   "keywords": [
+    "maná"
+   ]
+  },
+  {
+   "id": "F21",
+   "difficulty": "facil",
+   "category": "Reis e profetas",
+   "question": "Qual filho de Davi edificou a casa do Senhor (o templo) em Jerusalém?",
+   "options": [
+    "Absalão",
+    "Salomão",
+    "Saul",
+    "Ezequias"
+   ],
+   "answer": 1,
+   "explanation": "Salomão edificou a casa do Senhor e a acabou.",
+   "refs": [
+    "1Rs 6:14"
+   ],
+   "keywords": [
+    "Salomão",
+    "casa"
+   ]
+  },
+  {
+   "id": "F22",
+   "difficulty": "facil",
+   "category": "Reis e profetas",
+   "question": "Qual profeta subiu ao céu num redemoinho?",
+   "options": [
+    "Eliseu",
+    "Elias",
+    "Enoque",
+    "Moisés"
+   ],
+   "answer": 1,
+   "explanation": "Um carro de fogo separou Elias de Eliseu, e Elias subiu ao céu num redemoinho.",
+   "refs": [
+    "2Rs 2:11"
+   ],
+   "keywords": [
+    "Elias",
+    "redemoinho"
+   ]
+  },
+  {
+   "id": "F23",
+   "difficulty": "facil",
+   "category": "Milagres e sinais",
+   "question": "Os muros de qual cidade caíram depois que o povo a rodeou e gritou?",
+   "options": [
+    "Jericó",
+    "Ai",
+    "Babilônia",
+    "Nínive"
+   ],
+   "answer": 0,
+   "explanation": "Depois de rodearem Jericó conforme a ordem do Senhor, o povo gritou e o muro caiu.",
+   "refs": [
+    "Js 6:1-20"
+   ],
+   "keywords": [
+    "Jericó",
+    "muro"
+   ]
+  },
+  {
+   "id": "F24",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem liderou o povo de Israel depois da morte de Moisés?",
+   "options": [
+    "Josué",
+    "Calebe",
+    "Arão",
+    "Gideão"
+   ],
+   "answer": 0,
+   "explanation": "Depois da morte de Moisés, o Senhor falou a Josué, filho de Num, para fazer o povo passar o Jordão.",
+   "refs": [
+    "Js 1:1-2"
+   ],
+   "keywords": [
+    "Josué",
+    "Moisés"
+   ]
+  },
+  {
+   "id": "F25",
+   "difficulty": "facil",
+   "category": "Milagres e sinais",
+   "question": "Quem Jesus ressuscitou depois de estar quatro dias na sepultura?",
+   "options": [
+    "Lázaro",
+    "Jairo",
+    "Zaqueu",
+    "Nicodemos"
+   ],
+   "answer": 0,
+   "explanation": "Jesus chegou a Betânia quando Lázaro já estava havia quatro dias na sepultura, e o chamou para fora.",
+   "refs": [
+    "Jo 11:17",
+    "Jo 11:43-44"
+   ],
+   "keywords": [
+    "Lázaro",
+    "quatro"
+   ]
+  },
+  {
+   "id": "F26",
+   "difficulty": "facil",
+   "category": "Milagres e sinais",
+   "question": "Onde Jesus transformou água em vinho, seu primeiro sinal?",
+   "options": [
+    "Caná da Galiléia",
+    "Betânia",
+    "Jericó",
+    "Samaria"
+   ],
+   "answer": 0,
+   "explanation": "Nas bodas em Caná da Galiléia, Jesus transformou a água em vinho; esse foi o princípio dos seus sinais.",
+   "refs": [
+    "Jo 2:1-11"
+   ],
+   "keywords": [
+    "Caná",
+    "vinho"
+   ]
+  },
+  {
+   "id": "F27",
+   "difficulty": "facil",
+   "category": "Milagres e sinais",
+   "question": "Na multiplicação para cerca de cinco mil homens, quantos pães e peixes os discípulos tinham?",
+   "options": [
+    "Cinco pães e dois peixes",
+    "Sete pães e três peixes",
+    "Dois pães e cinco peixes",
+    "Doze pães e dois peixes"
+   ],
+   "answer": 0,
+   "explanation": "Os discípulos disseram: Não temos aqui senão cinco pães e dois peixes.",
+   "refs": [
+    "Mt 14:17"
+   ],
+   "keywords": [
+    "cinco",
+    "pães",
+    "dois",
+    "peixes"
+   ]
+  },
+  {
+   "id": "F28",
+   "difficulty": "facil",
+   "category": "Personagens do Novo Testamento",
+   "question": "Qual chefe dos publicanos, de pequena estatura, subiu numa árvore para ver Jesus?",
+   "options": [
+    "Zaqueu",
+    "Mateus",
+    "Nicodemos",
+    "Bartimeu"
+   ],
+   "answer": 0,
+   "explanation": "Zaqueu, chefe dos publicanos, era de pequena estatura e subiu a um sicômoro para ver Jesus.",
+   "refs": [
+    "Lc 19:2-4"
+   ],
+   "keywords": [
+    "Zaqueu"
+   ]
+  },
+  {
+   "id": "F29",
+   "difficulty": "facil",
+   "category": "Personagens do Novo Testamento",
+   "question": "Qual discípulo disse que só creria na ressurreição se visse o sinal dos cravos?",
+   "options": [
+    "Tomé",
+    "Pedro",
+    "Filipe",
+    "André"
+   ],
+   "answer": 0,
+   "explanation": "Tomé não estava com os discípulos quando Jesus apareceu; oito dias depois, Jesus lhe mostrou as mãos e o lado.",
+   "refs": [
+    "Jo 20:24-28"
+   ],
+   "keywords": [
+    "Tomé"
+   ]
+  },
+  {
+   "id": "F30",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Qual governador lavou as mãos diante da multidão e entregou Jesus para ser crucificado?",
+   "options": [
+    "Herodes",
+    "Pilatos",
+    "Caifás",
+    "Félix"
+   ],
+   "answer": 1,
+   "explanation": "Pilatos lavou as mãos diante da multidão e entregou Jesus para ser crucificado.",
+   "refs": [
+    "Mt 27:24-26"
+   ],
+   "keywords": [
+    "Pilatos"
+   ]
+  },
+  {
+   "id": "F31",
+   "difficulty": "facil",
+   "category": "Igreja primitiva",
+   "question": "Qual perseguidor da igreja se converteu no caminho de Damasco?",
+   "options": [
+    "Saulo",
+    "Barnabé",
+    "Silas",
+    "Timóteo"
+   ],
+   "answer": 0,
+   "explanation": "Perto de Damasco, uma luz do céu cercou Saulo, e ele ouviu: Saulo, Saulo, por que me persegues?",
+   "refs": [
+    "At 9:3-4"
+   ],
+   "keywords": [
+    "Saulo",
+    "Damasco"
+   ]
+  },
+  {
+   "id": "F32",
+   "difficulty": "facil",
+   "category": "Igreja primitiva",
+   "question": "Quem foi apedrejado enquanto invocava o Senhor Jesus, conforme Atos 7?",
+   "options": [
+    "Estêvão",
+    "Tiago",
+    "Filipe",
+    "Ananias"
+   ],
+   "answer": 0,
+   "explanation": "Apedrejaram a Estêvão, que, em invocação, dizia: Senhor Jesus, recebe o meu espírito.",
+   "refs": [
+    "At 7:59"
+   ],
+   "keywords": [
+    "Estêvão"
+   ]
+  },
+  {
+   "id": "F33",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual moabita disse à sogra: o teu povo é o meu povo, o teu Deus é o meu Deus?",
+   "options": [
+    "Rute",
+    "Orfa",
+    "Noemi",
+    "Ester"
+   ],
+   "answer": 0,
+   "explanation": "Rute decidiu acompanhar Noemi e declarou que o povo e o Deus de Noemi seriam também os seus.",
+   "refs": [
+    "Rt 1:16"
+   ],
+   "keywords": [
+    "Rute"
+   ]
+  },
+  {
+   "id": "F34",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Que animal enganou Eva no jardim do Éden?",
+   "options": [
+    "A serpente",
+    "Um leão",
+    "Um corvo",
+    "Uma pomba"
+   ],
+   "answer": 0,
+   "explanation": "A serpente, mais astuta que todas as alimárias do campo, falou com a mulher e a enganou.",
+   "refs": [
+    "Gn 3:1-4"
+   ],
+   "keywords": [
+    "serpente"
+   ]
+  },
+  {
+   "id": "F35",
+   "difficulty": "facil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Que menino foi colocado num cesto entre os juncos e depois adotado pela filha de Faraó?",
+   "options": [
+    "Moisés",
+    "Samuel",
+    "José",
+    "Isaque"
+   ],
+   "answer": 0,
+   "explanation": "A mãe pôs o menino num cesto de juncos à beira do rio; a filha de Faraó o adotou e o chamou Moisés.",
+   "refs": [
+    "Êx 2:3-10"
+   ],
+   "keywords": [
+    "Moisés",
+    "Faraó"
+   ]
+  },
+  {
+   "id": "F36",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Que sinal Deus pôs na nuvem como aliança de que não haveria outro dilúvio?",
+   "options": [
+    "O arco",
+    "Uma estrela",
+    "Uma coluna de fogo",
+    "Uma nuvem escura"
+   ],
+   "answer": 0,
+   "explanation": "Deus pôs o seu arco na nuvem como sinal do concerto entre Ele e a terra.",
+   "refs": [
+    "Gn 9:13"
+   ],
+   "keywords": [
+    "arco",
+    "nuvem"
+   ]
+  },
+  {
+   "id": "F37",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Qual era a profissão de Pedro e André quando Jesus os chamou?",
+   "options": [
+    "Pescadores",
+    "Carpinteiros",
+    "Cobradores de impostos",
+    "Pastores"
+   ],
+   "answer": 0,
+   "explanation": "Jesus viu Simão, chamado Pedro, e André lançando as redes ao mar, porque eram pescadores.",
+   "refs": [
+    "Mt 4:18"
+   ],
+   "keywords": [
+    "Pedro",
+    "André",
+    "pescadores"
+   ]
+  },
+  {
+   "id": "F38",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Segundo Jesus, qual é o primeiro e grande mandamento?",
+   "options": [
+    "Amar o Senhor teu Deus de todo o coração",
+    "Guardar o sábado",
+    "Não matar",
+    "Honrar pai e mãe"
+   ],
+   "answer": 0,
+   "explanation": "Jesus respondeu: Amarás o Senhor, teu Deus, de todo o teu coração, de toda a tua alma e de todo o teu pensamento.",
+   "refs": [
+    "Mt 22:37-38"
+   ],
+   "keywords": [
+    "amarás",
+    "coração",
+    "mandamento"
+   ]
+  },
+  {
+   "id": "F39",
+   "difficulty": "facil",
+   "category": "Vida de Jesus",
+   "question": "Qual rei mandou matar os meninos de Belém de dois anos para baixo?",
+   "options": [
+    "Herodes",
+    "Pilatos",
+    "Davi",
+    "Faraó"
+   ],
+   "answer": 0,
+   "explanation": "Herodes, irritado por ter sido iludido pelos magos, mandou matar os meninos de Belém e seus arredores.",
+   "refs": [
+    "Mt 2:16"
+   ],
+   "keywords": [
+    "Herodes",
+    "Belém"
+   ]
+  },
+  {
+   "id": "F40",
+   "difficulty": "facil",
+   "category": "Criação e patriarcas",
+   "question": "Segundo o primeiro versículo da Bíblia, o que Deus criou no princípio?",
+   "options": [
+    "Os céus e a terra",
+    "O homem",
+    "A luz",
+    "Os animais"
+   ],
+   "answer": 0,
+   "explanation": "O primeiro versículo de Gênesis afirma que no princípio Deus criou os céus e a terra.",
+   "refs": [
+    "Gn 1:1"
+   ],
+   "keywords": [
+    "princípio",
+    "céus",
+    "terra"
+   ]
+  },
+  {
+   "id": "M01",
+   "difficulty": "medio",
+   "category": "Igreja primitiva",
+   "question": "Quem foi escolhido para substituir Judas Iscariotes entre os apóstolos?",
+   "options": [
+    "Barnabé",
+    "Silas",
+    "Matias",
+    "Timóteo"
+   ],
+   "answer": 2,
+   "explanation": "Os discípulos apresentaram José (Barsabás) e Matias; lançaram sortes e a sorte caiu sobre Matias.",
+   "refs": [
+    "At 1:23-26"
+   ],
+   "keywords": [
+    "Matias"
+   ]
+  },
+  {
+   "id": "M02",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Que animal falou com o profeta Balaão?",
+   "options": [
+    "Uma jumenta",
+    "Uma serpente",
+    "Um corvo",
+    "Um camelo"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor abriu a boca da jumenta, que falou a Balaão.",
+   "refs": [
+    "Nm 22:28"
+   ],
+   "keywords": [
+    "jumenta",
+    "Balaão"
+   ]
+  },
+  {
+   "id": "M03",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem era o irmão de Moisés que falaria por ele ao povo?",
+   "options": [
+    "Arão",
+    "Josué",
+    "Calebe",
+    "Hur"
+   ],
+   "answer": 0,
+   "explanation": "Deus disse a Moisés que Arão, o levita, seu irmão, falaria bem.",
+   "refs": [
+    "Êx 4:14"
+   ],
+   "keywords": [
+    "Arão",
+    "irmão"
+   ]
+  },
+  {
+   "id": "M04",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Quem era o pai de João Batista?",
+   "options": [
+    "Zacarias",
+    "Simeão",
+    "José",
+    "Eli"
+   ],
+   "answer": 0,
+   "explanation": "O anjo disse a Zacarias que sua mulher Isabel lhe daria um filho, que se chamaria João.",
+   "refs": [
+    "Lc 1:13"
+   ],
+   "keywords": [
+    "Zacarias",
+    "João"
+   ]
+  },
+  {
+   "id": "M05",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Quem era a mãe de João Batista?",
+   "options": [
+    "Isabel",
+    "Ana",
+    "Maria",
+    "Marta"
+   ],
+   "answer": 0,
+   "explanation": "O anjo anunciou que Isabel, mulher de Zacarias, daria à luz um filho chamado João.",
+   "refs": [
+    "Lc 1:13"
+   ],
+   "keywords": [
+    "Isabel"
+   ]
+  },
+  {
+   "id": "M06",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Qual profeta ungiu Davi no meio de seus irmãos?",
+   "options": [
+    "Natã",
+    "Samuel",
+    "Elias",
+    "Gade"
+   ],
+   "answer": 1,
+   "explanation": "Samuel tomou o vaso do azeite e ungiu Davi no meio de seus irmãos.",
+   "refs": [
+    "1Sm 16:13"
+   ],
+   "keywords": [
+    "Samuel",
+    "Davi"
+   ]
+  },
+  {
+   "id": "M07",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Qual era o nome do pai de Davi?",
+   "options": [
+    "Jessé",
+    "Obede",
+    "Boaz",
+    "Saul"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor enviou Samuel a Jessé, o belemita, dentre cujos filhos escolhera um rei.",
+   "refs": [
+    "1Sm 16:1"
+   ],
+   "keywords": [
+    "Jessé"
+   ]
+  },
+  {
+   "id": "M08",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Qual filho do rei Saul fez forte amizade com Davi?",
+   "options": [
+    "Jônatas",
+    "Absalão",
+    "Joabe",
+    "Abner"
+   ],
+   "answer": 0,
+   "explanation": "A alma de Jônatas se ligou com a alma de Davi, e Jônatas o amou como à sua própria alma.",
+   "refs": [
+    "1Sm 18:1"
+   ],
+   "keywords": [
+    "Jônatas",
+    "Davi"
+   ]
+  },
+  {
+   "id": "M09",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual era o nome da sogra de Rute?",
+   "options": [
+    "Noemi",
+    "Orfa",
+    "Ana",
+    "Débora"
+   ],
+   "answer": 0,
+   "explanation": "Noemi, viúva de Elimeleque, tinha dois filhos que casaram com mulheres moabitas: Orfa e Rute.",
+   "refs": [
+    "Rt 1:3-4"
+   ],
+   "keywords": [
+    "Noemi",
+    "Rute"
+   ]
+  },
+  {
+   "id": "M10",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Com quem Rute se casou em Belém?",
+   "options": [
+    "Boaz",
+    "Obede",
+    "Elimeleque",
+    "Quiliom"
+   ],
+   "answer": 0,
+   "explanation": "Boaz tomou a Rute, e ela lhe foi por mulher.",
+   "refs": [
+    "Rt 4:13"
+   ],
+   "keywords": [
+    "Boaz",
+    "Rute"
+   ]
+  },
+  {
+   "id": "M11",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Quais eram os três jovens lançados na fornalha de fogo ardente na Babilônia?",
+   "options": [
+    "Sadraque, Mesaque e Abede-Nego",
+    "Pedro, Tiago e João",
+    "Sem, Cam e Jafé",
+    "Moisés, Arão e Hur"
+   ],
+   "answer": 0,
+   "explanation": "Por não adorarem a estátua de ouro, Sadraque, Mesaque e Abede-Nego foram lançados na fornalha.",
+   "refs": [
+    "Dn 3:19-23"
+   ],
+   "keywords": [
+    "Sadraque",
+    "Mesaque",
+    "fornalha"
+   ]
+  },
+  {
+   "id": "M12",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Durante o banquete de qual rei apareceram dedos de mão escrevendo na parede?",
+   "options": [
+    "Belsazar",
+    "Nabucodonosor",
+    "Dario",
+    "Ciro"
+   ],
+   "answer": 0,
+   "explanation": "Durante o banquete do rei Belsazar, apareceram dedos de mão de homem que escreviam na parede do palácio.",
+   "refs": [
+    "Dn 5:1-5"
+   ],
+   "keywords": [
+    "Belsazar",
+    "parede"
+   ]
+  },
+  {
+   "id": "M13",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual rainha intercedeu pela vida do seu povo diante do rei Assuero?",
+   "options": [
+    "Ester",
+    "Vasti",
+    "Rute",
+    "Mical"
+   ],
+   "answer": 0,
+   "explanation": "A rainha Ester pediu ao rei que lhe fosse dada a sua vida e a do seu povo.",
+   "refs": [
+    "Et 7:3"
+   ],
+   "keywords": [
+    "Ester",
+    "rainha"
+   ]
+  },
+  {
+   "id": "M14",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual judeu de Susã criou Ester, filha do seu tio, como se fosse sua filha?",
+   "options": [
+    "Mardoqueu",
+    "Hamã",
+    "Neemias",
+    "Esdras"
+   ],
+   "answer": 0,
+   "explanation": "Mardoqueu criou Hadassa, que é Ester, filha do seu tio, tomando-a por filha.",
+   "refs": [
+    "Et 2:5-7"
+   ],
+   "keywords": [
+    "Mardoqueu",
+    "Ester"
+   ]
+  },
+  {
+   "id": "M15",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem procurou destruir todos os judeus no reino de Assuero?",
+   "options": [
+    "Hamã",
+    "Mardoqueu",
+    "Assuero",
+    "Bigtã"
+   ],
+   "answer": 0,
+   "explanation": "Hamã, ao saber que Mardoqueu era judeu, procurou destruir todos os judeus do reino.",
+   "refs": [
+    "Et 3:6"
+   ],
+   "keywords": [
+    "Hamã",
+    "judeus"
+   ]
+  },
+  {
+   "id": "M16",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Quem liderou a reconstrução dos muros de Jerusalém após o exílio?",
+   "options": [
+    "Neemias",
+    "Esdras",
+    "Zorobabel",
+    "Ageu"
+   ],
+   "answer": 0,
+   "explanation": "Neemias, ao saber que o muro de Jerusalém estava fendido, chamou o povo para reedificá-lo.",
+   "refs": [
+    "Ne 1:1-3",
+    "Ne 2:17"
+   ],
+   "keywords": [
+    "Neemias",
+    "muro"
+   ]
+  },
+  {
+   "id": "M17",
+   "difficulty": "medio",
+   "category": "Números na Bíblia",
+   "question": "Por quantos anos os filhos de Israel andaram pelo deserto, segundo a sentença do Senhor?",
+   "options": [
+    "7",
+    "12",
+    "40",
+    "70"
+   ],
+   "answer": 2,
+   "explanation": "O Senhor declarou que os filhos de Israel andariam pastoreando no deserto quarenta anos.",
+   "refs": [
+    "Nm 14:33"
+   ],
+   "keywords": [
+    "quarenta",
+    "anos",
+    "deserto"
+   ]
+  },
+  {
+   "id": "M18",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Como se chamava o sogro de Moisés, sacerdote de Midiã?",
+   "options": [
+    "Jetro",
+    "Labão",
+    "Terá",
+    "Arão"
+   ],
+   "answer": 0,
+   "explanation": "Moisés apascentava o rebanho de Jetro, seu sogro, sacerdote em Midiã.",
+   "refs": [
+    "Êx 3:1"
+   ],
+   "keywords": [
+    "Jetro",
+    "sogro"
+   ]
+  },
+  {
+   "id": "M19",
+   "difficulty": "medio",
+   "category": "Criação e patriarcas",
+   "question": "Quem foi a mulher de Isaque?",
+   "options": [
+    "Rebeca",
+    "Raquel",
+    "Lia",
+    "Sara"
+   ],
+   "answer": 0,
+   "explanation": "Isaque tomou a Rebeca, e foi-lhe por mulher, e amou-a.",
+   "refs": [
+    "Gn 24:67"
+   ],
+   "keywords": [
+    "Rebeca",
+    "Isaque"
+   ]
+  },
+  {
+   "id": "M20",
+   "difficulty": "medio",
+   "category": "Criação e patriarcas",
+   "question": "Qual irmão vendeu o seu direito de primogenitura por um guisado?",
+   "options": [
+    "Esaú",
+    "Jacó",
+    "Rúben",
+    "Ismael"
+   ],
+   "answer": 0,
+   "explanation": "Esaú vendeu a sua primogenitura a Jacó por pão e guisado de lentilhas, e assim a desprezou.",
+   "refs": [
+    "Gn 25:33-34"
+   ],
+   "keywords": [
+    "Esaú",
+    "primogenitura"
+   ]
+  },
+  {
+   "id": "M21",
+   "difficulty": "medio",
+   "category": "Números na Bíblia",
+   "question": "Quantos anos Jacó serviu a Labão por Raquel, antes do primeiro casamento?",
+   "options": [
+    "3",
+    "7",
+    "12",
+    "20"
+   ],
+   "answer": 1,
+   "explanation": "Jacó serviu sete anos por Raquel, e foram aos seus olhos como poucos dias, pelo muito que a amava.",
+   "refs": [
+    "Gn 29:20"
+   ],
+   "keywords": [
+    "sete",
+    "Raquel"
+   ]
+  },
+  {
+   "id": "M22",
+   "difficulty": "medio",
+   "category": "Criação e patriarcas",
+   "question": "Que novo nome Jacó recebeu após lutar até o romper da alva?",
+   "options": [
+    "Israel",
+    "Judá",
+    "Abraão",
+    "Edom"
+   ],
+   "answer": 0,
+   "explanation": "Foi-lhe dito que não se chamaria mais Jacó, mas Israel.",
+   "refs": [
+    "Gn 32:28"
+   ],
+   "keywords": [
+    "Israel",
+    "Jacó"
+   ]
+  },
+  {
+   "id": "M23",
+   "difficulty": "medio",
+   "category": "Criação e patriarcas",
+   "question": "Quem interpretou os sonhos de Faraó sobre as vacas e as espigas?",
+   "options": [
+    "José",
+    "Daniel",
+    "Moisés",
+    "Arão"
+   ],
+   "answer": 0,
+   "explanation": "José explicou a Faraó que os dois sonhos eram um só e mostravam o que Deus havia de fazer.",
+   "refs": [
+    "Gn 41:25"
+   ],
+   "keywords": [
+    "José",
+    "Faraó"
+   ]
+  },
+  {
+   "id": "M24",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Qual foi a primeira praga enviada sobre o Egito?",
+   "options": [
+    "As águas tornaram-se em sangue",
+    "Rãs",
+    "Piolhos",
+    "Trevas"
+   ],
+   "answer": 0,
+   "explanation": "Arão feriu as águas do rio, e todas as águas se tornaram em sangue.",
+   "refs": [
+    "Êx 7:20"
+   ],
+   "keywords": [
+    "sangue",
+    "águas"
+   ]
+  },
+  {
+   "id": "M25",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual juiz derrotou os midianitas com apenas trezentos homens?",
+   "options": [
+    "Gideão",
+    "Sansão",
+    "Jefté",
+    "Baraque"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor disse a Gideão que com os trezentos homens livraria Israel.",
+   "refs": [
+    "Jz 7:7"
+   ],
+   "keywords": [
+    "Gideão",
+    "trezentos"
+   ]
+  },
+  {
+   "id": "M26",
+   "difficulty": "medio",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual profetisa julgava Israel assentada debaixo de uma palmeira?",
+   "options": [
+    "Débora",
+    "Jael",
+    "Ana",
+    "Miriã"
+   ],
+   "answer": 0,
+   "explanation": "Débora, profetisa, julgava Israel e assentava-se debaixo da palmeira de Débora.",
+   "refs": [
+    "Jz 4:4-5"
+   ],
+   "keywords": [
+    "Débora",
+    "palmeira"
+   ]
+  },
+  {
+   "id": "M27",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Quem pediu a Elias porção dobrada do seu espírito?",
+   "options": [
+    "Eliseu",
+    "Geazi",
+    "Samuel",
+    "Jonas"
+   ],
+   "answer": 0,
+   "explanation": "Eliseu pediu que houvesse sobre ele porção dobrada do espírito de Elias.",
+   "refs": [
+    "2Rs 2:9"
+   ],
+   "keywords": [
+    "Eliseu",
+    "dobrada"
+   ]
+  },
+  {
+   "id": "M28",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Qual comandante sírio foi curado da lepra ao mergulhar sete vezes no Jordão?",
+   "options": [
+    "Naamã",
+    "Hazael",
+    "Ben-Hadade",
+    "Geazi"
+   ],
+   "answer": 0,
+   "explanation": "Naamã mergulhou no Jordão sete vezes, conforme a palavra do homem de Deus, e a sua carne ficou limpa.",
+   "refs": [
+    "2Rs 5:9-14"
+   ],
+   "keywords": [
+    "Naamã",
+    "Jordão",
+    "sete"
+   ]
+  },
+  {
+   "id": "M29",
+   "difficulty": "medio",
+   "category": "Reis e profetas",
+   "question": "Qual rainha, mulher de Acabe, ameaçou de morte o profeta Elias?",
+   "options": [
+    "Jezabel",
+    "Atalia",
+    "Vasti",
+    "Mical"
+   ],
+   "answer": 0,
+   "explanation": "Jezabel mandou dizer a Elias que lhe tiraria a vida, como ele fizera aos profetas de Baal.",
+   "refs": [
+    "1Rs 19:1-2"
+   ],
+   "keywords": [
+    "Jezabel",
+    "Elias"
+   ]
+  },
+  {
+   "id": "M30",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Qual príncipe dos judeus, fariseu, foi ter com Jesus de noite?",
+   "options": [
+    "Nicodemos",
+    "Gamaliel",
+    "José de Arimatéia",
+    "Zaqueu"
+   ],
+   "answer": 0,
+   "explanation": "Nicodemos, príncipe dos judeus, foi ter com Jesus de noite.",
+   "refs": [
+    "Jo 3:1-2"
+   ],
+   "keywords": [
+    "Nicodemos",
+    "noite"
+   ]
+  },
+  {
+   "id": "M31",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Quem eram as irmãs de Lázaro, de Betânia?",
+   "options": [
+    "Marta e Maria",
+    "Ana e Isabel",
+    "Lia e Raquel",
+    "Priscila e Lídia"
+   ],
+   "answer": 0,
+   "explanation": "Lázaro era de Betânia, aldeia de Maria e de sua irmã Marta.",
+   "refs": [
+    "Jo 11:1"
+   ],
+   "keywords": [
+    "Marta",
+    "Maria",
+    "Lázaro"
+   ]
+  },
+  {
+   "id": "M32",
+   "difficulty": "medio",
+   "category": "Vida de Jesus",
+   "question": "Quem foi obrigado a levar a cruz de Jesus?",
+   "options": [
+    "Simão, um cireneu",
+    "José de Arimatéia",
+    "Barrabás",
+    "Pedro"
+   ],
+   "answer": 0,
+   "explanation": "Encontraram um homem cireneu, chamado Simão, a quem constrangeram a levar a cruz.",
+   "refs": [
+    "Mt 27:32"
+   ],
+   "keywords": [
+    "Simão",
+    "cruz"
+   ]
+  },
+  {
+   "id": "M33",
+   "difficulty": "medio",
+   "category": "Igreja primitiva",
+   "question": "Qual casal mentiu sobre o preço de uma propriedade vendida?",
+   "options": [
+    "Ananias e Safira",
+    "Áquila e Priscila",
+    "Zacarias e Isabel",
+    "Andrônico e Júnia"
+   ],
+   "answer": 0,
+   "explanation": "Ananias, com Safira, sua mulher, vendeu uma propriedade e reteve parte do preço.",
+   "refs": [
+    "At 5:1-2"
+   ],
+   "keywords": [
+    "Ananias",
+    "Safira"
+   ]
+  },
+  {
+   "id": "M34",
+   "difficulty": "medio",
+   "category": "Igreja primitiva",
+   "question": "Qual vendedora de púrpura, da cidade de Tiatira, teve o coração aberto pelo Senhor em Filipos?",
+   "options": [
+    "Lídia",
+    "Dorcas",
+    "Febe",
+    "Priscila"
+   ],
+   "answer": 0,
+   "explanation": "Lídia, vendedora de púrpura, ouvia, e o Senhor lhe abriu o coração para atender ao que Paulo dizia.",
+   "refs": [
+    "At 16:14"
+   ],
+   "keywords": [
+    "Lídia",
+    "púrpura"
+   ]
+  },
+  {
+   "id": "M35",
+   "difficulty": "medio",
+   "category": "Igreja primitiva",
+   "question": "Qual centurião de Cesaréia mandou chamar Pedro?",
+   "options": [
+    "Cornélio",
+    "Júlio",
+    "Cláudio",
+    "Lísias"
+   ],
+   "answer": 0,
+   "explanation": "Cornélio, centurião da coorte chamada italiana, morava em Cesaréia.",
+   "refs": [
+    "At 10:1"
+   ],
+   "keywords": [
+    "Cornélio",
+    "centurião"
+   ]
+  },
+  {
+   "id": "M36",
+   "difficulty": "medio",
+   "category": "Igreja primitiva",
+   "question": "Quem estava com Paulo orando e cantando hinos na prisão de Filipos à meia-noite?",
+   "options": [
+    "Silas",
+    "Barnabé",
+    "Timóteo",
+    "Lucas"
+   ],
+   "answer": 0,
+   "explanation": "Perto da meia-noite, Paulo e Silas oravam e cantavam hinos a Deus.",
+   "refs": [
+    "At 16:25"
+   ],
+   "keywords": [
+    "Paulo",
+    "Silas"
+   ]
+  },
+  {
+   "id": "M37",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Qual jovem caiu de uma janela enquanto Paulo pregava longamente em Trôade?",
+   "options": [
+    "Êutico",
+    "Trófimo",
+    "Tíquico",
+    "Erasto"
+   ],
+   "answer": 0,
+   "explanation": "Êutico, tomado de sono profundo, caiu do terceiro andar e foi levantado morto; Paulo o abraçou e ele viveu.",
+   "refs": [
+    "At 20:9-12"
+   ],
+   "keywords": [
+    "Êutico"
+   ]
+  },
+  {
+   "id": "M38",
+   "difficulty": "medio",
+   "category": "Milagres e sinais",
+   "question": "Qual discípula de Jope, cheia de boas obras, foi ressuscitada quando Pedro orou?",
+   "options": [
+    "Tabita (Dorcas)",
+    "Lídia",
+    "Rode",
+    "Febe"
+   ],
+   "answer": 0,
+   "explanation": "Tabita, que traduzido é Dorcas, adoeceu e morreu; Pedro orou e disse: Tabita, levanta-te.",
+   "refs": [
+    "At 9:36-40"
+   ],
+   "keywords": [
+    "Tabita",
+    "Dorcas"
+   ]
+  },
+  {
+   "id": "M39",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Em que ilha estava João quando recebeu a revelação do Apocalipse?",
+   "options": [
+    "Patmos",
+    "Malta",
+    "Chipre",
+    "Creta"
+   ],
+   "answer": 0,
+   "explanation": "João estava na ilha chamada Patmos por causa da palavra de Deus e do testemunho de Jesus Cristo.",
+   "refs": [
+    "Ap 1:9"
+   ],
+   "keywords": [
+    "Patmos"
+   ]
+  },
+  {
+   "id": "M40",
+   "difficulty": "medio",
+   "category": "Personagens do Novo Testamento",
+   "question": "Por qual pessoa Paulo intercede na carta a Filemom?",
+   "options": [
+    "Onésimo",
+    "Tíquico",
+    "Epafras",
+    "Demas"
+   ],
+   "answer": 0,
+   "explanation": "Paulo roga a Filemom por seu filho Onésimo, que gerou nas suas prisões.",
+   "refs": [
+    "Fm 1:10"
+   ],
+   "keywords": [
+    "Onésimo"
+   ]
+  },
+  {
+   "id": "D01",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei de Judá começou a reinar aos oito anos e promoveu uma reforma religiosa?",
+   "options": [
+    "Ezequias",
+    "Josias",
+    "Manassés",
+    "Asa"
+   ],
+   "answer": 1,
+   "explanation": "Josias tinha oito anos quando começou a reinar e fez o que era reto aos olhos do Senhor; depois renovou o concerto e removeu a idolatria.",
+   "refs": [
+    "2Rs 22:1-2",
+    "2Rs 23:1-25"
+   ],
+   "keywords": [
+    "Josias",
+    "oito"
+   ]
+  },
+  {
+   "id": "D02",
+   "difficulty": "dificil",
+   "category": "Números na Bíblia",
+   "question": "Segundo Gênesis, quem viveu novecentos e sessenta e nove anos?",
+   "options": [
+    "Metusalém",
+    "Adão",
+    "Noé",
+    "Enoque"
+   ],
+   "answer": 0,
+   "explanation": "Todos os dias de Metusalém foram novecentos e sessenta e nove anos.",
+   "refs": [
+    "Gn 5:27"
+   ],
+   "keywords": [
+    "Metusalém",
+    "novecentos"
+   ]
+  },
+  {
+   "id": "D03",
+   "difficulty": "dificil",
+   "category": "Criação e patriarcas",
+   "question": "Quem andou com Deus e não se viu mais, porquanto Deus para si o tomou?",
+   "options": [
+    "Enoque",
+    "Elias",
+    "Lameque",
+    "Sete"
+   ],
+   "answer": 0,
+   "explanation": "Enoque andou com Deus; e não se viu mais, porquanto Deus para si o tomou.",
+   "refs": [
+    "Gn 5:24"
+   ],
+   "keywords": [
+    "Enoque",
+    "Deus"
+   ]
+  },
+  {
+   "id": "D04",
+   "difficulty": "dificil",
+   "category": "Criação e patriarcas",
+   "question": "Qual rei de Salém e sacerdote do Deus Altíssimo trouxe pão e vinho a Abrão?",
+   "options": [
+    "Melquisedeque",
+    "Abimeleque",
+    "Quedorlaomer",
+    "Bera"
+   ],
+   "answer": 0,
+   "explanation": "Melquisedeque, rei de Salém, trouxe pão e vinho; era sacerdote do Deus Altíssimo.",
+   "refs": [
+    "Gn 14:18"
+   ],
+   "keywords": [
+    "Melquisedeque",
+    "Salém"
+   ]
+  },
+  {
+   "id": "D05",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "A qual rei Deus acrescentou quinze anos de vida?",
+   "options": [
+    "Ezequias",
+    "Josias",
+    "Uzias",
+    "Jotão"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor ouviu a oração de Ezequias e acrescentou aos seus dias quinze anos.",
+   "refs": [
+    "2Rs 20:5-6"
+   ],
+   "keywords": [
+    "Ezequias",
+    "quinze"
+   ]
+  },
+  {
+   "id": "D06",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei de Judá começou a reinar aos doze anos e reinou cinquenta e cinco anos?",
+   "options": [
+    "Manassés",
+    "Davi",
+    "Uzias",
+    "Josafá"
+   ],
+   "answer": 0,
+   "explanation": "Manassés tinha doze anos quando começou a reinar e reinou cinquenta e cinco anos em Jerusalém.",
+   "refs": [
+    "2Rs 21:1"
+   ],
+   "keywords": [
+    "Manassés",
+    "doze"
+   ]
+  },
+  {
+   "id": "D07",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual profeta confrontou Davi com a parábola da cordeirinha do pobre?",
+   "options": [
+    "Natã",
+    "Gade",
+    "Samuel",
+    "Aías"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor enviou Natã a Davi, que lhe contou a história do rico e do pobre.",
+   "refs": [
+    "2Sm 12:1-7"
+   ],
+   "keywords": [
+    "Natã",
+    "Davi"
+   ]
+  },
+  {
+   "id": "D08",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual filho de Davi ficou preso pela cabeça nos ramos de um carvalho?",
+   "options": [
+    "Absalão",
+    "Amnom",
+    "Adonias",
+    "Salomão"
+   ],
+   "answer": 0,
+   "explanation": "Absalão, montado num mulo, passou debaixo de um carvalho e ficou preso pela cabeça.",
+   "refs": [
+    "2Sm 18:9"
+   ],
+   "keywords": [
+    "Absalão",
+    "carvalho"
+   ]
+  },
+  {
+   "id": "D09",
+   "difficulty": "dificil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Diante de qual sacerdote o jovem Samuel servia ao Senhor?",
+   "options": [
+    "Eli",
+    "Arão",
+    "Zadoque",
+    "Abiatar"
+   ],
+   "answer": 0,
+   "explanation": "O jovem Samuel servia ao Senhor perante Eli.",
+   "refs": [
+    "1Sm 3:1"
+   ],
+   "keywords": [
+    "Samuel",
+    "Eli"
+   ]
+  },
+  {
+   "id": "D10",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual filho de Zeruia era o chefe do exército de Davi?",
+   "options": [
+    "Joabe",
+    "Abner",
+    "Benaia",
+    "Amasa"
+   ],
+   "answer": 0,
+   "explanation": "Joabe, filho de Zeruia, estava sobre o exército de Davi.",
+   "refs": [
+    "2Sm 8:16"
+   ],
+   "keywords": [
+    "Joabe",
+    "Zeruia"
+   ]
+  },
+  {
+   "id": "D11",
+   "difficulty": "dificil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem morreu ao estender a mão à arca de Deus quando os bois tropeçaram?",
+   "options": [
+    "Uzá",
+    "Aiô",
+    "Obede-Edom",
+    "Abinadabe"
+   ],
+   "answer": 0,
+   "explanation": "Uzá estendeu a mão à arca de Deus e lançou mão dela; a ira do Senhor se acendeu contra ele, e morreu ali.",
+   "refs": [
+    "2Sm 6:6-7"
+   ],
+   "keywords": [
+    "Uzá",
+    "arca"
+   ]
+  },
+  {
+   "id": "D12",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual era o nome da mulher de Urias, o heteu?",
+   "options": [
+    "Bate-Seba",
+    "Abigail",
+    "Mical",
+    "Tamar"
+   ],
+   "answer": 0,
+   "explanation": "Disseram a Davi que ela era Bate-Seba, filha de Eliã, mulher de Urias, o heteu.",
+   "refs": [
+    "2Sm 11:3"
+   ],
+   "keywords": [
+    "Bate",
+    "Seba",
+    "Urias"
+   ]
+  },
+  {
+   "id": "D13",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei da Pérsia proclamou que os judeus podiam subir e edificar a casa do Senhor em Jerusalém?",
+   "options": [
+    "Ciro",
+    "Dario",
+    "Artaxerxes",
+    "Nabucodonosor"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor despertou o espírito de Ciro, rei da Pérsia, que fez proclamar a edificação da casa do Senhor.",
+   "refs": [
+    "Ed 1:1-3"
+   ],
+   "keywords": [
+    "Ciro",
+    "Pérsia"
+   ]
+  },
+  {
+   "id": "D14",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual escriba trouxe e leu o livro da Lei diante do povo reunido em Jerusalém?",
+   "options": [
+    "Esdras",
+    "Neemias",
+    "Zorobabel",
+    "Ageu"
+   ],
+   "answer": 0,
+   "explanation": "O povo pediu a Esdras, o escriba, que trouxesse o livro da Lei de Moisés, e ele o leu diante da congregação.",
+   "refs": [
+    "Ne 8:1-3"
+   ],
+   "keywords": [
+    "Esdras",
+    "lei"
+   ]
+  },
+  {
+   "id": "D15",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual profeta recebeu a ordem de tomar por mulher a Gômer?",
+   "options": [
+    "Oséias",
+    "Amós",
+    "Joel",
+    "Miquéias"
+   ],
+   "answer": 0,
+   "explanation": "O Senhor falou a Oséias, e ele tomou a Gômer, filha de Diblaim.",
+   "refs": [
+    "Os 1:2-3"
+   ],
+   "keywords": [
+    "Oséias",
+    "Gômer"
+   ]
+  },
+  {
+   "id": "D16",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Em que livro profético aparece a visão do vale de ossos secos?",
+   "options": [
+    "Ezequiel",
+    "Isaías",
+    "Jeremias",
+    "Daniel"
+   ],
+   "answer": 0,
+   "explanation": "No capítulo 37 de Ezequiel, o profeta é levado a um vale cheio de ossos e manda profetizar aos ossos secos.",
+   "refs": [
+    "Ez 37:1-4"
+   ],
+   "keywords": [
+    "ossos",
+    "secos"
+   ]
+  },
+  {
+   "id": "D17",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual profeta foi lançado numa cisterna de lodo?",
+   "options": [
+    "Jeremias",
+    "Daniel",
+    "Isaías",
+    "Amós"
+   ],
+   "answer": 0,
+   "explanation": "Tomaram Jeremias e o lançaram na cisterna de Malquias; não havia água, senão lama.",
+   "refs": [
+    "Jr 38:6"
+   ],
+   "keywords": [
+    "Jeremias",
+    "cisterna"
+   ]
+  },
+  {
+   "id": "D18",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei sonhou com uma grande estátua feita de diferentes materiais?",
+   "options": [
+    "Nabucodonosor",
+    "Belsazar",
+    "Dario",
+    "Ciro"
+   ],
+   "answer": 0,
+   "explanation": "Nabucodonosor teve sonhos; Daniel descreveu a grande estátua com cabeça de ouro, peito de prata e ventre de cobre.",
+   "refs": [
+    "Dn 2:1",
+    "Dn 2:31-33"
+   ],
+   "keywords": [
+    "Nabucodonosor",
+    "estátua"
+   ]
+  },
+  {
+   "id": "D19",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Que nome o chefe dos eunucos deu a Daniel na Babilônia?",
+   "options": [
+    "Beltessazar",
+    "Sadraque",
+    "Mesaque",
+    "Abede-Nego"
+   ],
+   "answer": 0,
+   "explanation": "O chefe dos eunucos pôs a Daniel o nome de Beltessazar.",
+   "refs": [
+    "Dn 1:7"
+   ],
+   "keywords": [
+    "Beltessazar",
+    "Daniel"
+   ]
+  },
+  {
+   "id": "D20",
+   "difficulty": "dificil",
+   "category": "Personagens do Novo Testamento",
+   "question": "Qual era o nome da mãe de Timóteo, cuja fé Paulo menciona?",
+   "options": [
+    "Eunice",
+    "Lóide",
+    "Lídia",
+    "Febe"
+   ],
+   "answer": 0,
+   "explanation": "Paulo lembra a fé que habitou primeiro na avó de Timóteo, Lóide, e em sua mãe, Eunice.",
+   "refs": [
+    "2Tm 1:5"
+   ],
+   "keywords": [
+    "Eunice",
+    "Lóide"
+   ]
+  },
+  {
+   "id": "D21",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rainha veio provar Salomão com perguntas difíceis?",
+   "options": [
+    "A rainha de Sabá",
+    "A rainha do Egito",
+    "A rainha de Tiro",
+    "A rainha de Moabe"
+   ],
+   "answer": 0,
+   "explanation": "A rainha de Sabá ouviu a fama de Salomão e veio prová-lo com questões difíceis.",
+   "refs": [
+    "1Rs 10:1"
+   ],
+   "keywords": [
+    "Sabá",
+    "Salomão"
+   ]
+  },
+  {
+   "id": "D22",
+   "difficulty": "dificil",
+   "category": "Números na Bíblia",
+   "question": "Além de trezentas concubinas, quantas mulheres princesas teve Salomão?",
+   "options": [
+    "70",
+    "300",
+    "700",
+    "1000"
+   ],
+   "answer": 2,
+   "explanation": "Salomão tinha setecentas mulheres, princesas, e trezentas concubinas.",
+   "refs": [
+    "1Rs 11:3"
+   ],
+   "keywords": [
+    "setecentas",
+    "trezentas"
+   ]
+  },
+  {
+   "id": "D23",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei de Israel fez dois bezerros de ouro para o povo não subir a Jerusalém?",
+   "options": [
+    "Jeroboão",
+    "Roboão",
+    "Acabe",
+    "Onri"
+   ],
+   "answer": 0,
+   "explanation": "Jeroboão temeu que o povo voltasse a Roboão e fez dois bezerros de ouro, pondo um em Betel e outro em Dã.",
+   "refs": [
+    "1Rs 12:26-29"
+   ],
+   "keywords": [
+    "Jeroboão",
+    "bezerros"
+   ]
+  },
+  {
+   "id": "D24",
+   "difficulty": "dificil",
+   "category": "Reis e profetas",
+   "question": "Qual rei respondeu duramente ao povo, rejeitando o conselho dos anciãos, e viu as tribos se separarem?",
+   "options": [
+    "Roboão",
+    "Jeroboão",
+    "Abias",
+    "Asa"
+   ],
+   "answer": 0,
+   "explanation": "Roboão deixou o conselho dos anciãos e falou duramente ao povo; então Israel se rebelou contra a casa de Davi.",
+   "refs": [
+    "1Rs 12:12-16"
+   ],
+   "keywords": [
+    "Roboão",
+    "anciãos"
+   ]
+  },
+  {
+   "id": "D25",
+   "difficulty": "dificil",
+   "category": "Números na Bíblia",
+   "question": "Quantos eram os profetas de Baal no desafio do monte Carmelo?",
+   "options": [
+    "50",
+    "150",
+    "450",
+    "850"
+   ],
+   "answer": 2,
+   "explanation": "Elias disse que só ele ficara profeta do Senhor, e os profetas de Baal eram quatrocentos e cinquenta homens.",
+   "refs": [
+    "1Rs 18:22"
+   ],
+   "keywords": [
+    "quatrocentos",
+    "Baal"
+   ]
+  },
+  {
+   "id": "D26",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Quem ofereceu dinheiro aos apóstolos para receber o poder de impor as mãos?",
+   "options": [
+    "Simão",
+    "Elimas",
+    "Barjesus",
+    "Demétrio"
+   ],
+   "answer": 0,
+   "explanation": "Simão, que exercia artes mágicas em Samaria, ofereceu dinheiro aos apóstolos.",
+   "refs": [
+    "At 8:9",
+    "At 8:18-19"
+   ],
+   "keywords": [
+    "Simão",
+    "dinheiro"
+   ]
+  },
+  {
+   "id": "D27",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Quem batizou o eunuco etíope no caminho de Gaza?",
+   "options": [
+    "Filipe",
+    "Pedro",
+    "Paulo",
+    "Barnabé"
+   ],
+   "answer": 0,
+   "explanation": "Filipe e o eunuco desceram ambos à água, e Filipe o batizou.",
+   "refs": [
+    "At 8:38"
+   ],
+   "keywords": [
+    "Filipe",
+    "eunuco"
+   ]
+  },
+  {
+   "id": "D28",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Com qual casal Paulo trabalhou fazendo tendas em Corinto?",
+   "options": [
+    "Áquila e Priscila",
+    "Ananias e Safira",
+    "Lídia e Febe",
+    "Silas e Timóteo"
+   ],
+   "answer": 0,
+   "explanation": "Paulo ficou com Áquila e Priscila, porque eram do mesmo ofício: faziam tendas.",
+   "refs": [
+    "At 18:2-3"
+   ],
+   "keywords": [
+    "Áquila",
+    "Priscila",
+    "tendas"
+   ]
+  },
+  {
+   "id": "D29",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Qual judeu eloquente, natural de Alexandria, chegou a Éfeso?",
+   "options": [
+    "Apolo",
+    "Áquila",
+    "Tito",
+    "Erasto"
+   ],
+   "answer": 0,
+   "explanation": "Chegou a Éfeso um judeu chamado Apolo, natural de Alexandria, varão eloquente e poderoso nas Escrituras.",
+   "refs": [
+    "At 18:24"
+   ],
+   "keywords": [
+    "Apolo",
+    "Alexandria"
+   ]
+  },
+  {
+   "id": "D30",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Quem disse a Paulo: Por pouco me queres persuadir a que me faça cristão?",
+   "options": [
+    "Agripa",
+    "Festo",
+    "Félix",
+    "Gálio"
+   ],
+   "answer": 0,
+   "explanation": "O rei Agripa disse a Paulo: Por pouco me queres persuadir a que me faça cristão!",
+   "refs": [
+    "At 26:28"
+   ],
+   "keywords": [
+    "Agripa",
+    "cristão"
+   ]
+  },
+  {
+   "id": "D31",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Em qual ilha Paulo e os náufragos chegaram após o naufrágio?",
+   "options": [
+    "Malta",
+    "Creta",
+    "Chipre",
+    "Rodes"
+   ],
+   "answer": 0,
+   "explanation": "Depois de salvos, souberam que a ilha se chamava Malta.",
+   "refs": [
+    "At 28:1"
+   ],
+   "keywords": [
+    "Malta"
+   ]
+  },
+  {
+   "id": "D32",
+   "difficulty": "dificil",
+   "category": "Vida de Jesus",
+   "question": "Segundo Mateus, à casa de qual sumo sacerdote Jesus foi levado após ser preso?",
+   "options": [
+    "Caifás",
+    "Gamaliel",
+    "Nicodemos",
+    "Zacarias"
+   ],
+   "answer": 0,
+   "explanation": "Os que prenderam Jesus o conduziram à casa do sumo sacerdote Caifás.",
+   "refs": [
+    "Mt 26:57"
+   ],
+   "keywords": [
+    "Caifás",
+    "sumo",
+    "sacerdote"
+   ]
+  },
+  {
+   "id": "D33",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Aos pés de qual mestre Paulo foi instruído em Jerusalém?",
+   "options": [
+    "Gamaliel",
+    "Nicodemos",
+    "Anás",
+    "Caifás"
+   ],
+   "answer": 0,
+   "explanation": "Paulo disse que nasceu em Tarso e foi criado em Jerusalém, instruído aos pés de Gamaliel.",
+   "refs": [
+    "At 22:3"
+   ],
+   "keywords": [
+    "Gamaliel",
+    "Tarso"
+   ]
+  },
+  {
+   "id": "D34",
+   "difficulty": "dificil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quem foi o filho de Boaz e Rute, avô do rei Davi?",
+   "options": [
+    "Obede",
+    "Jessé",
+    "Perez",
+    "Salmom"
+   ],
+   "answer": 0,
+   "explanation": "O filho de Boaz e Rute foi chamado Obede; ele é o pai de Jessé, pai de Davi.",
+   "refs": [
+    "Rt 4:17"
+   ],
+   "keywords": [
+    "Obede",
+    "Jessé",
+    "Davi"
+   ]
+  },
+  {
+   "id": "D35",
+   "difficulty": "dificil",
+   "category": "Igreja primitiva",
+   "question": "Qual apóstolo, irmão de João, foi morto à espada pelo rei Herodes?",
+   "options": [
+    "Tiago",
+    "Pedro",
+    "André",
+    "Filipe"
+   ],
+   "answer": 0,
+   "explanation": "O rei Herodes matou à espada Tiago, irmão de João.",
+   "refs": [
+    "At 12:1-2"
+   ],
+   "keywords": [
+    "Tiago",
+    "espada"
+   ]
+  },
+  {
+   "id": "D36",
+   "difficulty": "dificil",
+   "category": "Vida de Jesus",
+   "question": "Qual era o nome do servo do sumo sacerdote cuja orelha Pedro cortou?",
+   "options": [
+    "Malco",
+    "Barrabás",
+    "Cleopas",
+    "Rode"
+   ],
+   "answer": 0,
+   "explanation": "Simão Pedro feriu o servo do sumo sacerdote e cortou-lhe a orelha direita; o servo chamava-se Malco.",
+   "refs": [
+    "Jo 18:10"
+   ],
+   "keywords": [
+    "Malco",
+    "orelha"
+   ]
+  },
+  {
+   "id": "D37",
+   "difficulty": "dificil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Qual filha de Reuel (Jetro) se casou com Moisés?",
+   "options": [
+    "Zípora",
+    "Miriã",
+    "Joquebede",
+    "Quetura"
+   ],
+   "answer": 0,
+   "explanation": "Moisés consentiu em morar com aquele homem, que deu a Moisés sua filha Zípora.",
+   "refs": [
+    "Êx 2:21"
+   ],
+   "keywords": [
+    "Zípora",
+    "Moisés"
+   ]
+  },
+  {
+   "id": "D38",
+   "difficulty": "dificil",
+   "category": "Personagens do Antigo Testamento",
+   "question": "Quais dois espias rasgaram as vestes e animaram o povo a entrar em Canaã?",
+   "options": [
+    "Josué e Calebe",
+    "Moisés e Arão",
+    "Nadabe e Abiú",
+    "Eldade e Medade"
+   ],
+   "answer": 0,
+   "explanation": "Josué, filho de Num, e Calebe, filho de Jefoné, disseram que a terra era muito boa.",
+   "refs": [
+    "Nm 14:6-7"
+   ],
+   "keywords": [
+    "Josué",
+    "Calebe"
+   ]
+  },
+  {
+   "id": "D39",
+   "difficulty": "dificil",
+   "category": "Criação e patriarcas",
+   "question": "Qual era o nome do pai de Abrão?",
+   "options": [
+    "Terá",
+    "Naor",
+    "Harã",
+    "Sem"
+   ],
+   "answer": 0,
+   "explanation": "Terá gerou a Abrão, a Naor e a Harã.",
+   "refs": [
+    "Gn 11:27"
+   ],
+   "keywords": [
+    "Terá",
+    "Abrão"
+   ]
+  },
+  {
+   "id": "D40",
+   "difficulty": "dificil",
+   "category": "Criação e patriarcas",
+   "question": "De que cidade Terá saiu com Abrão em direção à terra de Canaã?",
+   "options": [
+    "Ur dos caldeus",
+    "Harã",
+    "Babel",
+    "Damasco"
+   ],
+   "answer": 0,
+   "explanation": "Terá tomou Abrão, Ló e Sarai e saiu com eles de Ur dos caldeus, para ir à terra de Canaã.",
+   "refs": [
+    "Gn 11:31"
+   ],
+   "keywords": [
+    "Ur",
+    "caldeus",
+    "Canaã"
+   ]
+  }
+ ]
+}
