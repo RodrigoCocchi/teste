@@ -98,7 +98,7 @@ class _PortalScreenState extends State<PortalScreen> {
           Card(
             color: AppColors.navy,
             child: ListTile(
-              leading: const Icon(Icons.church, color: Colors.white, size: 32),
+              leading: const Icon(Icons.near_me, color: Colors.white, size: 32),
               title: const Text('Pesquisar cultos', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               subtitle: const Text('Casas de oração e horários (relatório) dentro do app',
                   style: TextStyle(color: Colors.white70)),

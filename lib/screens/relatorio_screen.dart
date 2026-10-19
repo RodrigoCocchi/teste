@@ -377,7 +377,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
 
   Widget _placeTile(RelPlace p, {double? km}) => Card(
         child: ListTile(
-          leading: const Icon(Icons.church_outlined, color: AppColors.navy),
+          leading: const Icon(Icons.place_outlined, color: AppColors.navy),
           title: Text(p.name, style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text([p.address, p.city].where((s) => s.isNotEmpty).join('\n')),
           isThreeLine: p.address.isNotEmpty && p.city.isNotEmpty,

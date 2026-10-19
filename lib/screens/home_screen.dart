@@ -121,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                 onTap: () => push(context, const LibrasScreen()),
               ),
               _HomeCard(
-                icon: Icons.church_outlined,
+                icon: Icons.language,
                 title: 'Portal CCB',
                 subtitle: 'Culto on-line, pedir oração, relatório, ofertas e mais',
                 onTap: () => push(context, const PortalScreen()),
