@@ -60,7 +60,8 @@ class BibleParseResult {
 
 enum _TokType { text, number, title }
 
-enum _NumKind { inline, lone, chapterHint }
+/// [verseStart]: número pequeno no início da linha (layout ARC).
+enum _NumKind { inline, lone, chapterHint, verseStart }
 
 class _Tok {
   _Tok.text(this.text, this.page)
@@ -208,7 +209,7 @@ void _tokenizeSmallStart(String raw, int page, List<String> lines, int li, List<
       return;
     }
   } else {
-    toks.add(_Tok.number(int.parse(m[1]!), _NumKind.inline, page, m[1]!));
+    toks.add(_Tok.number(int.parse(m[1]!), _NumKind.verseStart, page, m[1]!));
   }
   if (rest.isNotEmpty) toks.add(_Tok.text(rest, page));
   toks.add(_Tok.text('\n', page));
@@ -414,6 +415,18 @@ BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
         startChapter(b + 1, 1, i);
       }
       continue;
+    }
+    // Layout ARC: versículo "1" seguido de "2" abre o próximo capítulo/livro,
+    // mesmo quando o número do capítulo aparece fora de ordem na página.
+    if (t.kind == _NumKind.verseStart && n == 1 && v >= 1 && next.isNotEmpty && next.first == 2) {
+      if (c + 1 <= maxCh) {
+        startChapter(b, c + 1, i);
+        continue;
+      }
+      if (b < 66) {
+        startChapter(b + 1, 1, i);
+        continue;
+      }
     }
     if (n == v + 1) {
       final looksLikeChapter =

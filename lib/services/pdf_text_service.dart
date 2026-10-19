@@ -125,11 +125,12 @@ HymnDetection detectHymnPages(List<List<String>> pages) {
   for (var p = 0; p < pages.length; p++) {
     final lines = pages[p];
     if (lines.isNotEmpty) withText++;
-    for (final line in lines.take(3)) {
+    for (final raw in lines.take(3)) {
+      final line = raw.replaceAll(smallMark, '');
       final m = pattern.firstMatch(line.trim());
       if (m == null) continue;
       final n = int.parse(m[1]!);
-      if (n == last + 1 || (n > last && n <= last + 3 && n <= 480)) {
+      if (n == last + 1 || (n > last && n <= last + 10 && n <= 480)) {
         found[n] = p + 1;
         final title = (_titleAfterNumber.firstMatch(line.trim())?[1] ?? '')
             .replaceAll(smallMark, '')

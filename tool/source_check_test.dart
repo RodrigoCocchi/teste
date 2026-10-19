@@ -57,11 +57,17 @@ void main() {
       if (kind == DocKind.bible) {
         final r = parseBibleText(pages);
         log('biblia: ${r.summary().replaceAll('\n', ' | ')}');
+        final perBook = <int, int>{};
+        for (final k in r.parsedChapters) {
+          perBook[k ~/ 1000] = (perBook[k ~/ 1000] ?? 0) + 1;
+        }
+        log('biblia: incompletos: ${bibleBooks.where((b) => (perBook[b.id] ?? 0) != b.chapters).map((b) => '${b.abbrev}=${perBook[b.id] ?? 0}/${b.chapters}').join(' ')}');
+        log('biblia: suspeitos: ${r.suspectChapters.map((k) => '${bookById(k ~/ 1000).abbrev}${k % 1000}').join(' ')}');
         final lastPage = r.chapterPages.values.fold<int>(0, (a, b) => b > a ? b : a);
         log('biblia: último capítulo reconhecido na página $lastPage');
         final firstPage = r.chapterPages[1001] ?? 1;
         final gn2 = r.chapterPages[1002] ?? firstPage;
-        for (final p in {firstPage, gn2, lastPage, lastPage + 1}) {
+        for (final p in {lastPage, lastPage + 1}) {
           if (p < 1 || p > pages.length) continue;
           log('--- página $p (${pages[p - 1].length} linhas) ---');
           for (final l in pages[p - 1].take(45)) {

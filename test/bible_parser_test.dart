@@ -165,4 +165,17 @@ void main() {
     expect(t(2, 3), 'Terceiro do dois.');
     expect(r.chapterPages[1002], 2);
   });
+
+  test('layout ARC: número do capítulo deslocado na página', () {
+    const m = smallMark;
+    final pages = <List<String>>[
+      ['Gênesis 1', '${m}1 Um de teste.', '${m}2 Dois de teste.'],
+      ['Gênesis', 'Título', '${m}1 Primeiro do dois.', '${m}2 Segundo do dois.', '2',
+        '${m}3 Terceiro do dois.'],
+    ];
+    final r = parseBibleText(pages);
+    final gn2 = r.verses.where((v) => v.book == 1 && v.chapter == 2).toList();
+    expect(gn2.map((v) => v.verse), [1, 2, 3]);
+    expect(gn2.first.text, 'Primeiro do dois.');
+  });
 }
