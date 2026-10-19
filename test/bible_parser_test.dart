@@ -145,4 +145,24 @@ void main() {
     expect(gn1[0].text, 'No princípio texto de teste um.');
     expect(gn1[2].text, 'Terceiro texto.');
   });
+
+  test('layout ARC: versículo em fonte pequena, "Livro N", títulos e notas', () {
+    const m = smallMark;
+    final pages = <List<String>>[
+      ['Gênesis 1', 'A criação', '${m}1 No princípio texto de teste um.',
+        '${m}2 Segundo de teste,', 'continua aqui.${m}1', '${m}1 1.2 Sl 33.6',
+        'a 1.2 Ou: teste', 'Outro título', '${m}3 Terceiro de teste.'],
+      ['Gênesis 2', 'Título do dois', '${m}1 Primeiro do dois.',
+        '${m}2 Segundo do dois.', 'Gênesis 3', '${m}3 Terceiro do dois.'],
+    ];
+    final r = parseBibleText(pages);
+    String t(int c, int v) => r.verses.firstWhere((x) => x.book == 1 && x.chapter == c && x.verse == v).text;
+    expect(r.verses.where((v) => v.book == 1 && v.chapter == 1).length, 3);
+    expect(r.verses.where((v) => v.book == 1 && v.chapter == 2).length, 3);
+    expect(t(1, 1), 'No princípio texto de teste um.');
+    expect(t(1, 2), 'Segundo de teste, continua aqui.');
+    expect(t(1, 3), 'Terceiro de teste.');
+    expect(t(2, 3), 'Terceiro do dois.');
+    expect(r.chapterPages[1002], 2);
+  });
 }

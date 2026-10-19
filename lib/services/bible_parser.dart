@@ -122,9 +122,17 @@ const Set<String> _enclitics = {
 /// Como tratar números no meio das linhas:
 /// [all] qualquer número pode ser versículo; [lineStart] só no início da
 /// linha; [dropSmall] ignora números em fonte menor (chamadas de notas).
-enum _Mode { all, lineStart, dropSmall }
+/// [smallStart]: versículos são números em fonte menor no início da linha
+/// (layout da ARC 1969 da cemaad), demais números pequenos são notas.
+enum _Mode { smallStart, all, lineStart, dropSmall }
 
-final RegExp _footnoteLine = RegExp('^$smallMark?\\d{1,2}\\s*$smallMark?\\s+\\d{1,3}[.:]\\d{1,3}');
+final RegExp _footnoteLine =
+    RegExp('^(?:$smallMark?\\d{1,2}\\s*$smallMark?|[a-z])\\s+\\d{1,3}[.:]\\d{1,3}');
+final RegExp _smallStart = RegExp('^$smallMark(\\d{1,3})\\s*');
+final RegExp _bookChapterLine = RegExp(r'^([1-3]?\s?[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ ]*?)\s+(\d{1,3})$');
+
+bool _isBookName(String s) =>
+    _bookKeys.contains(normalize(s).replaceAll(RegExp(r'[^a-z]'), ''));
 final RegExp _smallNumber = RegExp('$smallMark\\d+');
 
 List<_Tok> _tokenize(List<List<String>> pages, [_Mode mode = _Mode.all]) {
@@ -136,6 +144,10 @@ List<_Tok> _tokenize(List<List<String>> pages, [_Mode mode = _Mode.all]) {
     for (var li = 0; li < lines.length; li++) {
       final raw = lines[li];
       if (_footnoteLine.hasMatch(raw.trim())) continue; // notas/referências cruzadas
+      if (mode == _Mode.smallStart) {
+        _tokenizeSmallStart(raw.trim(), page, lines, li, toks);
+        continue;
+      }
       final line = (mode == _Mode.all
               ? raw.replaceAll(smallMark, '')
               : raw.replaceAll(_smallNumber, '').replaceAll(smallMark, ''))
@@ -173,6 +185,47 @@ List<_Tok> _tokenize(List<List<String>> pages, [_Mode mode = _Mode.all]) {
     }
   }
   return toks;
+}
+
+/// Linha no layout "número pequeno no início = versículo".
+void _tokenizeSmallStart(String raw, int page, List<String> lines, int li, List<_Tok> toks) {
+  final bc = _bookChapterLine.firstMatch(raw.replaceAll(smallMark, '').trim());
+  if (bc != null && _isBookName(bc[1]!)) {
+    toks.add(_Tok.number(int.parse(bc[2]!), _NumKind.chapterHint, page, raw));
+    return;
+  }
+  final m = _smallStart.firstMatch(raw);
+  var rest = (m == null ? raw : raw.substring(m.end)).replaceAll(_smallNumber, '').replaceAll(smallMark, '');
+  rest = rest.replaceAll(RegExp(r'\s+'), ' ').trim();
+  if (m == null) {
+    if (_loneNumber.hasMatch(rest)) {
+      toks.add(_Tok.number(int.parse(rest), _NumKind.lone, page, rest));
+      return;
+    }
+    if (rest.isEmpty || _isRunningHeader(rest)) return;
+    if (_isTitleLine(rest) || _isSectionHeading(rest, lines, li)) {
+      toks.add(_Tok.title(rest, page));
+      return;
+    }
+  } else {
+    toks.add(_Tok.number(int.parse(m[1]!), _NumKind.inline, page, m[1]!));
+  }
+  if (rest.isNotEmpty) toks.add(_Tok.text(rest, page));
+  toks.add(_Tok.text('\n', page));
+}
+
+/// Título de seção: linha curta, sem pontuação final, depois de uma linha
+/// que terminou frase (ou de cabeçalho/nota).
+bool _isSectionHeading(String line, List<String> lines, int li) {
+  if (RegExp(r'[.,;:!?)»"”]$').hasMatch(line)) return false;
+  final lengths = [for (final l in lines) l.length]..sort();
+  final full = lengths.isEmpty ? 0 : lengths[(lengths.length * 3) ~/ 4];
+  if (line.length > full * 0.7) return false;
+  if (li == 0) return true;
+  final prev = lines[li - 1].replaceAll(_smallNumber, '').trim();
+  return RegExp(r'[.;:!?»"”]$').hasMatch(prev) ||
+      _footnoteLine.hasMatch(lines[li - 1].trim()) ||
+      _bookChapterLine.hasMatch(prev);
 }
 
 /// Detecta a numeração impressa das páginas (número isolado sempre na mesma
@@ -241,7 +294,7 @@ String _clean(String s) => s
 /// ausentes e são relatados.
 BibleParseResult parseBibleText(List<List<String>> pages) {
   BibleParseResult? best;
-  for (final mode in const [_Mode.dropSmall, _Mode.lineStart, _Mode.all]) {
+  for (final mode in const [_Mode.smallStart, _Mode.dropSmall, _Mode.lineStart, _Mode.all]) {
     final r = _parse(pages, mode);
     if (best == null || r.parsedChapters.length > best.parsedChapters.length) best = r;
     if (r.isComplete && r.suspectChapters.isEmpty) break;
@@ -353,6 +406,8 @@ BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
     final canNextBook = n == 1 && c == maxCh && b < 66;
 
     if (t.kind == _NumKind.chapterHint) {
+      // Exige que o próximo número seja 1 ou 2 (evita cabeçalhos de página).
+      if (!startsChapter) continue;
       if (canNextChapter) {
         startChapter(b, c + 1, i);
       } else if (canNextBook) {

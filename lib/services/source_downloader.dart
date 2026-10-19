@@ -40,7 +40,7 @@ class SourceDownloader {
   final HttpClient _client;
 
   /// Esperas (segundos) entre novas tentativas quando o servidor limita acessos.
-  List<int> retryDelays = const [5, 15, 30];
+  List<int> retryDelays = const [5, 20, 60];
 
   /// Baixa [url] para [dest]. Retorna o endereço de onde o PDF veio.
   Future<String> download(String url, String dest,

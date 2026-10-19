@@ -101,15 +101,7 @@ class _HymnMappingScreenState extends State<HymnMappingScreen> {
           ],
         ),
       );
-      if (apply == true) {
-        final manual = await App.I.hymns.manualPages(doc);
-        await App.I.hymns.clearAutoPages(doc);
-        for (final e in r.pages.entries) {
-          if (!manual.containsKey(e.key)) {
-            await App.I.hymns.setPage(e.key, doc, e.value, manual: false);
-          }
-        }
-      }
+      if (apply == true) await App.I.applyHymnDetection(doc, r);
     } on Object catch (e) {
       if (mounted) showSnack(context, '$e');
     } finally {

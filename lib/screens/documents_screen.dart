@@ -53,6 +53,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
           : '${kind.label}.pdf';
       await App.I.documents.import(kind, dest, name);
       await File(dest).delete();
+      if (kind != DocKind.bible) await _detectHymns(kind);
       _set(null);
       return true;
     } on Object catch (e) {
@@ -81,6 +82,21 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     }
   }
 
+  /// Mapeia automaticamente as páginas e títulos dos hinos a partir do PDF.
+  Future<int> _detectHymns(DocKind kind) async {
+    final info = App.I.documents.info(kind);
+    if (info == null) return 0;
+    try {
+      final d = await PdfTextService.detectHymns(info.path,
+          onProgress: (p) => _set('${kind.label}: localizando os hinos (página ${p.page} de ${p.pages})',
+              p.page / p.pages));
+      if (d.pages.length < 50) return 0; // pouco confiável: fica o mapeamento manual
+      return await App.I.applyHymnDetection(kind.key, d);
+    } on Object {
+      return 0;
+    }
+  }
+
   Future<void> _downloadAll() async {
     final results = <String>[];
     for (final kind in DocKind.values) {
@@ -89,7 +105,12 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
         continue;
       }
       final ok = await _download(kind, ask: false);
-      results.add('${kind.label}: ${ok ? 'baixado' : 'falhou'}');
+      var detail = '';
+      if (ok && kind != DocKind.bible) {
+        final n = (await App.I.hymns.manualPages(kind.key)).length;
+        detail = n > 0 ? ' ($n hinos localizados)' : ' (mapeie as páginas em Hinário › ajustes)';
+      }
+      results.add('${kind.label}: ${ok ? 'baixado$detail' : 'falhou'}');
     }
     if (!mounted) return;
     final bibleNow = App.I.documents.has(DocKind.bible) && !App.I.hasBibleText;
@@ -122,6 +143,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     try {
       await App.I.documents.import(kind, path, f.name);
       await FilePicker.clearTemporaryFiles();
+      if (kind != DocKind.bible) await _detectHymns(kind);
       _set(null);
       if (mounted) showSnack(context, '${kind.label} importado: ${f.name}');
       if (kind == DocKind.bible && mounted) {

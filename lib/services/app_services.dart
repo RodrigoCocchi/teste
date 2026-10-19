@@ -18,6 +18,7 @@ import '../data/quiz_repository.dart';
 import '../data/user_repository.dart';
 import 'bible_parser.dart';
 import 'documents.dart';
+import 'pdf_text_service.dart';
 import 'settings.dart';
 
 /// Ponto único de acesso aos serviços (inicializado em main()).
@@ -124,6 +125,27 @@ class App {
     settings.bibleReport = report;
     bibleVersion.value++;
     return report;
+  }
+
+  /// Aplica a detecção automática de páginas/títulos dos hinos. Ajustes
+  /// manuais e títulos já cadastrados são mantidos. Retorna quantos hinos
+  /// foram mapeados.
+  Future<int> applyHymnDetection(String doc, HymnDetection d) async {
+    final manual = await hymns.manualPages(doc);
+    await hymns.clearAutoPages(doc);
+    final batch = db.db.batch();
+    for (final e in d.pages.entries) {
+      if (!manual.containsKey(e.key)) {
+        batch.insert('hymn_page', {'hymn_number': e.key, 'doc': doc, 'page': e.value, 'manual': 0},
+            conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    }
+    for (final e in d.titles.entries) {
+      batch.rawUpdate('UPDATE hymn SET title = ? WHERE number = ? AND title IS NULL', [e.value, e.key]);
+    }
+    await batch.commit(noResult: true);
+    settings.touch();
+    return d.pages.length;
   }
 
   /// Importa texto já estruturado em JSON. Formatos aceitos:

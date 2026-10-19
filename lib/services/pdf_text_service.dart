@@ -21,8 +21,9 @@ class _Job {
 
 /// Resultado da detecção automática de páginas dos hinos.
 class HymnDetection {
-  const HymnDetection(this.pages, this.pageCount, this.pagesWithText);
+  const HymnDetection(this.pages, this.pageCount, this.pagesWithText, [this.titles = const {}]);
   final Map<int, int> pages; // número do hino → página (1-based)
+  final Map<int, String> titles; // título impresso ao lado do número
   final int pageCount;
   final int pagesWithText;
 }
@@ -109,10 +110,14 @@ class PdfTextService {
   }
 }
 
+final RegExp _titleAfterNumber =
+    RegExp(r'^(?:hino\s*|n[º°o.]\s*)?\d{1,3}\s*[-–.]?\s*(.*)$', caseSensitive: false);
+
 /// Procura o número do hino no topo de cada página ("Hino 12", "12", "Nº 12").
 /// Aceita apenas números em ordem crescente para evitar falsos positivos.
 HymnDetection detectHymnPages(List<List<String>> pages) {
   final found = <int, int>{};
+  final titles = <int, String>{};
   var withText = 0;
   var last = 0;
   final pattern = RegExp(r'^(?:hino\s*|n[º°o.]\s*)?(\d{1,3})(?:\s*[-–.]|\s*$|\s+[A-ZÀ-Ú])',
@@ -126,10 +131,14 @@ HymnDetection detectHymnPages(List<List<String>> pages) {
       final n = int.parse(m[1]!);
       if (n == last + 1 || (n > last && n <= last + 3 && n <= 480)) {
         found[n] = p + 1;
+        final title = (_titleAfterNumber.firstMatch(line.trim())?[1] ?? '')
+            .replaceAll(smallMark, '')
+            .trim();
+        if (title.length >= 3 && RegExp(r'[A-Za-zÀ-ÿ]{3}').hasMatch(title)) titles[n] = title;
         last = n;
         break;
       }
     }
   }
-  return HymnDetection(found, pages.length, withText);
+  return HymnDetection(found, pages.length, withText, titles);
 }
