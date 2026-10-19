@@ -196,4 +196,15 @@ void main() {
     expect(vs(5), [1, 2]);
     expect(r.verses.firstWhere((v) => v.book == 1 && v.chapter == 5 && v.verse == 1).text, 'Um do cinco.');
   });
+
+  test('layout ARC: letra hebraica antes do versículo (Lamentações)', () {
+    const m = smallMark;
+    final pages = <List<String>>[
+      ['Gênesis 1', 'ÁLEFE. ${m}1 No princípio um.', 'continua.', 'BETE. ${m}2 Dois.', '${m}3 Três.'],
+    ];
+    final r = parseBibleText(pages);
+    final gn1 = r.verses.where((v) => v.book == 1 && v.chapter == 1).toList();
+    expect(gn1.map((v) => v.verse), [1, 2, 3]);
+    expect(gn1.first.text, 'No princípio um. continua.');
+  });
 }

@@ -129,7 +129,9 @@ enum _Mode { smallStart, all, lineStart, dropSmall }
 
 final RegExp _footnoteLine = RegExp(
     '^(?:$smallMark?\\d{1,2}\\s*$smallMark?|[a-z])\\s+\\d{1,3}(?:[.:]\\d{1,3}|,\\s)');
-final RegExp _smallStart = RegExp('^$smallMark(\\d{1,3})\\s*');
+/// Versículo no início da linha, opcionalmente após o nome de uma letra
+/// hebraica (Lamentações/Salmo 119: "ÁLEFE. 1 ...").
+final RegExp _smallStart = RegExp('^(?:[A-ZÀ-Þ]{2,9}\\.\\s*)?$smallMark(\\d{1,3})\\s*');
 final RegExp _bookChapterLine = RegExp(r'^([1-3]?\s?[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ ]*?)\s+(\d{1,3})$');
 
 bool _isBookName(String s) =>
@@ -484,6 +486,11 @@ BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
       if (idx >= 0) {
         final end = last.text.indexOf('.', idx);
         last.text = last.text.substring(0, end >= 0 ? end + 1 : last.text.length);
+        // O excesso (apêndices) foi removido; reavalia o capítulo.
+        final key = last.book * 1000 + last.chapter;
+        if (verses.where((v) => v.book * 1000 + v.chapter == key).every((v) => v.text.length <= 1500)) {
+          result.suspectChapters.remove(key);
+        }
       }
     }
   }
