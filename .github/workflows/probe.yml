@@ -3,7 +3,7 @@ name: Diagnóstico do relatório CCB
 on:
   push:
     branches: [ccr-a717e1c3-dutbli]
-    paths: ['tool/probe_relatorio.py', '.github/workflows/probe.yml']
+    paths: ['tool/probe_*.py', '.github/workflows/probe.yml']
   workflow_dispatch:
 
 jobs:
@@ -11,4 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tool/probe_relatorio.py
+      - run: python3 tool/probe_relatorio.py || true
+      - run: python3 tool/probe_vlibras.py
