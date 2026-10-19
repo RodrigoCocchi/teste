@@ -1,6 +1,15 @@
 """Diagnóstico da página de relatório da CCB: estrutura, formulários e
 endereços de dados usados pela página (não salva conteúdo)."""
-import json, re, sys, urllib.request, urllib.parse
+import json, re, sys, urllib.request, urllib.parse, http.cookiejar
+
+JAR = http.cookiejar.CookieJar()
+
+class LogRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        print(f"[probe] redirect {code} -> {newurl} | set-cookie: {[c.split(';')[0].split('=')[0] for c in headers.get_all('Set-Cookie') or []]}")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(JAR), LogRedirect())
 
 UA = {"User-Agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36"}
 BASE = "https://congregacaocristanobrasil.org.br"
@@ -8,7 +17,7 @@ BASE = "https://congregacaocristanobrasil.org.br"
 def get(url, data=None, headers=None):
     h = dict(UA); h.update(headers or {})
     req = urllib.request.Request(url, data=data, headers=h)
-    with urllib.request.urlopen(req, timeout=40) as r:
+    with OPENER.open(req, timeout=40) as r:
         return r.status, r.headers.get("content-type", ""), r.read()
 
 def show(url):
