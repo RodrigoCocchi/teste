@@ -51,3 +51,12 @@ if html:
                     r"(?:url|action)\s*:\s*[\"'][^\"']+[\"']"]:
             found = sorted(set(re.findall(pat, js, re.I)))[:25]
             if found: print(f"[probe] {s} {pat}:", found)
+
+# Página inicial: links de cada seção (Culto on-line, Pedir oração, etc.)
+home = show(BASE + "/")
+if home:
+    for m in re.finditer(r"<a[^>]*href=\"([^\"]+)\"[^>]*>(.*?)</a>", home, re.S):
+        label = re.sub(r"<[^>]+>", " ", m.group(2))
+        label = re.sub(r"\s+", " ", label).strip()
+        alt = re.findall(r"(?:alt|title|aria-label)=\"([^\"]+)\"", m.group(0))
+        print("[link]", m.group(1), "|", label[:80], "|", alt[:2])
