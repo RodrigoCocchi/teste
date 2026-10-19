@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:biblia_hinos_ccb/services/ccb_portal.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,5 +32,25 @@ void main() {
     expect(d.links['telefone'], 'tel:+551100000000');
     expect(d.links['video'], 'https://www.youtube.com/watch?v=x');
     expect(d.urlFor('inexistente'), ccbSite);
+  });
+
+  test('segue redirecionamentos guardando cookies', () async {
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    server.listen((req) async {
+      final hasCookie = req.cookies.any((c) => c.name == 'sess' && c.value == '1');
+      if (!hasCookie) {
+        req.response.cookies.add(Cookie('sess', '1'));
+        req.response.statusCode = 302;
+        req.response.headers.set('location', '/');
+      } else {
+        req.response.write('<html>ok</html>');
+      }
+      await req.response.close();
+    });
+    final client = HttpClient();
+    final body = await fetchWithCookies(client, Uri.parse('http://127.0.0.1:${server.port}/'));
+    expect(body, '<html>ok</html>');
+    client.close(force: true);
+    await server.close(force: true);
   });
 }

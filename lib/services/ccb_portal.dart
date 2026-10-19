@@ -97,6 +97,37 @@ PortalData parsePortalHtml(String html, {Uri? base}) {
   return PortalData(links, date, DateTime.now());
 }
 
+/// GET seguindo redirecionamentos manualmente e guardando os cookies (o site
+/// da CCB redireciona em círculo para clientes que não guardam cookies).
+Future<String> fetchWithCookies(HttpClient client, Uri start, {Map<String, String>? jar}) async {
+  final cookies = jar ?? <String, String>{};
+  var uri = start;
+  for (var i = 0; i < 12; i++) {
+    final req = await client.getUrl(uri);
+    req.followRedirects = false;
+    req.headers.set(HttpHeaders.acceptHeader, 'text/html,application/json;q=0.9,*/*;q=0.8');
+    req.headers.set(HttpHeaders.acceptLanguageHeader, 'pt-BR,pt;q=0.9');
+    if (cookies.isNotEmpty) {
+      req.headers.set(HttpHeaders.cookieHeader, cookies.entries.map((e) => '${e.key}=${e.value}').join('; '));
+    }
+    final res = await req.close().timeout(const Duration(seconds: 30));
+    for (final c in res.cookies) {
+      cookies[c.name] = c.value;
+    }
+    if (res.isRedirect || (res.statusCode >= 300 && res.statusCode < 400)) {
+      final loc = res.headers.value(HttpHeaders.locationHeader);
+      await res.drain<void>();
+      if (loc == null) break;
+      uri = uri.resolve(loc);
+      continue;
+    }
+    final body = await res.transform(utf8.decoder).join();
+    if (res.statusCode >= 400) throw HttpException('Site respondeu ${res.statusCode}');
+    return body;
+  }
+  throw const HttpException('Muitos redirecionamentos');
+}
+
 class CcbPortal {
   CcbPortal(this._prefs);
   final SharedPreferences _prefs;
@@ -115,10 +146,7 @@ class CcbPortal {
       ..userAgent = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36'
       ..connectionTimeout = const Duration(seconds: 20);
     try {
-      final req = await client.getUrl(Uri.parse('$ccbSite/'));
-      final res = await req.close().timeout(const Duration(seconds: 30));
-      final html = await res.transform(utf8.decoder).join();
-      if (res.statusCode >= 400) throw HttpException('Site respondeu ${res.statusCode}');
+      final html = await fetchWithCookies(client, Uri.parse('$ccbSite/'));
       final data = parsePortalHtml(html);
       if (data.links.isNotEmpty) {
         await _prefs.setString('portalLinks', jsonEncode(data.links));
