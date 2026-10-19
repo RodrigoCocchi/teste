@@ -7,6 +7,7 @@ import '../services/documents.dart';
 import '../theme.dart';
 import 'nav.dart';
 import 'plan_screen.dart';
+import 'libras_screen.dart';
 import 'portal_screen.dart';
 import 'relatorio_screen.dart';
 import 'search_screen.dart';
@@ -112,6 +113,12 @@ class HomeScreen extends StatelessWidget {
                 title: 'Cultos perto de mim',
                 subtitle: 'Casas de oração e horários (relatório CCB)',
                 onTap: () => push(context, const RelatorioScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.sign_language,
+                title: 'Libras',
+                subtitle: 'Escreva e veja o avatar do VLibras sinalizar',
+                onTap: () => push(context, const LibrasScreen()),
               ),
               _HomeCard(
                 icon: Icons.church_outlined,
