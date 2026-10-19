@@ -3,7 +3,7 @@ name: Diagnóstico do relatório CCB
 on:
   push:
     branches: [ccr-a717e1c3-dutbli]
-    paths: ['tool/probe_*.py', '.github/workflows/probe.yml']
+    paths: ['tool/probe_*.py', 'tool/libras_page.html', '.github/workflows/probe.yml']
   workflow_dispatch:
 
 jobs:
@@ -11,5 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tool/probe_relatorio.py || true
-      - run: python3 tool/probe_vlibras.py
+      - run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - run: python3 tool/probe_libras.py tool/libras_page.html
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: libras
+          path: libras.png

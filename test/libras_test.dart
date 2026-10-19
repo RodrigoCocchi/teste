@@ -1,5 +1,5 @@
 import 'package:biblia_hinos_ccb/data/libras_phrases.dart';
-import 'package:biblia_hinos_ccb/screens/libras_screen.dart';
+import 'package:biblia_hinos_ccb/data/libras_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
