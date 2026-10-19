@@ -70,7 +70,9 @@ PortalData parsePortalHtml(String html, {Uri? base}) {
   }
 
   for (final l in portalSections) {
-    final hit = anchors.where((a) => matches(a, l)).firstOrNull;
+    // Prefere o link cujo texto é a seção (o card), depois o endereço.
+    final byText = anchors.where((a) => l.keywords.any((k) => a.$3.startsWith(k))).lastOrNull;
+    final hit = byText ?? anchors.where((a) => matches(a, l)).firstOrNull;
     if (hit != null) links[l.key] = hit.$2;
   }
   // Botões do bloco do próximo culto: links entre "Próximo Culto" e o bloco seguinte.

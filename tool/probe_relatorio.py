@@ -1,71 +1,53 @@
-"""Diagnóstico da página de relatório da CCB: estrutura, formulários e
-endereços de dados usados pela página (não salva conteúdo)."""
-import json, re, sys, urllib.request, urllib.parse, http.cookiejar
+"""Diagnóstico dos serviços de pesquisa do relatório da CCB: mostra como a
+página chama os serviços e a estrutura das respostas (só chaves e amostras)."""
+import json, re, urllib.request, urllib.parse, http.cookiejar
 
 JAR = http.cookiejar.CookieJar()
-
-class LogRedirect(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        print(f"[probe] redirect {code} -> {newurl} | set-cookie: {[c.split(';')[0].split('=')[0] for c in headers.get_all('Set-Cookie') or []]}")
-        return super().redirect_request(req, fp, code, msg, headers, newurl)
-
-OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(JAR), LogRedirect())
-
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(JAR))
 UA = {"User-Agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36"}
 BASE = "https://congregacaocristanobrasil.org.br"
 
-def get(url, data=None, headers=None):
+def req(path, data=None, headers=None, method=None):
     h = dict(UA); h.update(headers or {})
-    req = urllib.request.Request(url, data=data, headers=h)
-    with OPENER.open(req, timeout=40) as r:
-        return r.status, r.headers.get("content-type", ""), r.read()
-
-def show(url):
+    r = urllib.request.Request(BASE + path, data=data, headers=h, method=method)
     try:
-        st, ct, body = get(url)
-    except Exception as e:
-        print(f"[probe] {url} -> ERRO {e}"); return None
-    print(f"[probe] {url} -> {st} {ct} {len(body)} bytes")
-    return body.decode("utf-8", "replace")
+        with OPENER.open(r, timeout=40) as resp:
+            return resp.status, resp.headers.get("content-type", ""), resp.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.headers.get("content-type", ""), e.read().decode("utf-8", "replace")
 
-html = show(BASE + "/relatorio")
-if html:
-    print("[probe] title:", re.findall(r"<title>(.*?)</title>", html, re.S)[:1])
-    for m in re.finditer(r"<form[^>]*>", html): print("[probe] form:", m.group(0)[:300])
-    for m in re.finditer(r"<(input|select)[^>]*>", html): print("[probe] campo:", m.group(0)[:200])
-    for m in re.finditer(r"<option[^>]*value=\"([^\"]*)\"[^>]*>([^<]{0,40})", html):
-        pass
-    opts = re.findall(r"<option[^>]*value=\"([^\"]*)\"[^>]*>([^<]{0,40})", html)
-    print("[probe] options (primeiras 30):", opts[:30], "total", len(opts))
-    scripts = re.findall(r"<script[^>]*src=\"([^\"]+)\"", html)
-    print("[probe] scripts:", scripts)
-    for pat in [r"https?://[^\"' <>]*api[^\"' <>]*", r"/api/[^\"' <>]*", r"[\"'](/[^\"']*relatorio[^\"']*)[\"']",
-                r"ajax[^\n]{0,200}", r"fetch\([^\n]{0,200}", r"lat[a-z]*[\"']?\s*[:=][^\n]{0,80}"]:
-        found = sorted(set(re.findall(pat, html, re.I)))[:20]
-        if found: print(f"[probe] padrão {pat}:", found)
-    # trechos de texto visíveis (estrutura)
-    text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S)
-    text = re.sub(r"<[^>]+>", "\n", text)
-    lines = [l.strip() for l in text.splitlines() if l.strip()]
-    print("[probe] linhas de texto:", len(lines))
-    for l in lines[:120]: print("[probe] |", l[:160])
-    # scripts do próprio site: procurar endpoints
-    for s in scripts:
-        u = urllib.parse.urljoin(BASE + "/relatorio", s)
-        if "congregacaocristanobrasil" not in u: continue
-        js = show(u)
-        if not js: continue
-        for pat in [r"[\"'](/[A-Za-z0-9_/\-\.]*(?:api|relatorio|igreja|localidade|cidade|culto|busca)[A-Za-z0-9_/\-\.?=&]*)[\"']",
-                    r"https?://[A-Za-z0-9\.\-]+/[A-Za-z0-9_/\-\.]*(?:api|relatorio)[A-Za-z0-9_/\-\.?=&]*",
-                    r"(?:url|action)\s*:\s*[\"'][^\"']+[\"']"]:
-            found = sorted(set(re.findall(pat, js, re.I)))[:25]
-            if found: print(f"[probe] {s} {pat}:", found)
+def shape(v, depth=0):
+    if isinstance(v, list):
+        return f"lista[{len(v)}] de " + (shape(v[0], depth + 1) if v else "?")
+    if isinstance(v, dict):
+        return "{" + ", ".join(f"{k}: {shape(x, depth + 1) if depth < 3 else type(x).__name__}" for k, x in list(v.items())[:30]) + "}"
+    return f"{type(v).__name__}({str(v)[:40]!r})"
 
-# Página inicial: links de cada seção (Culto on-line, Pedir oração, etc.)
-home = show(BASE + "/")
-if home:
-    for m in re.finditer(r"<a[^>]*href=\"([^\"]+)\"[^>]*>(.*?)</a>", home, re.S):
-        label = re.sub(r"<[^>]+>", " ", m.group(2))
-        label = re.sub(r"\s+", " ", label).strip()
-        alt = re.findall(r"(?:alt|title|aria-label)=\"([^\"]+)\"", m.group(0))
-        print("[link]", m.group(1), "|", label[:80], "|", alt[:2])
+st, ct, html = req("/relatorio")
+print("[p] relatorio", st, len(html))
+token = re.search(r'name="__RequestVerificationToken" type="hidden" value="([^"]+)"', html)
+token = token.group(1) if token else ""
+for m in re.finditer(r"/service/[a-z\-]+", html):
+    a = max(0, m.start() - 700); b = m.end() + 900
+    print("[p] ===== trecho", m.group(0))
+    for line in html[a:b].splitlines():
+        if line.strip(): print("[p] |", line.rstrip()[:220])
+print("[p] funções JS:", sorted(set(re.findall(r"function\s+(\w+)\s*\(", html))))
+
+def tryall(path, payloads):
+    for kind, data, hdr in payloads:
+        st, ct, body = req(path, data=data, headers=hdr, method="POST" if data is not None else "GET")
+        info = body[:300].replace("\n", " ")
+        try:
+            j = json.loads(body); info = shape(j)
+        except Exception: pass
+        print(f"[p] {path} {kind} -> {st} {ct[:30]} {info[:900]}")
+
+hdr_form = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "X-Requested-With": "XMLHttpRequest",
+            "RequestVerificationToken": token}
+hdr_json = {"Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest", "RequestVerificationToken": token}
+enc = lambda d: urllib.parse.urlencode(dict(d, __RequestVerificationToken=token)).encode()
+tryall("/service/pais-relatorio", [("GET", None, {"X-Requested-With": "XMLHttpRequest"}), ("POST", enc({}), hdr_form)])
+tryall("/service/estado-relatorio", [("POST pais=1", enc({"pais": "1"}), hdr_form), ("POST id=1", enc({"id": "1"}), hdr_form)])
+tryall("/service/localidade-relatorio", [("POST busca", enc({"busca": "Bras"}), hdr_form),
+                                        ("JSON busca", json.dumps({"busca": "Bras"}).encode(), hdr_json)])
