@@ -17,6 +17,7 @@ import '../data/plan_repository.dart';
 import '../data/quiz_repository.dart';
 import '../data/user_repository.dart';
 import 'bible_parser.dart';
+import 'ccb_portal.dart';
 import 'documents.dart';
 import 'pdf_text_service.dart';
 import 'settings.dart';
@@ -24,11 +25,12 @@ import 'setup_service.dart';
 
 /// Ponto único de acesso aos serviços (inicializado em main()).
 class App {
-  App._(this.db, this.settings, this.documents, this.questions, this.themes, this.studies);
+  App._(this.db, this.settings, this.documents, this.questions, this.themes, this.studies, this._prefs);
 
   static late App I;
 
   final AppDatabase db;
+  final SharedPreferences _prefs;
   final Settings settings;
   final DocumentStore documents;
   final List<QuizQuestion> questions;
@@ -41,6 +43,7 @@ class App {
   late final hymns = HymnRepository(db);
   late final plan = PlanRepository(db);
   late final setup = SetupService(this);
+  late final portal = CcbPortal(_prefs);
 
   /// Incrementado quando o texto bíblico muda (nova importação).
   final ValueNotifier<int> bibleVersion = ValueNotifier(0);
@@ -63,6 +66,7 @@ class App {
       QuizQuestion.listFromJson(quizJson),
       BibleThemeData.listFromJson(themesJson),
       DailyStudyData.listFromJson(studiesJson),
+      sp,
     );
     I = app;
     // O conteúdo fixo só é gravado no banco quando muda (abertura rápida).
