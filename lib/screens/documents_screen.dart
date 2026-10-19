@@ -8,17 +8,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../services/app_services.dart';
 import '../services/documents.dart';
-import '../services/pdf_text_service.dart';
+import '../services/setup_service.dart';
 import '../services/source_downloader.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
+import 'setup_screen.dart';
 
 /// Importação manual dos PDFs (Bíblia e Hinário) e indexação da Bíblia.
 class DocumentsScreen extends StatefulWidget {
-  const DocumentsScreen({super.key, this.autoDownload = false});
-
-  /// Inicia o download de todos os documentos ao abrir a tela.
-  final bool autoDownload;
+  const DocumentsScreen({super.key});
   @override
   State<DocumentsScreen> createState() => _DocumentsScreenState();
 }
@@ -26,99 +24,50 @@ class DocumentsScreen extends StatefulWidget {
 class _DocumentsScreenState extends State<DocumentsScreen> {
   String? _status;
   double? _progress;
-  bool get _busy => _status != null;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.autoDownload) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _downloadAll());
-    }
-  }
+  bool get _busy => _status != null || App.I.setup.running;
 
   /// Baixa o documento da fonte indicada. Retorna true se deu certo.
-  Future<bool> _download(DocKind kind, {bool ask = true}) async {
-    final url = officialSources[kind]!;
-    final tmpDir = await getTemporaryDirectory();
-    final dest = '${tmpDir.path}/${kind.key}_download.pdf';
-    final downloader = SourceDownloader();
+  Future<bool> _download(DocKind kind) async {
     _set('${kind.label}: conectando…');
     try {
-      final from = await downloader.download(url, dest,
-          prefer: kind == DocKind.hymnalOrgao ? 'orgao' : null,
-          onProgress: (p) => _set('${kind.label}: ${p.message}', p.fraction));
-      final name = Uri.parse(from).pathSegments.isNotEmpty &&
-              Uri.parse(from).pathSegments.last.toLowerCase().endsWith('.pdf')
-          ? Uri.decodeComponent(Uri.parse(from).pathSegments.last)
-          : '${kind.label}.pdf';
-      await App.I.documents.import(kind, dest, name);
-      await File(dest).delete();
-      if (kind != DocKind.bible) await _detectHymns(kind);
+      final step = SetupStep(kind.label);
+      void listener() => _set('${kind.label}: ${step.message}', step.progress);
+      App.I.setup.addListener(listener);
+      try {
+        await App.I.setup.download(kind, step: step);
+      } finally {
+        App.I.setup.removeListener(listener);
+      }
       _set(null);
       return true;
     } on Object catch (e) {
       _set(null);
       if (!mounted) return false;
-      if (ask) {
-        final open = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text('Não foi possível baixar: ${kind.label}'),
-            content: Text('$e\n\nVocê pode abrir a página no navegador, baixar o PDF e depois '
-                'usar "Importar PDF".'),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Fechar')),
-              FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Abrir página')),
-            ],
-          ),
-        );
-        if (open == true) await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-      } else {
-        showSnack(context, '${kind.label}: $e');
+      final open = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Não foi possível baixar: ${kind.label}'),
+          content: Text('$e\n\nVocê pode abrir a página no navegador, baixar o PDF e depois '
+              'usar "Importar do celular".'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Fechar')),
+            FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Abrir página')),
+          ],
+        ),
+      );
+      if (open == true) {
+        await launchUrl(Uri.parse(officialSources[kind]!), mode: LaunchMode.externalApplication);
       }
       return false;
-    } finally {
-      downloader.close();
     }
   }
 
-  /// Mapeia automaticamente as páginas e títulos dos hinos a partir do PDF.
-  Future<int> _detectHymns(DocKind kind) async {
-    final info = App.I.documents.info(kind);
-    if (info == null) return 0;
-    try {
-      final d = await PdfTextService.detectHymns(info.path,
-          onProgress: (p) => _set('${kind.label}: localizando os hinos (página ${p.page} de ${p.pages})',
-              p.page / p.pages));
-      if (d.pages.length < 50) return 0; // pouco confiável: fica o mapeamento manual
-      return await App.I.applyHymnDetection(kind.key, d);
-    } on Object {
-      return 0;
-    }
-  }
+  Future<void> _detectHymns(DocKind kind) =>
+      App.I.setup.detectHymns(kind, onProgress: (m, [p]) => _set('${kind.label}: $m', p));
 
-  Future<void> _downloadAll() async {
-    final results = <String>[];
-    for (final kind in DocKind.values) {
-      if (App.I.documents.has(kind)) {
-        results.add('${kind.label}: já importado');
-        continue;
-      }
-      final ok = await _download(kind, ask: false);
-      var detail = '';
-      if (ok && kind != DocKind.bible) {
-        final n = (await App.I.hymns.manualPages(kind.key)).length;
-        detail = n > 0 ? ' ($n hinos localizados)' : ' (mapeie as páginas em Hinário › ajustes)';
-      }
-      results.add('${kind.label}: ${ok ? 'baixado$detail' : 'falhou'}');
-    }
-    if (!mounted) return;
-    final bibleNow = App.I.documents.has(DocKind.bible) && !App.I.hasBibleText;
-    await _showReport('Download dos documentos', results.join('\n') +
-        (results.any((r) => r.endsWith('falhou'))
-            ? '\n\nPara os que falharam, use "Baixar" de novo ou "Importar PDF".'
-            : ''));
-    if (bibleNow && mounted) await _indexBible();
+  void _downloadAll() {
+    App.I.setup.run();
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen()));
   }
 
   void _set(String? status, [double? progress]) {
@@ -169,31 +118,19 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
   }
 
   Future<void> _indexBible() async {
-    final info = App.I.documents.info(DocKind.bible);
-    if (info == null) return;
+    if (App.I.documents.info(DocKind.bible) == null) return;
     _set('Lendo o PDF…', 0);
     try {
-      final result = await PdfTextService.parseBible(info.path,
-          onProgress: (p) => _set('Extraindo texto: página ${p.page} de ${p.pages}', p.page / p.pages));
-      if (result.verses.isEmpty) {
-        _set(null);
-        if (mounted) {
-          await _showReport('Nenhum versículo reconhecido',
-              'Não foi possível estruturar o texto deste PDF (pode ser um PDF escaneado, sem '
-              'camada de texto, ou com layout não reconhecido). Nada foi gravado.\n\n'
-              'A leitura pelo PDF continua disponível. Alternativa: importe um arquivo JSON '
-              'estruturado.\n\n${result.summary()}');
-        }
-        return;
-      }
-      _set('Gravando ${result.verses.length} versículos…', 0);
-      final report = await App.I.storeBible(result, 'PDF: ${info.originalName}',
-          onProgress: (p) => _set('Gravando no banco…', p));
+      final report = await App.I.setup.indexBible(onProgress: (m, [p]) => _set(m, p));
       _set(null);
       if (mounted) await _showReport('Indexação concluída', report);
     } on Object catch (e) {
       _set(null);
-      if (mounted) showSnack(context, 'Falha na indexação: $e');
+      if (mounted) {
+        await _showReport('Não foi possível organizar o texto',
+            '$e\n\nNada foi gravado. A leitura pelo PDF continua disponível. '
+            'Alternativa: importe um arquivo JSON estruturado.');
+      }
     }
   }
 
@@ -284,7 +221,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Documentos')),
       body: ListenableBuilder(
-        listenable: Listenable.merge([app.documents, app.settings]),
+        listenable: Listenable.merge([app.documents, app.settings, app.setup]),
         builder: (context, _) => ListView(children: [
           if (_busy)
             Card(

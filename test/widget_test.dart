@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:biblia_hinos_ccb/main.dart';
+import 'package:biblia_hinos_ccb/screens/setup_screen.dart';
 import 'package:biblia_hinos_ccb/services/app_services.dart';
+import 'package:biblia_hinos_ccb/services/setup_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +25,7 @@ void main() {
     tester.view.devicePixelRatio = 2.75;
     addTearDown(tester.view.reset);
     SharedPreferences.setMockInitialValues({});
+    SetupService.autoStart = false;
     await tester.runAsync(() async {
       final dir = await Directory.systemTemp.createTemp('bh_widget');
       await App.init(dbPath: inMemoryDatabasePath, factory: databaseFactoryFfi, dataDir: dir.path);
@@ -50,6 +53,25 @@ void main() {
     await settle(tester);
     expect(find.text('Versículos'), findsOneWidget);
 
+    await tester.runAsync(() => App.I.db.db.close());
+  });
+
+  testWidgets('tela de preparação mostra as etapas', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.75;
+    addTearDown(tester.view.reset);
+    SharedPreferences.setMockInitialValues({});
+    await tester.runAsync(() async {
+      final dir = await Directory.systemTemp.createTemp('bh_widget2');
+      await App.init(dbPath: inMemoryDatabasePath, factory: databaseFactoryFfi, dataDir: dir.path);
+    });
+    await tester.pumpWidget(const MaterialApp(home: SetupScreen()));
+    await tester.pump();
+    expect(find.text('Preparando o aplicativo'), findsOneWidget);
+    expect(find.text('Baixar a Bíblia'), findsOneWidget);
+    expect(find.text('Organizar livros, capítulos e versículos'), findsOneWidget);
+    expect(find.text('Usar o app enquanto isso'), findsOneWidget);
+    expect(App.I.setup.needed, isTrue);
     await tester.runAsync(() => App.I.db.db.close());
   });
 }

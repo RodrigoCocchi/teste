@@ -20,6 +20,7 @@ import 'bible_parser.dart';
 import 'documents.dart';
 import 'pdf_text_service.dart';
 import 'settings.dart';
+import 'setup_service.dart';
 
 /// Ponto único de acesso aos serviços (inicializado em main()).
 class App {
@@ -39,6 +40,7 @@ class App {
   late final quiz = QuizRepository(db);
   late final hymns = HymnRepository(db);
   late final plan = PlanRepository(db);
+  late final setup = SetupService(this);
 
   /// Incrementado quando o texto bíblico muda (nova importação).
   final ValueNotifier<int> bibleVersion = ValueNotifier(0);

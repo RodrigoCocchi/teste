@@ -5,10 +5,10 @@ import '../data/hymn_repository.dart';
 import '../services/app_services.dart';
 import '../services/documents.dart';
 import '../theme.dart';
-import 'documents_screen.dart';
 import 'nav.dart';
 import 'plan_screen.dart';
 import 'search_screen.dart';
+import 'setup_screen.dart';
 import 'settings_screen.dart';
 import 'shell.dart';
 import 'study_screen.dart';
@@ -35,10 +35,6 @@ class HomeScreen extends StatelessWidget {
         builder: (context, _) {
           final last = app.settings.lastChapter;
           final lastHymn = app.settings.lastHymn;
-          final noDocs = !app.documents.has(DocKind.bible) &&
-              !app.documents.has(DocKind.hymnalDo) &&
-              !app.documents.has(DocKind.hymnalOrgao) &&
-              !app.hasBibleText;
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: [
@@ -48,20 +44,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               _SearchBox(onTap: () => push(context, const SearchScreen())),
-              if (noDocs) ...[
-                const SizedBox(height: 12),
-                Card(
-                  color: AppColors.gold.withValues(alpha: 0.15),
-                  child: ListTile(
-                    leading: const Icon(Icons.file_upload_outlined),
-                    title: const Text('Baixar a Bíblia e o Hinário'),
-                    subtitle: const Text(
-                        'Toque para baixar os PDFs das fontes indicadas (precisa de internet só agora).'),
-                    trailing: const Icon(Icons.download),
-                    onTap: () => push(context, const DocumentsScreen(autoDownload: true)),
-                  ),
-                ),
-              ],
+              const SetupBanner(),
               const SizedBox(height: 12),
               if (last != null || lastHymn != null)
                 Row(children: [

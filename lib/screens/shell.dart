@@ -5,6 +5,9 @@ import 'favorites_screen.dart';
 import 'home_screen.dart';
 import 'hymnal_screen.dart';
 import 'quiz_screen.dart';
+import 'setup_screen.dart';
+import '../services/setup_service.dart';
+import '../services/app_services.dart';
 
 /// Navegação inferior: Início | Bíblia | Hinário | Quiz | Favoritos.
 class Shell extends StatefulWidget {
@@ -20,6 +23,21 @@ class Shell extends StatefulWidget {
 class _ShellState extends State<Shell> {
   int _index = 0;
   final _visited = <int>{0};
+
+  @override
+  void initState() {
+    super.initState();
+    // Preparação automática: baixa e organiza tudo sem precisar de toque.
+    final setup = App.I.setup;
+    if (SetupService.autoStart && setup.needed) {
+      setup.run();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen()));
+        }
+      });
+    }
+  }
 
   void select(int i) => setState(() {
         _index = i;
