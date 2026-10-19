@@ -65,7 +65,16 @@ void main() {
         log('biblia: suspeitos: ${r.suspectChapters.map((k) => '${bookById(k ~/ 1000).abbrev}${k % 1000}').join(' ')}');
         final lastPage = r.chapterPages.values.fold<int>(0, (a, b) => b > a ? b : a);
         log('biblia: último capítulo reconhecido na página $lastPage');
-        for (final p in {lastPage, lastPage + 1}) {
+        for (final key in r.suspectChapters) {
+          final vs = r.verses.where((v) => v.book * 1000 + v.chapter == key).toList();
+          log('suspeito ${bookById(key ~/ 1000).abbrev} ${key % 1000}: ${vs.length} versículos; '
+              'tamanhos ${vs.map((v) => v.text.length).join(',')}; página ${r.chapterPages[key]}');
+        }
+        final suspectPages = <int>{
+          for (final key in r.suspectChapters)
+            if (r.chapterPages[key] != null) ...[r.chapterPages[key]!, r.chapterPages[key]! + 1],
+        };
+        for (final p in {...suspectPages, lastPage + 1}) {
           if (p < 1 || p > pages.length) continue;
           log('--- página $p (${pages[p - 1].length} linhas) ---');
           for (final l in pages[p - 1].take(45)) {
