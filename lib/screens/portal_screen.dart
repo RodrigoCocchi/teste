@@ -5,6 +5,7 @@ import '../services/app_services.dart';
 import '../services/ccb_portal.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
+import 'relatorio_screen.dart';
 
 /// Atalhos para o site oficial da CCB (abre no navegador).
 class PortalScreen extends StatefulWidget {
@@ -94,6 +95,17 @@ class _PortalScreenState extends State<PortalScreen> {
             ),
           ),
           const SizedBox(height: 8),
+          Card(
+            color: AppColors.navy,
+            child: ListTile(
+              leading: const Icon(Icons.church, color: Colors.white, size: 32),
+              title: const Text('Pesquisar cultos', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              subtitle: const Text('Casas de oração e horários (relatório) dentro do app',
+                  style: TextStyle(color: Colors.white70)),
+              trailing: const Icon(Icons.chevron_right, color: Colors.white),
+              onTap: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const RelatorioScreen())),
+            ),
+          ),
           for (final s in portalSections)
             Card(
               child: ListTile(
