@@ -49,6 +49,17 @@ def pick(lst, words):
         if any(w.lower() in str(it.get("Text", "")).lower() for w in words): return it
     return items[1] if len(items) > 1 else None
 
+for m in re.finditer(r'<input[^>]*type="checkbox"[^>]*>', html):
+    print("[p] chk", m.group(0)[:200])
+for m in re.finditer(r'<label[^>]*for="[^"]*"[^>]*>[^<]{1,60}</label>', html):
+    print("[p] lbl", m.group(0)[:160])
+city = None
+import sys
+for pag in ["1", "2"]:
+    r = post("/service/servico-relatorio", {"codigoPais": "1", "codigoEstado": "376", "codigoCidade": "2329",
+             "tipoCulto": "", "diaSemana": "", "periodo": "", "pagina": pag, "tamanho": "50", "quantidade": "50"})
+    print("[p] rows", r.count("data-id") if isinstance(r, str) else r, re.findall(r"Exibindo[^<]*", str(r)))
+sys.exit(0)
 # Trechos JS que montam os parâmetros
 for m in re.finditer(r"/service/(estado|cidade|servico|localidade)[a-z\-]*", html):
     a = max(0, m.start() - 300); b = m.end() + 500
