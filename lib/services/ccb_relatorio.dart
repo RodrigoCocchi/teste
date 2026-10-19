@@ -10,79 +10,96 @@ class RelOption {
   final String value;
 }
 
-/// Linha de resultado das tabelas do relatório.
-class RelRow {
-  const RelRow(this.id, this.cells);
-  final String? id; // data-id, usado para abrir o detalhe
-  final List<String> cells;
+/// Casa de oração listada nas pesquisas do relatório.
+class RelPlace {
+  const RelPlace({required this.id, required this.name, this.code = '', this.city = '', this.address = ''});
+  final String id; // data-id, usado para abrir o detalhe
+  final String name;
+  final String code; // ex.: BR-21-0008
+  final String city; // ex.: São Paulo, SP, Brasil
+  final String address;
 }
 
 class RelPage {
-  const RelPage(this.headers, this.rows, this.info);
-  final List<String> headers;
-  final List<RelRow> rows;
-  final String? info; // ex.: "Exibindo 20 de 24254"
+  const RelPage(this.places, this.info, this.hasNext);
+  final List<RelPlace> places;
+  final String? info; // ex.: "Exibindo 5 de 13"
+  final bool hasNext;
+}
+
+/// Filtros da pesquisa de cultos (vazio = todos).
+class RelFilter {
+  const RelFilter({this.tipos = const {}, this.dias = const {}, this.periodos = const {}});
+  final Set<String> tipos;
+  final Set<int> dias; // 1 = domingo ... 7 = sábado
+  final Set<String> periodos;
+}
+
+/// Bloco do detalhe: título (ex.: "Localização", "Dias de Culto") e linhas.
+class RelSection {
+  const RelSection(this.title, this.lines);
+  final String title;
+  final List<String> lines;
 }
 
 const List<String> relTiposCulto = ['Culto Oficial', 'Reunião de Jovens e Menores'];
 const List<String> relPeriodos = ['Manhã', 'Tarde', 'Noite'];
 const List<String> relDias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
-String _cellText(String html) => html
-    .replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), ' · ')
+String relText(String html) => html
+    .replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), ' ')
     .replaceAll(RegExp(r'<[^>]+>'), ' ')
     .replaceAll('&nbsp;', ' ')
     .replaceAll('&amp;', '&')
     .replaceAll('&quot;', '"')
     .replaceAll('&#39;', "'")
     .replaceAllMapped(RegExp(r'&#(\d+);'), (m) => String.fromCharCode(int.parse(m[1]!)))
+    .replaceAllMapped(RegExp(r'&#x([0-9a-fA-F]+);'), (m) => String.fromCharCode(int.parse(m[1]!, radix: 16)))
     .replaceAll(RegExp(r'\s+'), ' ')
-    .replaceAll(RegExp(r'^[\s·]+|[\s·]+$'), '')
     .trim();
 
-/// Converte o HTML devolvido pelos serviços do relatório em linhas de tabela.
+/// Converte o HTML devolvido pelas pesquisas do relatório em casas de oração.
 RelPage parseRelTable(String html) {
-  final headers = RegExp(r'<th\b[^>]*>(.*?)</th>', dotAll: true, caseSensitive: false)
-      .allMatches(html)
-      .map((m) => _cellText(m[1]!))
-      .toList();
-  final rows = <RelRow>[];
-  for (final m in RegExp(r'<tr\b([^>]*)>(.*?)</tr>', dotAll: true, caseSensitive: false).allMatches(html)) {
-    final cells = RegExp(r'<td\b[^>]*>(.*?)</td>', dotAll: true, caseSensitive: false)
-        .allMatches(m[2]!)
-        .map((c) => _cellText(c[1]!))
+  final places = <RelPlace>[];
+  final starts = RegExp(r'''data-id\s*=\s*["']([^"']+)["']''').allMatches(html).toList();
+  for (var i = 0; i < starts.length; i++) {
+    final end = i + 1 < starts.length ? starts[i + 1].start : html.length;
+    var block = html.substring(starts[i].end, end);
+    final close = block.indexOf('</td>');
+    if (close >= 0) block = block.substring(0, close);
+    final name = RegExp(r'<strong[^>]*>(.*?)</strong>', dotAll: true).firstMatch(block)?[1];
+    final code = RegExp(r'<small[^>]*>(.*?)</small>', dotAll: true).firstMatch(block)?[1];
+    final divs = RegExp(r'<div[^>]*>([^<]*)</div>')
+        .allMatches(block)
+        .map((m) => relText(m[1]!))
+        .where((t) => t.isNotEmpty)
         .toList();
-    if (cells.isEmpty || cells.every((c) => c.isEmpty)) continue;
-    final id = RegExp(r'''data-id\s*=\s*["']([^"']+)["']''').firstMatch(m[0]!)?[1];
-    rows.add(RelRow(id, cells));
+    places.add(RelPlace(
+      id: starts[i][1]!,
+      name: relText(name ?? (divs.isEmpty ? '' : divs.first)),
+      code: relText(code ?? ''),
+      city: divs.isNotEmpty ? divs.first : '',
+      address: divs.length > 1 ? divs[1] : '',
+    ));
   }
-  final text = _cellText(html);
+  final text = relText(html);
   final info = RegExp(r'Exibindo\s+\d+\s+de\s+\d+', caseSensitive: false).firstMatch(text)?[0];
-  return RelPage(headers, rows, info);
+  final hasNext = RegExp(r'<button[^>]*value="\d+"[^>]*>\s*Pr[óo]ximo', caseSensitive: false).hasMatch(html);
+  return RelPage(places, info, hasNext);
 }
 
-/// Detalhe da casa de oração: pares "rótulo: valor" do HTML.
-List<(String, String)> parseRelDetail(String html) {
-  final out = <(String, String)>[];
-  for (final m in RegExp(r'<tr\b[^>]*>(.*?)</tr>', dotAll: true, caseSensitive: false).allMatches(html)) {
-    final cells = RegExp(r'<t[hd]\b[^>]*>(.*?)</t[hd]>', dotAll: true, caseSensitive: false)
-        .allMatches(m[1]!)
-        .map((c) => _cellText(c[1]!))
-        .where((c) => c.isNotEmpty)
-        .toList();
-    if (cells.length >= 2) {
-      out.add((cells.first, cells.skip(1).join(' · ')));
-    } else if (cells.length == 1) {
-      out.add(('', cells.first));
+/// Detalhe da casa de oração em blocos (localização, dias de culto, ministério, telefones).
+List<RelSection> parseRelDetail(String html) {
+  final out = <RelSection>[];
+  for (final card in html.split(RegExp(r'<div class="card detalhe">')).skip(1)) {
+    final title = relText(RegExp(r'<label[^>]*>(.*?)</label>', dotAll: true).firstMatch(card)?[1] ?? '');
+    final lines = <String>[];
+    for (final m in RegExp(r'<p[^>]*>(.*?)</p>', dotAll: true).allMatches(card)) {
+      final t = relText(m[1]!);
+      // O site repete nomes seguidos no ministério.
+      if (t.isNotEmpty && (lines.isEmpty || lines.last != t)) lines.add(t);
     }
-  }
-  if (out.isEmpty) {
-    for (final line in html.split(RegExp(r'<br\s*/?>|</p>|</div>|</li>|</h\d>', caseSensitive: false))) {
-      final t = _cellText(line);
-      if (t.isEmpty) continue;
-      final i = t.indexOf(':');
-      out.add(i > 0 && i < 40 ? (t.substring(0, i).trim(), t.substring(i + 1).trim()) : ('', t));
-    }
+    if (title.isNotEmpty || lines.isNotEmpty) out.add(RelSection(title, lines));
   }
   return out;
 }
@@ -156,22 +173,21 @@ class CcbRelatorio {
     required String pais,
     String estado = '',
     String cidade = '',
-    Set<String> tipos = const {},
-    int? dia, // 1 = domingo ... 7 = sábado
-    String periodo = '',
+    RelFilter filter = const RelFilter(),
     int pagina = 1,
   }) async =>
       parseRelTable(await _post('servico-relatorio', {
         'codigoPais': pais,
         'codigoEstado': estado,
         'codigoCidade': cidade,
-        'tipoCulto': tipos.join(','),
-        'diaSemana': dia == null ? '' : '$dia',
-        'periodo': periodo,
+        // O site não devolve nada com filtro vazio: "todos" = todas as opções marcadas.
+        'tipoCulto': (filter.tipos.isEmpty ? relTiposCulto : filter.tipos).join(','),
+        'diaSemana': (filter.dias.isEmpty ? [1, 2, 3, 4, 5, 6, 7] : (filter.dias.toList()..sort())).join(','),
+        'periodo': (filter.periodos.isEmpty ? relPeriodos : filter.periodos).join(','),
         'pagina': '$pagina',
       }));
 
-  Future<List<(String, String)>> detalhe(String codigo) async =>
+  Future<List<RelSection>> detalhe(String codigo) async =>
       parseRelDetail(await _post('localidade-detalhe', {'codigo': codigo}));
 
   void close() {

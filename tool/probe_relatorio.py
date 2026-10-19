@@ -57,7 +57,8 @@ city = None
 import sys
 for pag in ["1", "2"]:
     r = post("/service/servico-relatorio", {"codigoPais": "1", "codigoEstado": "376", "codigoCidade": "2329",
-             "tipoCulto": "", "diaSemana": "", "periodo": "", "pagina": pag, "tamanho": "50", "quantidade": "50"})
+             "tipoCulto": "Culto Oficial,Reunião de Jovens e Menores", "diaSemana": "1,2,3,4,5,6,7",
+             "periodo": "Manhã,Tarde,Noite", "pagina": pag})
     print("[p] rows", r.count("data-id") if isinstance(r, str) else r, re.findall(r"Exibindo[^<]*", str(r)))
 sys.exit(0)
 # Trechos JS que montam os parâmetros

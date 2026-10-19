@@ -43,6 +43,8 @@ dependencies:
   syncfusion_flutter_pdf: ^35.1.40+1
   path: ^1.9.1
   url_launcher: ^6.3.3
+  geolocator: ^14.0.1
+  geocoding: ^5.0.0
 
 dev_dependencies:
   flutter_test:

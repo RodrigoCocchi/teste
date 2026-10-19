@@ -8,6 +8,7 @@ import '../theme.dart';
 import 'nav.dart';
 import 'plan_screen.dart';
 import 'portal_screen.dart';
+import 'relatorio_screen.dart';
 import 'search_screen.dart';
 import 'setup_screen.dart';
 import 'settings_screen.dart';
@@ -105,6 +106,12 @@ class HomeScreen extends StatelessWidget {
                 title: 'Plano de Leitura',
                 subtitle: 'A Bíblia inteira em 365 dias',
                 onTap: () => push(context, const PlanScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.near_me_outlined,
+                title: 'Cultos perto de mim',
+                subtitle: 'Casas de oração e horários (relatório CCB)',
+                onTap: () => push(context, const RelatorioScreen()),
               ),
               _HomeCard(
                 icon: Icons.church_outlined,
