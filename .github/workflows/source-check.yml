@@ -1,0 +1,24 @@
+name: Verificar fontes
+
+on:
+  push:
+    branches: [ccr-a717e1c3-dutbli]
+    paths: ['lib/services/**', 'tool/source_check_test.dart', '.github/workflows/source-check.yml']
+  workflow_dispatch:
+
+jobs:
+  fontes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Baixar das fontes e diagnosticar a extração
+        env:
+          ONLINE_CHECK: '1'
+        run: flutter test tool/source_check_test.dart --reporter expanded 2>&1 | grep -E "\[diag\]|Some tests|All tests" || true

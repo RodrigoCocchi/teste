@@ -64,31 +64,40 @@ class PdfTextService {
     }
   }
 
+  /// Linhas de cada página em ordem de leitura (usado também em diagnóstico).
+  static List<List<String>> extractPageLines(String path,
+      {void Function(int page, int pages)? onPage, int? maxPages}) {
+    final doc = sf.PdfDocument(inputBytes: File(path).readAsBytesSync());
+    final extractor = sf.PdfTextExtractor(doc);
+    final count = maxPages == null ? doc.pages.count : maxPages.clamp(0, doc.pages.count);
+    final pages = <List<String>>[];
+    for (var i = 0; i < count; i++) {
+      List<String> lines;
+      try {
+        final textLines = extractor.extractTextLines(startPageIndex: i, endPageIndex: i);
+        final words = <WordBox>[
+          for (final l in textLines)
+            for (final w in l.wordCollection)
+              if (w.text.trim().isNotEmpty)
+                WordBox(w.text.trim(), w.bounds.left, w.bounds.top, w.bounds.width,
+                    w.bounds.height),
+        ];
+        lines = orderPageLines(words, doc.pages[i].size.width);
+      } on Object {
+        lines = const [];
+      }
+      pages.add(lines);
+      onPage?.call(i + 1, count);
+    }
+    doc.dispose();
+    return pages;
+  }
+
   static void _entry(_Job job) {
     try {
-      final doc = sf.PdfDocument(inputBytes: File(job.path).readAsBytesSync());
-      final extractor = sf.PdfTextExtractor(doc);
-      final count = doc.pages.count;
-      final pages = <List<String>>[];
-      for (var i = 0; i < count; i++) {
-        List<String> lines;
-        try {
-          final textLines = extractor.extractTextLines(startPageIndex: i, endPageIndex: i);
-          final words = <WordBox>[
-            for (final l in textLines)
-              for (final w in l.wordCollection)
-                if (w.text.trim().isNotEmpty)
-                  WordBox(w.text.trim(), w.bounds.left, w.bounds.top, w.bounds.width,
-                      w.bounds.height),
-          ];
-          lines = orderPageLines(words, doc.pages[i].size.width);
-        } on Object {
-          lines = const [];
-        }
-        pages.add(lines);
-        if (i % 5 == 0 || i == count - 1) job.port.send(ExtractProgress(i + 1, count));
-      }
-      doc.dispose();
+      final pages = extractPageLines(job.path, onPage: (i, count) {
+        if (i % 5 == 0 || i == count) job.port.send(ExtractProgress(i, count));
+      });
       if (job.mode == 'bible') {
         job.port.send(parseBibleText(pages));
       } else {
