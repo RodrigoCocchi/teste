@@ -19,10 +19,15 @@ textos() {
   echo "=== Tela ($1) ==="
   grep -o 'text="[^"]*"\|content-desc="[^"]*"' "smoke/$1.xml" | grep -v '=""' | head -40 || true
 }
-sleep 25
+# Espera (até 6 min) a tela de preparação, a tela inicial ou um erro.
+touch smoke/inicio.xml
+for i in $(seq 1 18); do
+  sleep 20
+  textos inicio
+  if grep -q "Preparando o aplicativo\|Tudo pronto\|Início\|Não foi possível iniciar" smoke/inicio.xml; then break; fi
+done
 adb exec-out screencap -p > smoke/tela1.png
-textos inicio
-sleep 120
+sleep 90
 adb exec-out screencap -p > smoke/tela2.png
 textos depois
 adb logcat -d > smoke/logcat.txt

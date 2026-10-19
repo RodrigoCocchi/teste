@@ -117,6 +117,19 @@ void main() {
     expect((await app.hymns.search('titulo teste')).single.number, 5);
   });
 
+  test('segunda abertura não regrava o conteúdo e mantém a conferência', () async {
+    final dir = await Directory.systemTemp.createTemp('bh_reopen');
+    final path = '${dir.path}/db.sqlite';
+    final a1 = await App.init(dbPath: path, factory: databaseFactoryFfi, dataDir: dir.path);
+    await a1.storeBible(fixture(), 'teste');
+    expect(a1.questions.firstWhere((q) => q.id == 'F01').verifyStatus, 'conferida');
+    await a1.db.db.close();
+    final a2 = await App.init(dbPath: path, factory: databaseFactoryFfi, dataDir: dir.path);
+    expect(a2.questions.firstWhere((q) => q.id == 'F01').verifyStatus, 'conferida');
+    expect(a2.verseCount, 8);
+    await a2.db.db.close();
+  });
+
   test('importa JSON estruturado', () {
     final r = App.parseBibleJson('{"verses":[{"b":1,"c":1,"v":2,"t":"b"},{"b":1,"c":1,"v":1,"t":"a"},'
         '{"b":99,"c":1,"v":1,"t":"inválido"}]}');

@@ -57,6 +57,15 @@ class QuizRepository {
     await batch.commit(noResult: true);
   }
 
+  /// Carrega o status de conferência gravado (sem regravar as perguntas).
+  Future<void> loadStatus(List<QuizQuestion> questions) async {
+    final rows = await _db.query('bible_question', columns: ['id', 'verify_status']);
+    final status = {for (final r in rows) r['id'] as String: r['verify_status'] as String};
+    for (final q in questions) {
+      q.verifyStatus = status[q.id] ?? 'pendente';
+    }
+  }
+
   /// Confere cada pergunta com o texto bíblico importado: todas as palavras-
   /// -chave devem aparecer no texto das referências citadas.
   Future<Map<String, int>> verifyAgainstBible(

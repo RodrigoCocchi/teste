@@ -23,7 +23,7 @@ class BootApp extends StatefulWidget {
 class _BootAppState extends State<BootApp> {
   late Future<void> _init = _start();
 
-  Future<void> _start() => App.init().timeout(const Duration(seconds: 40));
+  Future<void> _start() => App.init().timeout(const Duration(minutes: 3));
 
   @override
   Widget build(BuildContext context) {

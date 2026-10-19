@@ -53,16 +53,31 @@ class App {
     final dir = dataDir ?? await _dataDir();
     final sp = prefs ?? await SharedPreferences.getInstance();
     final db = await AppDatabase.open(dbPath ?? p.join(dir, 'biblia_hinos.db'), factory: factory);
+    final quizJson = await b.loadString('assets/data/quiz.json');
+    final themesJson = await b.loadString('assets/data/themes.json');
+    final studiesJson = await b.loadString('assets/data/studies.json');
     final app = App._(
       db,
       Settings(sp),
       DocumentStore(sp, dir),
-      QuizQuestion.listFromJson(await b.loadString('assets/data/quiz.json')),
-      BibleThemeData.listFromJson(await b.loadString('assets/data/themes.json')),
-      DailyStudyData.listFromJson(await b.loadString('assets/data/studies.json')),
+      QuizQuestion.listFromJson(quizJson),
+      BibleThemeData.listFromJson(themesJson),
+      DailyStudyData.listFromJson(studiesJson),
     );
     I = app;
-    await app._seed();
+    // O conteúdo fixo só é gravado no banco quando muda (abertura rápida).
+    final signature = '${AppDatabase.schemaVersion}:${quizJson.hashCode}:'
+        '${themesJson.hashCode}:${studiesJson.hashCode}';
+    // A assinatura fica no próprio banco: se o banco for recriado, semeia de novo.
+    await db.db.execute('CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT)');
+    final seeded = await db.db.query('meta', where: 'key = ?', whereArgs: ['contentSeed']);
+    if (seeded.isEmpty || seeded.first['value'] != signature) {
+      await app._seed();
+      await db.db.insert('meta', {'key': 'contentSeed', 'value': signature},
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    } else {
+      await app.quiz.loadStatus(app.questions);
+    }
     app.verseCount = await app.bible.verseCount();
     return app;
   }
