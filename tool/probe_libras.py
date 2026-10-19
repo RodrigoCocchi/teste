@@ -20,16 +20,28 @@ async def main():
         await page.wait_for_timeout(15000)
         print("[l] VLibras:", await page.evaluate("!!window.VLibras && !!window.VLibrasWidget"))
         print("[l] root:", await page.evaluate("(()=>{const r=document.getElementById('vlibras-app-root');return r?('active='+r.dataset.active):'sem root'})()"))
-        await page.fill("#texto", "A paz de Deus")
-        await page.click("text=Preparar")
+        await page.screenshot(path="libras.png")
+        await page.evaluate("document.getElementById('texto').value='A paz de Deus'; preparar();")
         await page.wait_for_timeout(1500)
-        await page.click("#alvo")
+        print("[l] alvo visível:", await page.evaluate("getComputedStyle(document.getElementById('alvo')).display"))
+        n = len(reqs)
+        try:
+            await page.locator("#alvo").tap(timeout=5000)
+        except Exception as e:
+            print("[l] tap falhou:", str(e)[:200])
+            await page.locator("#alvo").click(force=True, timeout=5000)
         await page.wait_for_timeout(15000)
+        print("[l] novas requisições após tocar:", [u[:140] for u in reqs[n:]][:30])
+        try:
+            await page.locator(".frase", has_text="Aleluia").click(force=True, timeout=5000)
+            await page.wait_for_timeout(8000)
+        except Exception as e:
+            print("[l] frase falhou:", str(e)[:200])
         print("[l] requests vlibras:")
         for u in reqs:
             if "vlibras" in u or "traducao" in u: print("[l]   ", u[:160])
         print("[l] traduziu:", any("translate" in u or "traducao" in u for u in reqs))
-        await page.screenshot(path="libras.png")
+        await page.screenshot(path="libras2.png")
         await b.close()
 
 asyncio.run(main())

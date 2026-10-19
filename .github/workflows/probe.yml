@@ -17,4 +17,4 @@ jobs:
         if: always()
         with:
           name: libras
-          path: libras.png
+          path: libras*.png
