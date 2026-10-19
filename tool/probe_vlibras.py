@@ -2,6 +2,7 @@
 import re, urllib.request
 
 UA = {"User-Agent": "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36"}
+ROOT = "https://vlibras.gov.br/app"
 
 def get(url):
     try:
@@ -10,16 +11,18 @@ def get(url):
     except Exception as e:
         return str(e), ""
 
-for url in ["https://vlibras.gov.br/app/vlibras-plugin.js", "https://vlibras.gov.br/app/"]:
-    st, body = get(url)
-    print("[v]", url, st, len(body))
-    if not body: continue
-    for kw in ["translate(", "window.plugin", "VLibras.Widget", "rootPath", "player.on(", "gloss", "setSpeed",
-               "personalization", "opacity", "avatar", "targetPath", "Unity", "loadPlayer", "translator", ".play("]:
-        hits = [m.start() for m in re.finditer(re.escape(kw), body)][:4]
-        for h in hits:
-            print(f"[v] {kw!r} @{h}: {body[max(0,h-220):h+260]!r}")
-for m in re.finditer(r'https?://[a-zA-Z0-9./_-]+', get("https://vlibras.gov.br/app/vlibras-plugin.js")[1]):
-    pass
-urls = sorted(set(re.findall(r'https?://[a-zA-Z0-9./_-]+', get("https://vlibras.gov.br/app/vlibras-plugin.js")[1])))
-print("[v] urls", urls[:60])
+st, loader = get(ROOT + "/vlibras-plugin.js")
+print("[v] loader", st)
+for i in range(0, len(loader), 400):
+    print("[v] L|", loader[i:i+400])
+paths = sorted(set(re.findall(r'\$\{r\}(/[A-Za-z0-9_./-]+)', loader)))
+print("[v] paths", paths)
+for p in paths:
+    if not p.endswith((".js", ".html")): continue
+    st, body = get(ROOT + p)
+    print("[v] ==", p, st, len(body))
+    for kw in ["translate", "postMessage", "addEventListener(`message`", "addEventListener(\"message\"", "window.plugin",
+               "setSpeed", "speed", "gloss", "dictionary", "player", "text"]:
+        for m in list(re.finditer(re.escape(kw), body))[:3]:
+            h = m.start()
+            print(f"[v] {p} {kw!r} @{h}: {body[max(0,h-200):h+250]!r}")
