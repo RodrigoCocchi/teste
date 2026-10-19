@@ -119,14 +119,28 @@ const Set<String> _enclitics = {
 };
 
 /// Converte as linhas de cada página (já em ordem de leitura) em tokens.
-List<_Tok> _tokenize(List<List<String>> pages) {
+/// Como tratar números no meio das linhas:
+/// [all] qualquer número pode ser versículo; [lineStart] só no início da
+/// linha; [dropSmall] ignora números em fonte menor (chamadas de notas).
+enum _Mode { all, lineStart, dropSmall }
+
+final RegExp _footnoteLine = RegExp('^$smallMark?\\d{1,2}\\s*$smallMark?\\s+\\d{1,3}[.:]\\d{1,3}');
+final RegExp _smallNumber = RegExp('$smallMark\\d+');
+
+List<_Tok> _tokenize(List<List<String>> pages, [_Mode mode = _Mode.all]) {
   final toks = <_Tok>[];
   final pageNumbers = _detectPageNumbers(pages);
   for (var p = 0; p < pages.length; p++) {
     final page = p + 1;
     final lines = pages[p];
     for (var li = 0; li < lines.length; li++) {
-      final line = lines[li].replaceAll(RegExp(r'\s+'), ' ').trim();
+      final raw = lines[li];
+      if (_footnoteLine.hasMatch(raw.trim())) continue; // notas/referências cruzadas
+      final line = (mode == _Mode.all
+              ? raw.replaceAll(smallMark, '')
+              : raw.replaceAll(_smallNumber, '').replaceAll(smallMark, ''))
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim();
       if (line.isEmpty) continue;
       if (pageNumbers != null) {
         final (pos, offset) = pageNumbers;
@@ -149,6 +163,7 @@ List<_Tok> _tokenize(List<List<String>> pages) {
       }
       var last = 0;
       for (final m in _inlineNumber.allMatches(line)) {
+        if (mode == _Mode.lineStart && m.start > 0) continue;
         if (m.start > last) toks.add(_Tok.text(line.substring(last, m.start), page));
         toks.add(_Tok.number(int.parse(m[1]!), _NumKind.inline, page, m[1]!));
         last = m.end;
@@ -225,7 +240,17 @@ String _clean(String s) => s
 /// Nada é inventado: capítulos que não puderem ser reconhecidos ficam
 /// ausentes e são relatados.
 BibleParseResult parseBibleText(List<List<String>> pages) {
-  final toks = _tokenize(pages);
+  BibleParseResult? best;
+  for (final mode in const [_Mode.dropSmall, _Mode.lineStart, _Mode.all]) {
+    final r = _parse(pages, mode);
+    if (best == null || r.parsedChapters.length > best.parsedChapters.length) best = r;
+    if (r.isComplete && r.suspectChapters.isEmpty) break;
+  }
+  return best!;
+}
+
+BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
+  final toks = _tokenize(pages, mode);
   final verses = <ParsedVerse>[];
   final chapterPages = <int, int>{};
   final bookPages = <int, int>{};
@@ -391,22 +416,32 @@ void _validate(BibleParseResult r) {
 
 /// Palavra posicionada na página (coordenadas em pontos PDF).
 class WordBox {
-  const WordBox(this.text, this.left, this.top, this.width, this.height);
+  const WordBox(this.text, this.left, this.top, this.width, this.height, [this.fontSize = 0]);
   final String text;
   final double left;
   final double top;
   final double width;
   final double height;
+  final double fontSize;
   double get right => left + width;
 }
 
 /// Reconstrói as linhas de uma página em ordem de leitura, separando
 /// automaticamente layouts de duas colunas (lê a coluna esquerda inteira
 /// antes da direita).
+/// Marca números em fonte menor que o texto (chamadas de nota/sobrescritos).
+const String smallMark = '\u0001';
+
 List<String> orderPageLines(List<WordBox> words, double pageWidth) {
   if (words.isEmpty) return const [];
+  final sizes = [
+    for (final w in words)
+      if (w.fontSize > 0 && RegExp(r'[A-Za-zÀ-ÿ]').hasMatch(w.text)) w.fontSize,
+  ]..sort();
+  final small = sizes.isEmpty ? 0.0 : sizes[sizes.length ~/ 2] * 0.8;
+  List<String> group(List<WordBox> ws) => _groupLines(ws, small);
   double? gutter;
-  final lineCount = _groupLines(words).length;
+  final lineCount = group(words).length;
   var best = 1 << 30;
   for (var f = 0.35; f <= 0.65; f += 0.01) {
     final x = pageWidth * f;
@@ -421,18 +456,18 @@ List<String> orderPageLines(List<WordBox> words, double pageWidth) {
   final twoColumns = best <= (lineCount * 0.05).ceil() &&
       left > words.length * 0.2 &&
       right > words.length * 0.2 &&
-      _groupLines(words.where((w) => w.left >= gutter!).toList()).length >= 3 &&
-      _groupLines(words.where((w) => w.right <= gutter!).toList()).length >= 3;
-  if (!twoColumns) return _groupLines(words);
+      group(words.where((w) => w.left >= gutter!).toList()).length >= 3 &&
+      group(words.where((w) => w.right <= gutter!).toList()).length >= 3;
+  if (!twoColumns) return group(words);
   final spanning = words.where((w) => w.left < gutter! && w.right > gutter).toList();
   final col1 = words.where((w) => w.right <= gutter!).toList();
   final col2 = words.where((w) => w.left >= gutter!).toList();
   // Linhas que cruzam o centro (títulos) entram na posição vertical correta
   // da primeira coluna.
-  return [..._groupLines([...spanning, ...col1]), ..._groupLines(col2)];
+  return [...group([...spanning, ...col1]), ...group(col2)];
 }
 
-List<String> _groupLines(List<WordBox> words) {
+List<String> _groupLines(List<WordBox> words, [double small = 0]) {
   final sorted = [...words]..sort((a, b) => a.top.compareTo(b.top));
   final lines = <List<WordBox>>[];
   for (final w in sorted) {
@@ -446,8 +481,31 @@ List<String> _groupLines(List<WordBox> words) {
     }
     lines.add([w]);
   }
-  return [
-    for (final l in lines)
-      (l..sort((a, b) => a.left.compareTo(b.left))).map((w) => w.text).join(' '),
-  ];
+  return [for (final l in lines) _joinLine(l..sort((a, b) => a.left.compareTo(b.left)), small)];
+}
+
+/// Junta as palavras de uma linha. Alguns PDFs entregam cada letra como uma
+/// "palavra": só insere espaço quando há um vão real entre as caixas.
+String _joinLine(List<WordBox> words, [double small = 0]) {
+  final sb = StringBuffer();
+  var inSmallNumber = false;
+  for (var i = 0; i < words.length; i++) {
+    final w = words[i];
+    var spaced = false;
+    if (i > 0) {
+      final prev = words[i - 1];
+      final h = prev.height < w.height ? prev.height : w.height;
+      final gap = w.left - prev.right;
+      if (gap > h * 0.15) {
+        sb.write(' ');
+        spaced = true;
+      }
+    }
+    final isSmallDigit =
+        w.fontSize > 0 && w.fontSize < small && RegExp(r'^\d+$').hasMatch(w.text);
+    if (isSmallDigit && (!inSmallNumber || spaced)) sb.write(smallMark);
+    inSmallNumber = isSmallDigit;
+    sb.write(w.text);
+  }
+  return sb.toString();
 }

@@ -39,6 +39,9 @@ class SourceDownloader {
 
   final HttpClient _client;
 
+  /// Esperas (segundos) entre novas tentativas quando o servidor limita acessos.
+  List<int> retryDelays = const [5, 15, 30];
+
   /// Baixa [url] para [dest]. Retorna o endereço de onde o PDF veio.
   Future<String> download(String url, String dest,
       {void Function(DownloadProgress)? onProgress, String? prefer}) async {
@@ -71,10 +74,24 @@ class SourceDownloader {
   /// Faz o download. Se a resposta for PDF, grava em [dest] e retorna null;
   /// se for HTML, retorna o texto da página.
   Future<String?> _fetch(Uri uri, String dest, void Function(DownloadProgress)? onProgress) async {
-    final req = await _client.getUrl(uri);
-    req.followRedirects = true;
-    req.maxRedirects = 10;
-    final res = await req.close().timeout(const Duration(seconds: 40));
+    HttpClientResponse res;
+    var attempt = 0;
+    while (true) {
+      final req = await _client.getUrl(uri);
+      req.followRedirects = true;
+      req.maxRedirects = 10;
+      res = await req.close().timeout(const Duration(seconds: 40));
+      // Servidor ocupado / limite de acessos: espera e tenta de novo.
+      if ((res.statusCode == 429 || res.statusCode == 503) && attempt < retryDelays.length) {
+        await res.drain<void>();
+        final wait = int.tryParse(res.headers.value('retry-after') ?? '') ?? retryDelays[attempt];
+        onProgress?.call(DownloadProgress('Servidor ocupado, tentando de novo em ${wait}s…'));
+        await Future<void>.delayed(Duration(seconds: wait.clamp(1, 60)));
+        attempt++;
+        continue;
+      }
+      break;
+    }
     if (res.statusCode >= 400) {
       await res.drain<void>();
       throw DownloadFailure('O servidor respondeu ${res.statusCode} para ${uri.host}.');

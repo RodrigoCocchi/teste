@@ -112,4 +112,37 @@ void main() {
     expect(lines.length, 6);
     expect(lines.first.split(' ').every((w) => w == 'p0'), isTrue);
   });
+
+  test('junta letras soltas e marca números pequenos (notas)', () {
+    // Cada letra como uma "palavra", como no PDF da ARC 1969.
+    final words = <WordBox>[];
+    var x = 50.0;
+    void word(String w, {double size = 10, double gapAfter = 3}) {
+      for (final ch in w.split('')) {
+        words.add(WordBox(ch, x, 100, 5, 10, size));
+        x += 5;
+      }
+      x += gapAfter;
+    }
+
+    word('17', gapAfter: 3);
+    word('Disse');
+    word('ele', gapAfter: 0.2);
+    word('3', size: 6);
+    word('fim.');
+    final line = orderPageLines(words, 600).single;
+    expect(line, '17 Disse ele${smallMark}3 fim.');
+  });
+
+  test('ignora chamadas de nota e linhas de referências cruzadas', () {
+    final pages = <List<String>>[
+      ['GÊNESIS', '1', 'No princípio texto de teste${smallMark}1 um.',
+        '2 Segundo texto de teste.', '1 1.1 Jo 1.1', '3 Terceiro${smallMark}2 texto.'],
+    ];
+    final r = parseBibleText(pages);
+    final gn1 = r.verses.where((v) => v.book == 1 && v.chapter == 1).toList();
+    expect(gn1.map((v) => v.verse), [1, 2, 3]);
+    expect(gn1[0].text, 'No princípio texto de teste um.');
+    expect(gn1[2].text, 'Terceiro texto.');
+  });
 }

@@ -59,10 +59,12 @@ void main() {
         log('biblia: ${r.summary().replaceAll('\n', ' | ')}');
         final lastPage = r.chapterPages.values.fold<int>(0, (a, b) => b > a ? b : a);
         log('biblia: último capítulo reconhecido na página $lastPage');
-        for (final p in [3, 4, lastPage, lastPage + 1, lastPage + 2]) {
+        final firstPage = r.chapterPages[1001] ?? 1;
+        final gn2 = r.chapterPages[1002] ?? firstPage;
+        for (final p in {firstPage, gn2, lastPage, lastPage + 1}) {
           if (p < 1 || p > pages.length) continue;
           log('--- página $p (${pages[p - 1].length} linhas) ---');
-          for (final l in pages[p - 1].take(70)) {
+          for (final l in pages[p - 1].take(45)) {
             log('  | ${mask(l)}');
           }
         }
@@ -74,10 +76,11 @@ void main() {
       } else {
         final h = detectHymnPages(pages);
         log('${kind.key}: ${h.pages.length} hinos detectados automaticamente');
-        for (final p in [1, 2, 3, 10, 50]) {
+        log('${kind.key}: primeiros detectados: ${h.pages.entries.take(12).map((e) => '${e.key}→p${e.value}').join(' ')}');
+        for (final p in [9, 10, 11, 12, 50, 51]) {
           if (p > pages.length) continue;
           log('--- página $p ---');
-          for (final l in pages[p - 1].take(6)) {
+          for (final l in pages[p - 1].take(5)) {
             log('  | ${mask(l)}');
           }
         }

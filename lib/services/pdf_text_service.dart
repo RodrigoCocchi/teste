@@ -80,7 +80,7 @@ class PdfTextService {
             for (final w in l.wordCollection)
               if (w.text.trim().isNotEmpty)
                 WordBox(w.text.trim(), w.bounds.left, w.bounds.top, w.bounds.width,
-                    w.bounds.height),
+                    w.bounds.height, w.fontSize),
         ];
         lines = orderPageLines(words, doc.pages[i].size.width);
       } on Object {

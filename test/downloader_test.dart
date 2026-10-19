@@ -38,6 +38,7 @@ void main() {
     late HttpServer server;
     late String base;
     late Directory dir;
+    var hits = 0;
 
     setUp(() async {
       dir = await Directory.systemTemp.createTemp('bh_dl');
@@ -49,6 +50,15 @@ void main() {
           case '/arquivo/hinario.pdf':
             req.response.headers.contentType = ContentType('application', 'pdf');
             req.response.add(fakePdf());
+          case '/ocupado.pdf':
+            hits++;
+            if (hits < 3) {
+              req.response.statusCode = 429;
+              req.response.headers.set('retry-after', '1');
+            } else {
+              req.response.headers.contentType = ContentType('application', 'pdf');
+              req.response.add(fakePdf());
+            }
           case '/redir':
             req.response.redirect(Uri.parse('$base/direto.pdf'));
             return;
@@ -86,6 +96,13 @@ void main() {
       final from = await d.download('$base/pagina.html', dest);
       expect(from, '$base/arquivo/hinario.pdf');
       expect(await File(dest).exists(), isTrue);
+      d.close();
+    });
+
+    test('tenta de novo quando o servidor responde 429', () async {
+      final d = SourceDownloader();
+      await d.download('$base/ocupado.pdf', '${dir.path}/o.pdf');
+      expect(hits, 3);
       d.close();
     });
 
