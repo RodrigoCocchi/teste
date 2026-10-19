@@ -3,6 +3,7 @@ name: Build APK
 on:
   push:
     branches: [ccr-a717e1c3-dutbli, main]
+    paths-ignore: ['tool/**', '*.md', '.github/workflows/probe.yml', '.github/workflows/source-check.yml']
   workflow_dispatch:
 
 permissions:
