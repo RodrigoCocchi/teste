@@ -65,8 +65,6 @@ void main() {
         log('biblia: suspeitos: ${r.suspectChapters.map((k) => '${bookById(k ~/ 1000).abbrev}${k % 1000}').join(' ')}');
         final lastPage = r.chapterPages.values.fold<int>(0, (a, b) => b > a ? b : a);
         log('biblia: último capítulo reconhecido na página $lastPage');
-        final firstPage = r.chapterPages[1001] ?? 1;
-        final gn2 = r.chapterPages[1002] ?? firstPage;
         for (final p in {lastPage, lastPage + 1}) {
           if (p < 1 || p > pages.length) continue;
           log('--- página $p (${pages[p - 1].length} linhas) ---');
