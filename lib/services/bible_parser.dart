@@ -127,8 +127,8 @@ const Set<String> _enclitics = {
 /// (layout da ARC 1969 da cemaad), demais números pequenos são notas.
 enum _Mode { smallStart, all, lineStart, dropSmall }
 
-final RegExp _footnoteLine =
-    RegExp('^(?:$smallMark?\\d{1,2}\\s*$smallMark?|[a-z])\\s+\\d{1,3}[.:]\\d{1,3}');
+final RegExp _footnoteLine = RegExp(
+    '^(?:$smallMark?\\d{1,2}\\s*$smallMark?|[a-z])\\s+\\d{1,3}(?:[.:]\\d{1,3}|,\\s)');
 final RegExp _smallStart = RegExp('^$smallMark(\\d{1,3})\\s*');
 final RegExp _bookChapterLine = RegExp(r'^([1-3]?\s?[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ ]*?)\s+(\d{1,3})$');
 
@@ -334,6 +334,17 @@ BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
     return out;
   }
 
+  /// Há um cabeçalho "Livro N" (N = [chapter]) antes do próximo versículo 1?
+  bool headingAhead(int from, int chapter) {
+    for (var j = from + 1; j < toks.length; j++) {
+      final t = toks[j];
+      if (t.type != _TokType.number) continue;
+      if (t.kind == _NumKind.chapterHint && t.n == chapter) return true;
+      if (t.kind == _NumKind.verseStart && t.n == 1) return false;
+    }
+    return false;
+  }
+
   void startChapter(int book, int chapter, int i) {
     flush();
     pendingTitles.clear();
@@ -413,12 +424,22 @@ BibleParseResult _parse(List<List<String>> pages, _Mode mode) {
         startChapter(b, c + 1, i);
       } else if (canNextBook) {
         startChapter(b + 1, 1, i);
+      } else if (n > c + 1 && n <= c + 5 && n <= maxCh && v >= 1) {
+        // Ficou para trás: o cabeçalho manda. Capítulos pulados ficam ausentes.
+        result.suspectChapters.add(b * 1000 + c);
+        startChapter(b, n, i);
       }
       continue;
     }
     // Layout ARC: versículo "1" seguido de "2" abre o próximo capítulo/livro,
     // mesmo quando o número do capítulo aparece fora de ordem na página.
-    if (t.kind == _NumKind.verseStart && n == 1 && v >= 1 && next.isNotEmpty && next.first == 2) {
+    if (t.kind == _NumKind.verseStart &&
+        n == 1 &&
+        v >= 2 &&
+        next.isNotEmpty &&
+        next.first == 2 &&
+        !headingAhead(i, c + 1) &&
+        !headingAhead(i, 1)) {
       if (c + 1 <= maxCh) {
         startChapter(b, c + 1, i);
         continue;

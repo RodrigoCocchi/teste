@@ -178,4 +178,22 @@ void main() {
     expect(gn2.map((v) => v.verse), [1, 2, 3]);
     expect(gn2.first.text, 'Primeiro do dois.');
   });
+
+  test('layout ARC: nota "1 3, cf." não vira versículo e cabeçalho ressincroniza', () {
+    const m = smallMark;
+    final pages = <List<String>>[
+      ['Gênesis 1', '${m}1 No princípio um.', '${m}2 Dois.'],
+      ['Gênesis 2', 'Título de teste${m}1 com nota', '${m}1 2, cf. Ex 15.13', '${m}1 Primeiro.',
+        '${m}2 Segundo.', '${m}3 Terceiro.'],
+      ['Gênesis 3', '${m}1 Um do três.', '${m}2 Dois do três.'],
+      ['Gênesis 5', '${m}1 Um do cinco.', '${m}2 Dois do cinco.'],
+    ];
+    final r = parseBibleText(pages);
+    List<int> vs(int c) => [for (final v in r.verses) if (v.book == 1 && v.chapter == c) v.verse];
+    expect(vs(2), [1, 2, 3]);
+    expect(vs(3), [1, 2]);
+    expect(vs(4), isEmpty); // ausente, não inventado
+    expect(vs(5), [1, 2]);
+    expect(r.verses.firstWhere((v) => v.book == 1 && v.chapter == 5 && v.verse == 1).text, 'Um do cinco.');
+  });
 }
