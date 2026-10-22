@@ -11,6 +11,7 @@ import '../services/bible_audio.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import 'nav.dart';
+import 'verse_image_screen.dart';
 
 /// Leitor de capítulo com numeração, seleção de versículos, cópia,
 /// compartilhamento, favoritos, marcações, notas e modo leitura.
@@ -183,6 +184,17 @@ class _ReaderScreenState extends State<ReaderScreen> {
     await Clipboard.setData(ClipboardData(text: _selectionText()));
     if (mounted) showSnack(context, 'Versículo(s) copiado(s)');
     setState(_selected.clear);
+  }
+
+  void _shareImage() {
+    final vs = _selectedVerses;
+    if (vs.isEmpty) return;
+    final text = _selectionText();
+    final cut = text.lastIndexOf('\n— ');
+    final body = vs.map((v) => vs.length == 1 ? v.text : '${v.verse} ${v.text}').join(' ');
+    final ref = cut < 0 ? '' : text.substring(cut + 3);
+    setState(_selected.clear);
+    push(context, VerseImageScreen(text: body, reference: ref));
   }
 
   Future<void> _share() async {
@@ -443,6 +455,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
               onPressed: () => _listen(from: _selectedVerses.first.verse)),
           IconButton(tooltip: 'Copiar', icon: const Icon(Icons.copy), onPressed: _copy),
           IconButton(tooltip: 'Compartilhar (WhatsApp)', icon: const Icon(Icons.share), onPressed: _share),
+          IconButton(tooltip: 'Imagem para compartilhar', icon: const Icon(Icons.image_outlined), onPressed: _shareImage),
           IconButton(tooltip: 'Favorito', icon: const Icon(Icons.star_border), onPressed: _toggleFavorite),
           PopupMenuButton<int>(
             tooltip: 'Marcar',
