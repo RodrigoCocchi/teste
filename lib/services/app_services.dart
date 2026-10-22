@@ -24,6 +24,7 @@ import 'documents.dart';
 import 'pdf_text_service.dart';
 import 'settings.dart';
 import 'setup_service.dart';
+import 'verse_of_day.dart';
 
 /// Ponto único de acesso aos serviços (inicializado em main()).
 class App {
@@ -90,6 +91,7 @@ class App {
       await app.quiz.loadStatus(app.questions);
     }
     app.verseCount = await app.bible.verseCount();
+    app.refreshVerseWidget();
     return app;
   }
 
@@ -140,6 +142,12 @@ class App {
     await batch.commit(noResult: true);
   }
 
+  /// Atualiza o widget "Versículo do dia" (em segundo plano; falhas não afetam o app).
+  void refreshVerseWidget() {
+    if (!hasBibleText) return;
+    publishVerseWidget(bible, themes).catchError((Object _) {});
+  }
+
   /// Grava o resultado da estruturação e confere as perguntas do quiz.
   Future<String> storeBible(BibleParseResult r, String source,
       {void Function(double)? onProgress}) async {
@@ -149,6 +157,7 @@ class App {
     final report = '${r.summary()}'
         'Perguntas do quiz conferidas com o texto: ${check['conferida']}, '
         'divergentes: ${check['divergente']}, sem texto: ${check['pendente']}';
+    refreshVerseWidget();
     settings.bibleSource = source;
     settings.bibleReport = report;
     bibleVersion.value++;

@@ -9,6 +9,8 @@ import 'nav.dart';
 import 'plan_screen.dart';
 import 'libras_screen.dart';
 import 'my_places_screen.dart';
+import '../services/verse_of_day.dart';
+import 'verse_image_screen.dart';
 import 'music_tools_screen.dart';
 import '../data/places_repository.dart';
 import 'portal_screen.dart';
@@ -53,6 +55,7 @@ class HomeScreen extends StatelessWidget {
               _SearchBox(onTap: () => push(context, const SearchScreen())),
               const SetupBanner(),
               const SizedBox(height: 12),
+              if (app.hasBibleText) const _VerseOfDayCard(),
               if (last != null || lastHymn != null)
                 Row(children: [
                   if (last != null)
@@ -280,4 +283,48 @@ class _MyChurchCardState extends State<_MyChurchCard> {
       },
     );
   }
+}
+
+/// Versículo do dia (o mesmo do widget da tela inicial do celular).
+class _VerseOfDayCard extends StatefulWidget {
+  const _VerseOfDayCard();
+  @override
+  State<_VerseOfDayCard> createState() => _VerseOfDayCardState();
+}
+
+class _VerseOfDayCardState extends State<_VerseOfDayCard> {
+  late final Future<(String, String)?> _verse =
+      verseForDay(App.I.bible, versePool(App.I.themes), DateTime.now());
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<(String, String)?>(
+        future: _verse,
+        builder: (context, snap) {
+          final v = snap.data;
+          if (v == null) return const SizedBox.shrink();
+          return Card(
+            color: AppColors.navy,
+            margin: const EdgeInsets.only(bottom: 8),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text('Versículo do dia',
+                    style: TextStyle(color: AppColors.gold, fontWeight: FontWeight.bold, fontSize: 12)),
+                const SizedBox(height: 6),
+                Text(v.$1, style: const TextStyle(color: Colors.white, fontSize: 16, height: 1.4, fontFamily: 'serif')),
+                Row(children: [
+                  Expanded(
+                    child: Text(v.$2, style: const TextStyle(color: AppColors.gold, fontWeight: FontWeight.bold)),
+                  ),
+                  IconButton(
+                    tooltip: 'Compartilhar como imagem',
+                    icon: const Icon(Icons.image_outlined, color: Colors.white70),
+                    onPressed: () => push(context, VerseImageScreen(text: v.$1, reference: v.$2)),
+                  ),
+                ]),
+              ]),
+            ),
+          );
+        },
+      );
 }
