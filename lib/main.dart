@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'screens/reminder_open.dart';
 import 'screens/shell.dart';
+import 'services/reminders.dart';
 import 'services/app_services.dart';
 import 'services/settings.dart';
 import 'theme.dart';
@@ -74,8 +76,34 @@ class _BootAppState extends State<BootApp> {
   }
 }
 
-class BibliaHinosApp extends StatelessWidget {
+final navigatorKey = GlobalKey<NavigatorState>();
+
+class BibliaHinosApp extends StatefulWidget {
   const BibliaHinosApp({super.key});
+  @override
+  State<BibliaHinosApp> createState() => _BibliaHinosAppState();
+}
+
+class _BibliaHinosAppState extends State<BibliaHinosApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Toque num lembrete (ou em "Compartilhar") abre o cartão para compartilhar.
+    final r = CultoReminders.instance;
+    r.onOpen = (payload, _) {
+      final nav = navigatorKey.currentState;
+      if (nav != null) openReminderPayload(nav, payload);
+    };
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      try {
+        final launch = await r.launchPayload();
+        final nav = navigatorKey.currentState;
+        if (launch != null && nav != null) openReminderPayload(nav, launch.$1);
+      } on Object {
+        // Sem suporte a notificações (ex.: testes): segue normalmente.
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +111,7 @@ class BibliaHinosApp extends StatelessWidget {
     return ListenableBuilder(
       listenable: settings,
       builder: (context, _) => MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'Bíblia & Hinos CCB',
         debugShowCheckedModeBanner: false,
         theme: buildTheme(settings.theme),

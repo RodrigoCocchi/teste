@@ -8,15 +8,18 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../data/agenda_repository.dart';
 import '../data/bible_books.dart';
 import '../data/bible_repository.dart';
 import '../data/content.dart';
 import '../data/database.dart';
 import '../data/hymn_repository.dart';
+import '../data/organ_repository.dart';
 import '../data/places_repository.dart';
 import '../data/plan_repository.dart';
 import '../data/prayer_repository.dart';
 import '../data/quiz_repository.dart';
+import '../data/rehearsal_repository.dart';
 import '../data/user_repository.dart';
 import 'bible_parser.dart';
 import 'ccb_portal.dart';
@@ -47,6 +50,9 @@ class App {
   late final plan = PlanRepository(db);
   late final places = PlacesRepository(db);
   late final prayers = PrayerRepository(db);
+  late final agenda = AgendaRepository(db);
+  late final organ = OrganRepository(db);
+  late final rehearsals = RehearsalRepository(db);
   late final setup = SetupService(this);
   late final portal = CcbPortal(_prefs);
 
@@ -79,9 +85,7 @@ class App {
         '${themesJson.hashCode}:${studiesJson.hashCode}';
     // A assinatura fica no próprio banco: se o banco for recriado, semeia de novo.
     await db.db.execute('CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT)');
-    // Tabelas de dados do usuário criadas depois da primeira versão.
-    await PlacesRepository.ensureTable(db.db);
-    await PrayerRepository.ensureTable(db.db);
+    await ensureUserTables(db.db);
     final seeded = await db.db.query('meta', where: 'key = ?', whereArgs: ['contentSeed']);
     if (seeded.isEmpty || seeded.first['value'] != signature) {
       await app._seed();
@@ -93,6 +97,15 @@ class App {
     app.verseCount = await app.bible.verseCount();
     app.refreshVerseWidget();
     return app;
+  }
+
+  /// Tabelas de dados do usuário criadas depois da primeira versão.
+  static Future<void> ensureUserTables(Database db) async {
+    await PlacesRepository.ensureTable(db);
+    await PrayerRepository.ensureTable(db);
+    await AgendaRepository.ensureTable(db);
+    await OrganRepository.ensureTables(db);
+    await RehearsalRepository.ensureTable(db);
   }
 
   /// Pasta privada do app; se o path_provider falhar, usa a pasta do sqflite.

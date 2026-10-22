@@ -8,12 +8,12 @@ import 'package:share_plus/share_plus.dart';
 
 
 import '../services/app_services.dart';
+import '../services/app_reminders.dart';
 import '../services/backup.dart';
 import '../services/settings.dart';
 import '../widgets/common.dart';
 import 'documents_screen.dart';
 import 'hymn_mapping_screen.dart';
-import 'my_places_screen.dart' show refreshReminders;
 import 'nav.dart';
 import 'voice_settings_screen.dart';
 

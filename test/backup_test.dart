@@ -1,14 +1,13 @@
 import 'package:biblia_hinos_ccb/data/database.dart';
-import 'package:biblia_hinos_ccb/data/places_repository.dart';
 import 'package:biblia_hinos_ccb/data/prayer_repository.dart';
+import 'package:biblia_hinos_ccb/services/app_services.dart';
 import 'package:biblia_hinos_ccb/services/backup.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 Future<AppDatabase> _open() async {
   final db = await AppDatabase.open(inMemoryDatabasePath, factory: databaseFactoryFfi);
-  await PlacesRepository.ensureTable(db.db);
-  await PrayerRepository.ensureTable(db.db);
+  await App.ensureUserTables(db.db);
   return db;
 }
 

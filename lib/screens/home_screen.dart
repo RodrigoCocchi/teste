@@ -7,7 +7,10 @@ import '../services/documents.dart';
 import '../theme.dart';
 import 'nav.dart';
 import 'plan_screen.dart';
+import 'agenda_screen.dart';
 import 'libras_screen.dart';
+import 'organ_screen.dart';
+import 'rehearsal_screen.dart';
 import 'my_places_screen.dart';
 import '../services/verse_of_day.dart';
 import 'verse_image_screen.dart';
@@ -114,6 +117,24 @@ class HomeScreen extends StatelessWidget {
                 title: 'Plano de Leitura',
                 subtitle: 'A Bíblia inteira em 365 dias',
                 onTap: () => push(context, const PlanScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.event_available,
+                title: 'Agenda e lembretes',
+                subtitle: 'Ensaios, Santa Ceia, batismos e outros, com aviso antes',
+                onTap: () => push(context, const AgendaScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.piano,
+                title: 'Escala das organistas',
+                subtitle: 'Rodízio do mês, lembretes e escala para compartilhar',
+                onTap: () => push(context, const OrganScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.groups_outlined,
+                title: 'Contador do ensaio',
+                subtitle: 'Instrumentos, organistas, GEM, encarregados e visitas, com total',
+                onTap: () => push(context, const RehearsalScreen()),
               ),
               _HomeCard(
                 icon: Icons.volunteer_activism_outlined,

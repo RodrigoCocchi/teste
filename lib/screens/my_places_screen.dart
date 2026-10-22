@@ -4,7 +4,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../data/places_repository.dart';
 import '../services/app_services.dart';
 import '../services/ccb_relatorio.dart';
+import '../services/app_reminders.dart';
 import '../services/reminders.dart';
+import '../services/share_builders.dart';
+import '../widgets/share_card.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import '../widgets/directions.dart';
@@ -20,15 +23,6 @@ String nextCultoLabel(SavedPlace p, DateTime now) {
   final diff = DateTime(at.year, at.month, at.day).difference(today).inDays;
   final day = diff == 0 ? 'Hoje' : diff == 1 ? 'Amanhã' : c.dayName;
   return '$day ${c.time} · ${c.kind}';
-}
-
-/// Refaz os lembretes depois de qualquer mudança nas casas salvas.
-Future<void> refreshReminders() async {
-  try {
-    await CultoReminders.instance.reschedule(await App.I.places.all());
-  } on Object {
-    // Sem permissão ou serviço indisponível: as casas continuam salvas.
-  }
 }
 
 /// Casas de oração salvas no aparelho: horários sem internet, lembretes e rota.
@@ -170,6 +164,12 @@ class _MyPlacesScreenState extends State<MyPlacesScreen> {
               label: const Text('Como chegar'),
               onPressed: () => showDirectionsChooser(context, p.address),
             ),
+            if (nextCulto(p.cultos, DateTime.now()) case (final c, final at))
+              OutlinedButton.icon(
+                icon: const Icon(Icons.share),
+                label: const Text('Compartilhar culto'),
+                onPressed: () => push(context, ShareCardScreen(data: cultoShare(p, c, at))),
+              ),
             PopupMenuButton<int>(
               tooltip: 'Lembrete',
               onSelected: (m) => _setRemind(p, m < 0 ? null : m),

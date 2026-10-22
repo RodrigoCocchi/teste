@@ -10,6 +10,10 @@ const Map<String, List<String>> backupTables = {
   'reading_progress': ['book_id', 'chapter', 'done_at'],
   'saved_place': ['id', 'name', 'code', 'city', 'address', 'detail', 'is_home', 'remind', 'saved_at', 'updated_at'],
   'prayer': ['text', 'created_at', 'answered_at', 'note'],
+  'agenda_event': ['id', 'kind', 'title', 'start_at', 'place', 'notes', 'repeat', 'alerts'],
+  'organist': ['id', 'name', 'is_me', 'position'],
+  'organ_duty': ['id', 'at', 'part', 'organist_id', 'place', 'notes'],
+  'rehearsal': ['id', 'at', 'place', 'kind', 'counts', 'notes'],
 };
 
 const String backupApp = 'biblia-hinos-ccb';
