@@ -13,6 +13,7 @@ import '../data/bible_repository.dart';
 import '../data/content.dart';
 import '../data/database.dart';
 import '../data/hymn_repository.dart';
+import '../data/places_repository.dart';
 import '../data/plan_repository.dart';
 import '../data/quiz_repository.dart';
 import '../data/user_repository.dart';
@@ -42,6 +43,7 @@ class App {
   late final quiz = QuizRepository(db);
   late final hymns = HymnRepository(db);
   late final plan = PlanRepository(db);
+  late final places = PlacesRepository(db);
   late final setup = SetupService(this);
   late final portal = CcbPortal(_prefs);
 
@@ -74,6 +76,8 @@ class App {
         '${themesJson.hashCode}:${studiesJson.hashCode}';
     // A assinatura fica no próprio banco: se o banco for recriado, semeia de novo.
     await db.db.execute('CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT)');
+    // Tabelas de dados do usuário criadas depois da primeira versão.
+    await PlacesRepository.ensureTable(db.db);
     final seeded = await db.db.query('meta', where: 'key = ?', whereArgs: ['contentSeed']);
     if (seeded.isEmpty || seeded.first['value'] != signature) {
       await app._seed();

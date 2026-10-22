@@ -8,6 +8,8 @@ import '../theme.dart';
 import 'nav.dart';
 import 'plan_screen.dart';
 import 'libras_screen.dart';
+import 'my_places_screen.dart';
+import '../data/places_repository.dart';
 import 'portal_screen.dart';
 import 'relatorio_screen.dart';
 import 'search_screen.dart';
@@ -108,6 +110,7 @@ class HomeScreen extends StatelessWidget {
                 subtitle: 'A Bíblia inteira em 365 dias',
                 onTap: () => push(context, const PlanScreen()),
               ),
+              const _MyChurchCard(),
               _HomeCard(
                 icon: Icons.near_me_outlined,
                 title: 'Cultos perto de mim',
@@ -218,4 +221,49 @@ class _MiniCard extends StatelessWidget {
           ),
         ),
       );
+}
+
+/// "Minha comum" com o próximo culto (sem internet).
+class _MyChurchCard extends StatefulWidget {
+  const _MyChurchCard();
+  @override
+  State<_MyChurchCard> createState() => _MyChurchCardState();
+}
+
+class _MyChurchCardState extends State<_MyChurchCard> {
+  SavedPlace? _home;
+  int _saved = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final all = await App.I.places.all();
+    if (!mounted) return;
+    setState(() {
+      _home = all.where((p) => p.isHome).firstOrNull;
+      _saved = all.length;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final h = _home;
+    return _HomeCard(
+      icon: Icons.home_outlined,
+      title: h == null ? 'Minha comum' : 'Minha comum · ${h.place.name}',
+      subtitle: h != null
+          ? 'Próximo culto: ${nextCultoLabel(h, DateTime.now())}'
+          : _saved > 0
+              ? '$_saved casa(s) de oração salva(s) · horários e lembretes'
+              : 'Salve sua casa de oração para ver os horários e receber lembretes',
+      onTap: () async {
+        await push(context, const MyPlacesScreen());
+        _load();
+      },
+    );
+  }
 }

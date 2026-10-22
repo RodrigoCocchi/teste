@@ -6,6 +6,7 @@ import '../services/ccb_relatorio.dart';
 import '../services/rel_nearby.dart';
 import '../theme.dart';
 import '../widgets/directions.dart';
+import 'my_places_screen.dart';
 
 enum _Mode { perto, cidade, nome }
 
@@ -292,6 +293,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
               ),
             ),
           ]),
+          SavePlaceButtons(place: p, sections: sections),
           if (d == null)
             const Padding(padding: EdgeInsets.only(top: 12), child: Text('Detalhes indisponíveis no momento.')),
           for (final s in sections.where((s) => s.title.isNotEmpty && s.title != p.name.split(' - ').first)) ...[
