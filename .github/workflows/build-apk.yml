@@ -9,6 +9,11 @@ on:
 permissions:
   contents: write
 
+# Só a versão mais nova importa: um push novo cancela a compilação anterior.
+concurrency:
+  group: build-apk-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   apk:
     runs-on: ubuntu-latest
