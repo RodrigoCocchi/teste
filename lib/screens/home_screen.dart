@@ -11,6 +11,7 @@ import 'agenda_screen.dart';
 import 'libras_screen.dart';
 import 'organ_screen.dart';
 import 'rehearsal_screen.dart';
+import 'youth_screen.dart';
 import 'my_places_screen.dart';
 import '../services/verse_of_day.dart';
 import '../services/profile.dart';
@@ -134,6 +135,12 @@ class HomeScreen extends StatelessWidget {
                 title: 'Escala das organistas',
                 subtitle: 'Rodízio do mês, lembretes e escala para compartilhar',
                 onTap: () => push(context, const OrganScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.diversity_3,
+                title: 'Jovens',
+                subtitle: 'Lembretes das reuniões, recitativos e andamento da reunião',
+                onTap: () => push(context, const YouthScreen()),
               ),
               _HomeCard(
                 icon: Icons.groups_outlined,

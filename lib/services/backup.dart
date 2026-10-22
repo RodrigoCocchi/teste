@@ -17,6 +17,8 @@ const Map<String, List<String>> backupTables = {
   'organist': ['id', 'name', 'is_me', 'position'],
   'organ_duty': ['id', 'at', 'part', 'organist_id', 'place', 'notes'],
   'rehearsal': ['id', 'at', 'place', 'kind', 'counts', 'notes'],
+  'recitativo': ['id', 'person', 'ref', 'text', 'status', 'recited_at', 'notes'],
+  'rjm_session': ['id', 'at', 'place', 'steps', 'recits', 'notes', 'started_at'],
 };
 
 const String backupApp = 'biblia-hinos-ccb';

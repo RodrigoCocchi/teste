@@ -106,14 +106,15 @@ class _AgendaScreenState extends State<AgendaScreen> {
 
 /// Criar ou editar um compromisso.
 class EventEditScreen extends StatefulWidget {
-  const EventEditScreen({super.key, this.event});
+  const EventEditScreen({super.key, this.event, this.initialKind});
   final AgendaEvent? event;
+  final String? initialKind;
   @override
   State<EventEditScreen> createState() => _EventEditScreenState();
 }
 
 class _EventEditScreenState extends State<EventEditScreen> {
-  late String _kind = widget.event?.kind ?? agendaKinds.first.name;
+  late String _kind = widget.event?.kind ?? widget.initialKind ?? agendaKinds.first.name;
   late final _title = TextEditingController(text: widget.event?.title ?? '');
   late final _place = TextEditingController(text: widget.event?.place ?? '');
   late final _notes = TextEditingController(text: widget.event?.notes ?? '');

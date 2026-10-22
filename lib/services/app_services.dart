@@ -21,6 +21,7 @@ import '../data/prayer_repository.dart';
 import '../data/quiz_repository.dart';
 import '../data/rehearsal_repository.dart';
 import '../data/user_repository.dart';
+import '../data/youth_repository.dart';
 import 'bible_parser.dart';
 import 'ccb_portal.dart';
 import 'documents.dart';
@@ -53,6 +54,7 @@ class App {
   late final agenda = AgendaRepository(db);
   late final organ = OrganRepository(db);
   late final rehearsals = RehearsalRepository(db);
+  late final youth = YouthRepository(db);
   late final setup = SetupService(this);
   late final portal = CcbPortal(_prefs);
 
@@ -106,6 +108,7 @@ class App {
     await AgendaRepository.ensureTable(db);
     await OrganRepository.ensureTables(db);
     await RehearsalRepository.ensureTable(db);
+    await YouthRepository.ensureTables(db);
   }
 
   /// Pasta privada do app; se o path_provider falhar, usa a pasta do sqflite.
