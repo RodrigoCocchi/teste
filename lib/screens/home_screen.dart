@@ -9,6 +9,7 @@ import 'nav.dart';
 import 'plan_screen.dart';
 import 'libras_screen.dart';
 import 'my_places_screen.dart';
+import 'music_tools_screen.dart';
 import '../data/places_repository.dart';
 import 'portal_screen.dart';
 import 'prayer_screen.dart';
@@ -123,6 +124,12 @@ class HomeScreen extends StatelessWidget {
                 title: 'Cultos perto de mim',
                 subtitle: 'Casas de oração e horários (relatório CCB)',
                 onTap: () => push(context, const RelatorioScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.music_note_outlined,
+                title: 'Afinador e metrônomo',
+                subtitle: 'Para os ensaios: afinação com o microfone e metrônomo com compasso',
+                onTap: () => push(context, const MusicToolsScreen()),
               ),
               _HomeCard(
                 icon: Icons.sign_language,
