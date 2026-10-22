@@ -47,6 +47,7 @@ dependencies:
   geocoding: ^5.0.0
   webview_flutter: ^4.14.1
   flutter_tts: ^4.2.5
+  android_intent_plus: ^6.1.0
 
 dev_dependencies:
   flutter_test:

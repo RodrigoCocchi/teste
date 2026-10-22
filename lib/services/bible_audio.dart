@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Motor de voz (separado para os testes não dependerem do Android).
 abstract class SpeechEngine {
@@ -11,17 +12,46 @@ abstract class SpeechEngine {
   Future<void> stop();
 }
 
+/// Voz escolhida nas Configurações (motor, voz e tom), guardada no aparelho.
+class VoicePrefs {
+  static const engineKey = 'ttsEngine';
+  static const voiceNameKey = 'ttsVoiceName';
+  static const voiceLocaleKey = 'ttsVoiceLocale';
+  static const pitchKey = 'ttsPitch';
+
+  /// Aplica as preferências ao [tts]. Devolve se há voz em português.
+  static Future<bool> apply(FlutterTts tts, SharedPreferences prefs) async {
+    final engine = prefs.getString(engineKey);
+    if (engine != null) {
+      try {
+        await tts.setEngine(engine);
+      } on Object {
+        // Motor desinstalado: segue com o padrão do aparelho.
+      }
+    }
+    await tts.awaitSpeakCompletion(true);
+    final br = await tts.isLanguageAvailable('pt-BR') == true;
+    await tts.setLanguage(br ? 'pt-BR' : 'pt-PT');
+    final name = prefs.getString(voiceNameKey);
+    final locale = prefs.getString(voiceLocaleKey);
+    if (name != null && locale != null) {
+      try {
+        await tts.setVoice({'name': name, 'locale': locale});
+      } on Object {
+        // Voz removida do aparelho: fica a voz padrão do idioma.
+      }
+    }
+    await tts.setPitch(prefs.getDouble(pitchKey) ?? 1.0);
+    return br || await tts.isLanguageAvailable('pt-PT') == true;
+  }
+}
+
 /// Voz do próprio aparelho (leitura em voz alta do Android), em português.
 class DeviceSpeech implements SpeechEngine {
   final _tts = FlutterTts();
 
   @override
-  Future<bool> init() async {
-    await _tts.awaitSpeakCompletion(true);
-    final ok = await _tts.isLanguageAvailable('pt-BR');
-    await _tts.setLanguage(ok == true ? 'pt-BR' : 'pt-PT');
-    return ok == true || await _tts.isLanguageAvailable('pt-PT') == true;
-  }
+  Future<bool> init() async => VoicePrefs.apply(_tts, await SharedPreferences.getInstance());
 
   @override
   Future<void> setRate(double rate) async => _tts.setSpeechRate(rate);

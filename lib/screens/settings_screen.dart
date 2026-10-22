@@ -6,6 +6,7 @@ import '../widgets/common.dart';
 import 'documents_screen.dart';
 import 'hymn_mapping_screen.dart';
 import 'nav.dart';
+import 'voice_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -34,6 +35,13 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             title: Text('Fonte do leitor: ${s.fontSize.round()}'),
             subtitle: Slider(min: 13, max: 34, divisions: 21, value: s.fontSize, onChanged: (v) => s.fontSize = v),
+          ),
+          const SectionTitle('Leitura em áudio'),
+          ListTile(
+            leading: const Icon(Icons.record_voice_over_outlined),
+            title: const Text('Voz do leitor'),
+            subtitle: const Text('Escolher voz, tom e velocidade da Bíblia em áudio'),
+            onTap: () => push(context, const VoiceSettingsScreen()),
           ),
           const SectionTitle('Documentos'),
           ListTile(
