@@ -11,6 +11,7 @@ import 'libras_screen.dart';
 import 'my_places_screen.dart';
 import '../data/places_repository.dart';
 import 'portal_screen.dart';
+import 'prayer_screen.dart';
 import 'relatorio_screen.dart';
 import 'search_screen.dart';
 import 'setup_screen.dart';
@@ -109,6 +110,12 @@ class HomeScreen extends StatelessWidget {
                 title: 'Plano de Leitura',
                 subtitle: 'A Bíblia inteira em 365 dias',
                 onTap: () => push(context, const PlanScreen()),
+              ),
+              _HomeCard(
+                icon: Icons.volunteer_activism_outlined,
+                title: 'Lista de oração',
+                subtitle: 'Seus pedidos de oração e os já atendidos',
+                onTap: () => push(context, const PrayerScreen()),
               ),
               const _MyChurchCard(),
               _HomeCard(

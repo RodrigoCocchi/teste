@@ -15,6 +15,7 @@ import '../data/database.dart';
 import '../data/hymn_repository.dart';
 import '../data/places_repository.dart';
 import '../data/plan_repository.dart';
+import '../data/prayer_repository.dart';
 import '../data/quiz_repository.dart';
 import '../data/user_repository.dart';
 import 'bible_parser.dart';
@@ -44,6 +45,7 @@ class App {
   late final hymns = HymnRepository(db);
   late final plan = PlanRepository(db);
   late final places = PlacesRepository(db);
+  late final prayers = PrayerRepository(db);
   late final setup = SetupService(this);
   late final portal = CcbPortal(_prefs);
 
@@ -78,6 +80,7 @@ class App {
     await db.db.execute('CREATE TABLE IF NOT EXISTS meta(key TEXT PRIMARY KEY, value TEXT)');
     // Tabelas de dados do usuário criadas depois da primeira versão.
     await PlacesRepository.ensureTable(db.db);
+    await PrayerRepository.ensureTable(db.db);
     final seeded = await db.db.query('meta', where: 'key = ?', whereArgs: ['contentSeed']);
     if (seeded.isEmpty || seeded.first['value'] != signature) {
       await app._seed();
