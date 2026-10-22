@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/ccb_relatorio.dart';
 import '../services/rel_nearby.dart';
 import '../theme.dart';
+import '../widgets/directions.dart';
 
 enum _Mode { perto, cidade, nome }
 
@@ -280,10 +281,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             FilledButton.icon(
               icon: const Icon(Icons.directions),
               label: const Text('Como chegar'),
-              onPressed: () => launchUrl(
-                Uri.https('www.google.com', '/maps/dir/', {'api': '1', 'destination': query}),
-                mode: LaunchMode.externalApplication,
-              ),
+              onPressed: () => showDirectionsChooser(context, query),
             ),
             OutlinedButton.icon(
               icon: const Icon(Icons.map_outlined),

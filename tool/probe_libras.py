@@ -18,16 +18,12 @@ async def main():
         await page.goto(f"http://127.0.0.1:8765/{PAGE}")
         await page.wait_for_timeout(15000)
         def gloss(since): return [u.rsplit('/', 1)[-1] for u in reqs[since:] if "WEBGL/" in u or "translate" in u]
-        tests = [
-            ("el.click()", "var a=document.getElementById('alvo');a.textContent='A paz de Deus';a.style.display='block';a.click();"),
-            ("dispatch mouse", "var a=document.getElementById('alvo');a.textContent='Vai com Deus';a.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));"),
-            ("pointer+mouse", "var a=document.getElementById('alvo');a.textContent='Jesus';for (const t of ['pointerdown','mousedown','pointerup','mouseup','click']) a.dispatchEvent(new (t.startsWith('pointer')?PointerEvent:MouseEvent)(t,{bubbles:true,cancelable:true,view:window}));"),
-        ]
-        for name, js in tests:
+        for frase in ["A paz de Deus", "Vai com Deus"]:
             n = len(reqs)
-            await page.evaluate(js)
+            await page.evaluate(f"mostrar({frase!r})")
             await page.wait_for_timeout(9000)
-            print("[l]", name, "->", gloss(n))
+            print("[l] mostrar", frase, "->", gloss(n))
+        await page.screenshot(path="libras.png")
         print("[l] globals:", await page.evaluate("Object.keys(window).filter(k=>/vlibras|plugin/i.test(k))"))
         await b.close()
 
