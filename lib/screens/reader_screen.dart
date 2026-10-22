@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/bible_books.dart';
 import '../data/bible_repository.dart';
 import '../data/user_repository.dart';
 import '../services/app_services.dart';
+import '../services/bible_audio.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import 'nav.dart';
@@ -37,19 +39,68 @@ class _ReaderScreenState extends State<ReaderScreen> {
   bool _readingMode = false;
   final _keys = <int, GlobalKey>{};
   final _scroll = ScrollController();
+  final _audio = ChapterAudio(DeviceSpeech());
+  bool _autoNext = true;
 
   @override
   void initState() {
     super.initState();
     _highlight = widget.highlight;
     _highlightEnd = widget.highlightEnd;
+    _audio
+      ..addListener(_onAudio)
+      ..onChapterEnd = _onChapterEnd;
+    SharedPreferences.getInstance().then((p) {
+      final sp = p.getString('audioSpeed');
+      if (sp != null && audioSpeeds.containsKey(sp)) _audio.speed = sp;
+      _autoNext = p.getBool('audioAutoNext') ?? true;
+    });
     _load();
+  }
+
+  // ---------------------------------------------------------------- áudio
+
+  void _onAudio() {
+    if (!mounted) return;
+    setState(() {});
+    final n = _audio.current;
+    if (_audio.state == AudioState.playing && n != null) {
+      final ctx = _keys[n]?.currentContext;
+      if (ctx != null) {
+        Scrollable.ensureVisible(ctx, alignment: 0.3, duration: const Duration(milliseconds: 400));
+      }
+    }
+  }
+
+  Future<void> _listen({int? from}) async {
+    setState(_selected.clear);
+    if (_verses.isEmpty) return;
+    final f = _audio.play('${_b.name}, capítulo $_chapter', [for (final v in _verses) (v.verse, v.text)], from: from);
+    // Aguarda só o início para avisar se o aparelho não tem voz em português.
+    await Future<void>.delayed(const Duration(milliseconds: 1500));
+    if (mounted && _audio.voiceAvailable == false) {
+      showSnack(context,
+          'Sem voz em português no celular. Instale em Configurações > Gerenciamento geral > Conversão de texto em voz.');
+    }
+    await f;
+  }
+
+  Future<void> _onChapterEnd() async {
+    if (!mounted || !_autoNext || (_book == 66 && _chapter == 22)) return;
+    await _go(1);
+    if (mounted) _listen();
+  }
+
+  Future<void> _setSpeed(String s) async {
+    (await SharedPreferences.getInstance()).setString('audioSpeed', s);
+    await _audio.setSpeed(s);
   }
 
   @override
   void dispose() {
     if (_readingMode) SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _scroll.dispose();
+    _audio.dispose();
     super.dispose();
   }
 
@@ -91,14 +142,14 @@ class _ReaderScreenState extends State<ReaderScreen> {
     }
   }
 
-  void _go(int delta) {
+  Future<void> _go(int delta) {
     var b = _book, c = _chapter + delta;
     if (c < 1) {
-      if (b == 1) return;
+      if (b == 1) return Future.value();
       b--;
       c = bookById(b).chapters;
     } else if (c > bookById(b).chapters) {
-      if (b == 66) return;
+      if (b == 66) return Future.value();
       b++;
       c = 1;
     }
@@ -108,7 +159,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
       _highlight = null;
       _highlightEnd = null;
     });
-    _load();
+    return _load();
   }
 
   List<Verse> get _selectedVerses =>
@@ -235,6 +286,10 @@ class _ReaderScreenState extends State<ReaderScreen> {
                   ? null
                   : [
                       IconButton(
+                          tooltip: 'Ouvir capítulo',
+                          icon: const Icon(Icons.headphones),
+                          onPressed: _audio.state == AudioState.idle ? () => _listen() : null),
+                      IconButton(
                           tooltip: 'Fonte', icon: const Icon(Icons.format_size), onPressed: _fontDialog),
                       IconButton(
                           tooltip: 'Modo leitura',
@@ -254,7 +309,11 @@ class _ReaderScreenState extends State<ReaderScreen> {
               child: const Icon(Icons.fullscreen_exit),
             )
           : null,
-      bottomNavigationBar: selecting ? _selectionBar() : null,
+      bottomNavigationBar: selecting
+          ? _selectionBar()
+          : _audio.state != AudioState.idle
+              ? _playerBar(t)
+              : null,
       body: SafeArea(
         child: _loading
             ? const Center(child: CircularProgressIndicator())
@@ -299,13 +358,19 @@ class _ReaderScreenState extends State<ReaderScreen> {
                       Row(children: [
                         if (!(_book == 1 && _chapter == 1))
                           OutlinedButton.icon(
-                              onPressed: () => _go(-1),
+                              onPressed: () {
+                                _audio.stop();
+                                _go(-1);
+                              },
                               icon: const Icon(Icons.chevron_left),
                               label: const Text('Anterior')),
                         const Spacer(),
                         if (!(_book == 66 && _chapter == 22))
                           FilledButton.icon(
-                              onPressed: () => _go(1),
+                              onPressed: () {
+                                _audio.stop();
+                                _go(1);
+                              },
                               icon: const Icon(Icons.chevron_right),
                               label: const Text('Próximo')),
                       ]),
@@ -321,8 +386,11 @@ class _ReaderScreenState extends State<ReaderScreen> {
     final h = _highlight;
     final targeted = h != null && v.verse >= h && v.verse <= (_highlightEnd ?? h);
     Color? bg;
+    final reading = _audio.state != AudioState.idle && _audio.current == v.verse;
     if (selected) {
       bg = t.colorScheme.primary.withValues(alpha: 0.18);
+    } else if (reading) {
+      bg = AppColors.gold.withValues(alpha: 0.30);
     } else if (mark?.color != null) {
       bg = AppColors.highlights[mark!.color! % AppColors.highlights.length].withValues(alpha: 0.45);
     } else if (targeted) {
@@ -369,6 +437,10 @@ class _ReaderScreenState extends State<ReaderScreen> {
 
   Widget _selectionBar() => BottomAppBar(
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          IconButton(
+              tooltip: 'Ouvir a partir daqui',
+              icon: const Icon(Icons.headphones),
+              onPressed: () => _listen(from: _selectedVerses.first.verse)),
           IconButton(tooltip: 'Copiar', icon: const Icon(Icons.copy), onPressed: _copy),
           IconButton(tooltip: 'Compartilhar (WhatsApp)', icon: const Icon(Icons.share), onPressed: _share),
           IconButton(tooltip: 'Favorito', icon: const Icon(Icons.star_border), onPressed: _toggleFavorite),
@@ -392,4 +464,46 @@ class _ReaderScreenState extends State<ReaderScreen> {
           IconButton(tooltip: 'Anotação', icon: const Icon(Icons.edit_note), onPressed: _note),
         ]),
       );
+
+  Widget _playerBar(ThemeData t) {
+    final playing = _audio.state == AudioState.playing;
+    return BottomAppBar(
+      child: Row(children: [
+        IconButton.filled(
+          tooltip: playing ? 'Pausar' : 'Continuar',
+          icon: Icon(playing ? Icons.pause : Icons.play_arrow),
+          onPressed: playing ? _audio.pause : _audio.resume,
+        ),
+        IconButton(tooltip: 'Parar', icon: const Icon(Icons.stop), onPressed: _audio.stop),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            _audio.current == null ? '${_b.name} $_chapter' : '${_b.name} $_chapter:${_audio.current}',
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        PopupMenuButton<String>(
+          tooltip: 'Velocidade',
+          initialValue: _audio.speed,
+          onSelected: _setSpeed,
+          itemBuilder: (_) => [for (final s in audioSpeeds.keys) PopupMenuItem(value: s, child: Text(s))],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(_audio.speed, style: const TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ),
+        IconButton(
+          tooltip: _autoNext ? 'Seguir para o próximo capítulo: ligado' : 'Seguir para o próximo capítulo: desligado',
+          icon: Icon(Icons.playlist_play, color: _autoNext ? AppColors.gold : t.disabledColor),
+          onPressed: () async {
+            setState(() => _autoNext = !_autoNext);
+            (await SharedPreferences.getInstance()).setBool('audioAutoNext', _autoNext);
+            if (mounted) {
+              showSnack(context, _autoNext ? 'Ao terminar, segue para o próximo capítulo' : 'Para ao fim do capítulo');
+            }
+          },
+        ),
+      ]),
+    );
+  }
 }
