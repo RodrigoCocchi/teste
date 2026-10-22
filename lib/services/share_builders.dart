@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/agenda_repository.dart';
 import '../data/organ_repository.dart';
 import '../data/places_repository.dart';
+import 'profile.dart';
 import '../widgets/share_card.dart';
 
 const String shareFooter = 'Enviado pelo app Bíblia & Hinos';
@@ -81,3 +82,20 @@ ShareCardData monthScaleShare(List<OrganDuty> duties, Map<int, String> names, in
     footer: shareFooter,
   );
 }
+
+/// Cartão do aniversário de batismo.
+ShareCardData baptismShare(Profile p, int years) => ShareCardData(
+      kicker: 'Aniversário de batismo',
+      title: p.name.isEmpty ? '$years ${years == 1 ? 'ano' : 'anos'} de batismo' : p.name,
+      subtitle: p.name.isEmpty ? null : '$years ${years == 1 ? 'ano' : 'anos'} de batismo',
+      icon: Icons.water_drop_outlined,
+      sections: [
+        ShareSection(rows: [
+          if (p.baptismDate != null) ('Batismo', '${two(p.baptismDate!.day)}/${two(p.baptismDate!.month)}/${p.baptismDate!.year}'),
+          if (p.baptismChurch.isNotEmpty) ('Igreja', p.baptismChurch),
+          if (p.baptismMinister.isNotEmpty) ('Ministério', p.baptismMinister),
+          ('Deus seja louvado!', ''),
+        ]),
+      ],
+      footer: shareFooter,
+    );

@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'profile.dart';
 
 /// Dados pessoais copiados no backup (o texto da Bíblia e os hinos não entram:
 /// são baixados de novo na instalação).
@@ -18,19 +21,25 @@ const Map<String, List<String>> backupTables = {
 
 const String backupApp = 'biblia-hinos-ccb';
 
-Future<Map<String, Object?>> buildBackup(Database db) async {
+Future<Map<String, Object?>> buildBackup(Database db, {SharedPreferences? prefs}) async {
   final data = <String, Object?>{};
   for (final e in backupTables.entries) {
     final rows = await db.query(e.key, columns: e.value);
     data[e.key] = rows;
   }
-  return {'app': backupApp, 'version': 1, 'created': DateTime.now().toIso8601String(), 'data': data};
+  return {
+    'app': backupApp,
+    'version': 1,
+    'created': DateTime.now().toIso8601String(),
+    'data': data,
+    if (prefs != null && !Profile.load(prefs).isEmpty) 'profile': Profile.load(prefs).toJson(),
+  };
 }
 
 String encodeBackup(Map<String, Object?> b) => const JsonEncoder.withIndent(' ').convert(b);
 
 /// Junta o backup aos dados atuais (não apaga nada). Devolve quantos itens entraram.
-Future<int> restoreBackup(Database db, String raw) async {
+Future<int> restoreBackup(Database db, String raw, {SharedPreferences? prefs}) async {
   final Object? json;
   try {
     json = jsonDecode(raw);
@@ -42,6 +51,11 @@ Future<int> restoreBackup(Database db, String raw) async {
   }
   final data = json['data'] as Map;
   var count = 0;
+  final profile = json['profile'];
+  if (prefs != null && profile is Map && Profile.load(prefs).isEmpty) {
+    await Profile.fromJson(profile).save(prefs);
+    count++;
+  }
   await db.transaction((t) async {
     for (final e in backupTables.entries) {
       final rows = data[e.key];

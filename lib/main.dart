@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/reminder_open.dart';
 import 'screens/shell.dart';
+import 'services/app_reminders.dart';
 import 'services/reminders.dart';
 import 'services/app_services.dart';
 import 'services/settings.dart';
@@ -96,6 +97,8 @@ class _BibliaHinosAppState extends State<BibliaHinosApp> {
     };
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
+        // Refaz os avisos ao abrir (ex.: contagem de anos do aniversário de batismo).
+        refreshReminders();
         final launch = await r.launchPayload();
         final nav = navigatorKey.currentState;
         if (launch != null && nav != null) openReminderPayload(nav, launch.$1);

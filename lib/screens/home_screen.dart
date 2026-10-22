@@ -13,6 +13,10 @@ import 'organ_screen.dart';
 import 'rehearsal_screen.dart';
 import 'my_places_screen.dart';
 import '../services/verse_of_day.dart';
+import '../services/profile.dart';
+import '../services/share_builders.dart';
+import '../widgets/share_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'verse_image_screen.dart';
 import 'music_tools_screen.dart';
 import '../data/places_repository.dart';
@@ -58,6 +62,7 @@ class HomeScreen extends StatelessWidget {
               _SearchBox(onTap: () => push(context, const SearchScreen())),
               const SetupBanner(),
               const SizedBox(height: 12),
+              const _BaptismDayCard(),
               if (app.hasBibleText) const _VerseOfDayCard(),
               if (last != null || lastHymn != null)
                 Row(children: [
@@ -348,4 +353,52 @@ class _VerseOfDayCardState extends State<_VerseOfDayCard> {
           );
         },
       );
+}
+
+/// No dia do aniversário de batismo, uma mensagem com opção de compartilhar.
+class _BaptismDayCard extends StatefulWidget {
+  const _BaptismDayCard();
+  @override
+  State<_BaptismDayCard> createState() => _BaptismDayCardState();
+}
+
+class _BaptismDayCardState extends State<_BaptismDayCard> {
+  Profile? _p;
+  int? _years;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      final p = Profile.load(prefs);
+      final y = baptismYearsToday(p.baptismDate, DateTime.now());
+      if (mounted && y != null) {
+        setState(() {
+          _p = p;
+          _years = y;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _p, y = _years;
+    if (p == null || y == null) return const SizedBox.shrink();
+    return Card(
+      color: AppColors.gold,
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        leading: const Icon(Icons.water_drop, color: AppColors.navy, size: 32),
+        title: Text('${p.firstName.isEmpty ? 'Hoje' : '${p.firstName}, hoje'} faz $y ${y == 1 ? 'ano' : 'anos'} do seu batismo!',
+            style: const TextStyle(color: AppColors.navy, fontWeight: FontWeight.bold)),
+        subtitle: const Text('Deus seja louvado!', style: TextStyle(color: AppColors.navy)),
+        trailing: IconButton(
+          tooltip: 'Compartilhar',
+          icon: const Icon(Icons.share, color: AppColors.navy),
+          onPressed: () => push(context, ShareCardScreen(data: baptismShare(p, y))),
+        ),
+      ),
+    );
+  }
 }

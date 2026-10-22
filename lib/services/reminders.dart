@@ -8,6 +8,7 @@ import 'package:timezone/timezone.dart' as tz;
 import '../data/agenda_repository.dart';
 import '../data/organ_repository.dart';
 import '../data/places_repository.dart';
+import 'profile.dart';
 
 /// Opções de antecedência do lembrete dos cultos (minutos).
 const Map<int, String> remindOptions = {15: '15 min antes', 30: '30 min antes', 60: '1 hora antes', 120: '2 horas antes'};
@@ -92,6 +93,34 @@ List<AlertSpec> dutyAlerts(OrganDuty d, List<int> minutes, DateTime now) {
   ];
 }
 
+int baptismAlertId(int k) => 1900000000 + k;
+
+/// Aviso do aniversário de batismo, às 8h do dia (próximos 3 anos, com a contagem certa).
+List<AlertSpec> baptismAlerts(Profile p, DateTime now) {
+  final b = p.baptismDate;
+  if (b == null || !p.remindBaptism) return const [];
+  final out = <AlertSpec>[];
+  final list = nextAnniversaries(b, now);
+  for (var k = 0; k < list.length; k++) {
+    final (d, years) = list[k];
+    var when = DateTime(d.year, d.month, d.day, 8);
+    // Se hoje já passou das 8h, avisa em instantes.
+    if (!when.isAfter(now)) {
+      if (d.year != now.year || d.month != now.month || d.day != now.day) continue;
+      when = now.add(const Duration(minutes: 1));
+    }
+    out.add(AlertSpec(
+      baptismAlertId(k),
+      'Aniversário de batismo 🎉',
+      '${p.firstName.isEmpty ? 'Hoje' : '${p.firstName}, hoje'} faz $years ${years == 1 ? 'ano' : 'anos'} do seu batismo'
+          '${p.baptismChurch.isEmpty ? '' : ' (${p.baptismChurch})'}. Deus seja louvado!',
+      when,
+      'baptism:$years',
+    ));
+  }
+  return out;
+}
+
 /// Avisos padrão da escala do órgão (minutos antes de começar a tocar).
 const String organAlertsKey = 'organAlerts';
 List<int> organAlertsFrom(SharedPreferences p) =>
@@ -149,6 +178,7 @@ class CultoReminders {
     required List<AgendaEvent> events,
     required List<OrganDuty> myDuties,
     required List<int> organAlerts,
+    Profile? profile,
   }) async {
     await init();
     await _plugin.cancelAll();
@@ -157,6 +187,7 @@ class CultoReminders {
       for (final p in places) ...placeAlerts(p, now),
       for (final e in events) ...eventAlerts(e, now),
       for (final d in myDuties) ...dutyAlerts(d, organAlerts, now),
+      if (profile != null) ...baptismAlerts(profile, now),
     ]..sort((a, b) => a.when.compareTo(b.when));
     var count = 0;
     // O Android limita os alarmes por app: agenda os mais próximos.

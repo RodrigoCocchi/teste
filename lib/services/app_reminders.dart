@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_services.dart';
+import 'profile.dart';
 import 'reminders.dart';
 
 /// Refaz todos os lembretes a partir dos dados salvos (cultos, agenda, escala).
@@ -17,6 +18,7 @@ Future<void> refreshReminders() async {
           ? const []
           : [for (final d in await app.organ.duties(from: now)) if (d.organistId == me.id) d],
       organAlerts: organAlertsFrom(prefs),
+      profile: Profile.load(prefs),
     );
   } on Object {
     // Sem permissão ou serviço indisponível: os dados continuam salvos.

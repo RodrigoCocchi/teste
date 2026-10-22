@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../services/app_services.dart';
@@ -15,6 +16,7 @@ import '../widgets/common.dart';
 import 'documents_screen.dart';
 import 'hymn_mapping_screen.dart';
 import 'nav.dart';
+import 'profile_screen.dart';
 import 'voice_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -28,6 +30,13 @@ class SettingsScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: s,
         builder: (context, _) => ListView(children: [
+          ListTile(
+            leading: const CircleAvatar(child: Icon(Icons.person)),
+            title: const Text('Meu perfil'),
+            subtitle: const Text('Nome, comum e batismo (lembrete do aniversário de batismo)'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => push(context, const ProfileScreen()),
+          ),
           const SectionTitle('Aparência'),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -110,7 +119,7 @@ class SettingsScreen extends StatelessWidget {
       final name = 'backup_biblia_hinos_${now.year}${now.month.toString().padLeft(2, '0')}'
           '${now.day.toString().padLeft(2, '0')}.json';
       final f = File(p.join((await getTemporaryDirectory()).path, name));
-      await f.writeAsString(encodeBackup(await buildBackup(App.I.db.db)));
+      await f.writeAsString(encodeBackup(await buildBackup(App.I.db.db, prefs: await SharedPreferences.getInstance())));
       await SharePlus.instance.share(ShareParams(
         files: [XFile(f.path, mimeType: 'application/json')],
         text: 'Backup do Bíblia & Hinos. Guarde este arquivo (Drive, WhatsApp, e-mail) para restaurar depois.',
@@ -125,7 +134,7 @@ class SettingsScreen extends StatelessWidget {
     final path = files.isEmpty ? null : files.first.path;
     if (path == null) return;
     try {
-      final n = await restoreBackup(App.I.db.db, await File(path).readAsString());
+      final n = await restoreBackup(App.I.db.db, await File(path).readAsString(), prefs: await SharedPreferences.getInstance());
       await refreshReminders();
       App.I.settings.touch();
       if (context.mounted) showSnack(context, 'Backup restaurado: $n itens.');
