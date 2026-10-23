@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DEMO_TICKETS } from './seed-data.js';
+import { DEMO_TICKETS } from './tickets.js';
 
 describe('DEMO_TICKETS', () => {
   it('tem 30 chamados variados', () => {

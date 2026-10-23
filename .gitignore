@@ -18,3 +18,5 @@ apps/office/android/local.properties
 apps/office/android/app/src/main/assets/public/
 *.keystore
 *.jks
+playwright-report/
+test-results/

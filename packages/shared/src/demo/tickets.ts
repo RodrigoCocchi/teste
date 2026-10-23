@@ -1,4 +1,5 @@
-import type { AgentKey, TicketCategory, TicketPriority, TicketStatus } from '@nexus/shared';
+import type { AgentKey } from '../agents.js';
+import type { TicketCategory, TicketPriority, TicketStatus } from '../tickets.js';
 
 /**
  * Chamados 100% fictícios do tenant demo (empresa inventada "Vértice Logística").

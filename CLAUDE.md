@@ -155,6 +155,8 @@ Meta: nível de vídeo publicitário, não de protótipo.
 - **APK**: `apps/office` é exportado estático (`output: 'export'`) e empacotado pelo
   Capacitor. Nada de SSR/route handlers no office — toda lógica fica na API.
   Auth no app via token bearer (header `Authorization` / `?token=` no WebSocket).
+- **Modo demo local**: sem `NEXT_PUBLIC_API_URL` o office roda a simulação de
+  `@nexus/shared` (demo) no próprio cliente. Toda tela nova precisa funcionar nos dois modos.
 - **Imagens**: masters em PNG/EXR sem perda em `assets/` (Git LFS); entregues como AVIF +
   WebP em 1x/2x/3x via `srcset`. Nunca servir JPEG recomprimido de baixa qualidade.
 - **Texturas 3D**: KTX2 (UASTC para normal maps e telas, ETC1S só em texturas difusas

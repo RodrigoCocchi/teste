@@ -1,10 +1,9 @@
 import { fileURLToPath } from 'node:url';
 import { eq } from 'drizzle-orm';
 import { AGENT_CATALOG } from '@nexus/agents';
-import { SLA_HOURS } from '@nexus/shared';
 import { createDb, type Database } from './client.js';
 import { agents, ticketMessages, tickets, tenants, tokenBudgets } from './schema.js';
-import { DEMO_TICKETS } from './seed-data.js';
+import { DEMO_TICKETS, SLA_HOURS } from '@nexus/shared';
 
 export const DEMO_TENANT_SLUG = 'demo';
 const HOUR = 3_600_000;

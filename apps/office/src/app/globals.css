@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Celular deitado: pouca altura, painel vai para o lado da cena. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 540px));
+
 @theme {
   --color-ink: #05070d;
   --color-panel: rgb(255 255 255 / 0.06);
@@ -34,6 +37,13 @@ body {
   border: 1px solid var(--color-line);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.glass-strong {
+  background: rgb(10 13 20 / 0.82);
+  border: 1px solid var(--color-line);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
 }
 
 @media (prefers-reduced-motion: reduce) {

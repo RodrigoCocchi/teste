@@ -21,7 +21,7 @@ import type { Auth } from './auth.js';
 import { trustedOrigins, type Env } from './env.js';
 import { EventHub } from './event-hub.js';
 import { toFetchHeaders } from './http.js';
-import { demoEventStream } from './mock-events.js';
+import { demoEventStream } from '@nexus/shared';
 import { requireRole, resolveAccess } from './tenancy.js';
 
 export interface AppDeps {

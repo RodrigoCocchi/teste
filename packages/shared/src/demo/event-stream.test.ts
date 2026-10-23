@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { agentKeySchema, officeEventSchema } from '@nexus/shared';
-import { demoEventStream } from './mock-events.js';
+import { agentKeySchema, officeEventSchema } from '../index.js';
+import { demoEventStream } from './event-stream.js';
 
 describe('demoEventStream', () => {
   it('gera eventos válidos pelo contrato, com agentes conhecidos', () => {

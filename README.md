@@ -37,13 +37,27 @@ Usuário dono do demo (opcional): `DEMO_USER_PASSWORD=... pnpm --filter @nexus/a
 
 ```bash
 pnpm lint && pnpm typecheck && pnpm test  # com DATABASE_URL definido roda também os testes de integração
+pnpm --filter @nexus/office e2e           # E2E do escritório (Playwright, celular + desktop)
 ```
 
 ## App Android (APK)
 
-O APK é gerado automaticamente pelo GitHub Actions (artefato `nexus-ti-apk` em cada push).
-Defina a variável `NEXT_PUBLIC_API_URL` do repositório com a URL pública da API.
-Local (precisa do Android Studio): veja [docs/MOBILE.md](docs/MOBILE.md).
+Cada push gera o APK, testa no emulador Android e publica na release
+[`nexus-apk-latest`](https://github.com/RodrigoCocchi/teste/releases/tag/nexus-apk-latest).
+Como instalar no celular: [INSTALAR-NEXUS.md](INSTALAR-NEXUS.md). Detalhes: [docs/MOBILE.md](docs/MOBILE.md).
+
+## Modo demo local
+
+Sem `NEXT_PUBLIC_API_URL` definida, o escritório roda **sem servidor**: a simulação dos agentes
+acontece no próprio navegador/celular. É o modo do APK de demonstração e o mais prático para gravar vídeos.
+Com a variável definida, ele se conecta à API (REST + WebSocket).
+
+```bash
+pnpm build && pnpm --filter @nexus/office dev              # demo local em http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:4000 pnpm --filter @nexus/office dev   # ligado à API
+```
+
+`?q=low` na URL força o modo gráfico leve (celulares fracos).
 
 ## Estrutura
 
@@ -67,4 +81,4 @@ packages/connectors  Contratos de conectores + criptografia de credenciais
 
 ## Status
 
-Fase 1 (Fundação) concluída. Próximo passo: Fase 2 — Escritório 3D v1.
+Fases 1 (Fundação) e 2 (Escritório 3D v1) concluídas. Próximo passo: Fase 3 — Orquestrador.

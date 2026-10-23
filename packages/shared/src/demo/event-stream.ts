@@ -1,5 +1,6 @@
-import { DEMO_TICKETS } from '@nexus/db';
-import type { AgentKey, OfficeEvent, OfficeEventType } from '@nexus/shared';
+import { DEMO_TICKETS } from './tickets.js';
+import type { AgentKey } from '../agents.js';
+import type { OfficeEvent, OfficeEventType } from '../events.js';
 
 type Step = [agent: AgentKey, type: OfficeEventType, payload: Record<string, unknown>];
 
@@ -46,8 +47,15 @@ function ticketScript(ticketNumber: number, subject: string, cycle: number): Ste
 function standupScript(): Step[] {
   return [
     ['manager', 'standup.started', { room: 'meeting_room' }],
+    ['manager', 'agent.thinking', { task: 'Esperando o time chegar' }],
     ['manager', 'agent.talking', { text: 'Bom dia, time! Como estão os chamados de hoje?' }],
+    ['triage', 'agent.talking', { text: '5 chamados novos desde ontem, 2 de prioridade alta.' }],
+    ['support_n1', 'agent.talking', { text: 'Fechei 6 ontem. Hoje foco nos acessos pendentes.' }],
     ['infra', 'agent.talking', { text: 'Disco do FS01 liberado, monitorando.' }],
+    ['dev', 'agent.talking', { text: 'Correção do relatório de fretes em revisão.' }],
+    ['qa', 'agent.talking', { text: 'Testando o PR do relatório agora de manhã.' }],
+    ['docs', 'agent.talking', { text: 'Publiquei 2 artigos novos na base de conhecimento.' }],
+    ['manager', 'agent.talking', { text: 'Ótimo. Bom trabalho a todos!' }],
     ['manager', 'standup.ended', {}],
   ];
 }

@@ -17,8 +17,19 @@ Regras que isso impõe:
 
 ## Gerar o APK
 
-**CI (recomendado)**: todo push roda o job `android` em `.github/workflows/ci.yml` e publica
-o artefato `nexus-ti-apk`. Configure a variável `NEXT_PUBLIC_API_URL` no repositório.
+**CI (recomendado)**: `.github/workflows/nexus-apk.yml` roda a cada push: testes, build,
+APK release assinado, **teste no emulador Android** (`.github/scripts/nexus-smoke.sh`, com
+screenshots no artefato `nexus-smoke-test`) e publica na release `nexus-apk-latest`.
+
+- Sem a variável `NEXT_PUBLIC_API_URL` o APK sai em **modo demo local** (funciona offline).
+- Assinatura: crie os segredos `NEXUS_KEYSTORE_BASE64` (keystore em base64) e
+  `NEXUS_KEYSTORE_PASSWORD` (alias `nexus`). Sem eles, cada build usa uma chave temporária e
+  é preciso desinstalar a versão anterior antes de instalar a nova.
+
+  ```bash
+  keytool -genkeypair -keystore nexus.jks -alias nexus -keyalg RSA -keysize 2048 -validity 10000
+  base64 -w0 nexus.jks   # conteúdo do segredo NEXUS_KEYSTORE_BASE64
+  ```
 
 **Local** (Android Studio + SDK 36 + JDK 21):
 

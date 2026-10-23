@@ -13,13 +13,15 @@ Marque `[x]` ao concluir. Cada fase termina com testes passando e commit.
 - [x] Web responsiva (mobile-first) com painel ao vivo
 - [x] Projeto Android (Capacitor) + APK gerado no CI
 
-## Fase 2 — Escritório 3D v1
+## Fase 2 — Escritório 3D v1 ✅
 
-- [ ] Cena com layout em JSON
-- [ ] Avatares placeholder com máquina de estados de animação
-- [ ] Navmesh e caminhada entre mesas
-- [ ] Câmera órbita / seguir agente
-- [ ] Painéis 2D básicos
+- [x] Cena com layout em JSON (`apps/office/src/office/office-layout.json`)
+- [x] Avatares placeholder com máquina de estados de animação
+- [x] Navegação (grade + A*) e caminhada entre mesas, standup na sala de reunião
+- [x] Câmera órbita / seguir agente / visão geral (enquadramento por tamanho de tela)
+- [x] Painéis 2D básicos (atividade, aprovações, chamados, métricas, ficha do agente)
+- [x] Modo demo local (simulação no navegador/celular, sem servidor)
+- [x] APK publicado automaticamente (release `nexus-apk-latest`) com teste no emulador
 - [ ] Testar o APK em aparelho real (desempenho do WebGL no WebView)
 
 ## Fase 3 — Orquestrador
