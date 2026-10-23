@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/out
+**/.next
+**/.turbo
+**/coverage
+apps/office/android
+.git
+.env
+.env.*
+
+assets

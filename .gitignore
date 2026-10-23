@@ -8,3 +8,13 @@ dist/
 *.log
 coverage/
 .DS_Store
+out/
+next-env.d.ts
+*.tsbuildinfo
+# Android (Capacitor)
+apps/office/android/app/build/
+apps/office/android/.gradle/
+apps/office/android/local.properties
+apps/office/android/app/src/main/assets/public/
+*.keystore
+*.jks

@@ -12,6 +12,7 @@ com mesa, avatar animado e status em tempo real. O que o boneco faz na tela refl
 o que o agente está fazendo de verdade (lendo chamado, codando, aguardando aprovação).
 
 Dois objetivos ao mesmo tempo:
+
 1. **Ferramenta real**: atender, responder e resolver chamados, desenvolver, documentar.
 2. **Vitrine**: visual cinematográfico para gravar conteúdo diário (Instagram/LinkedIn)
    e vender o produto para PMEs.
@@ -32,29 +33,34 @@ Dois objetivos ao mesmo tempo:
   (modelo barato para triagem, modelo forte para dev/diagnóstico); cache de prompt.
 - **Visual é cosmético, lógica é real**: o front 3D só consome eventos. Nunca colocar
   regra de negócio no front.
+- **Web responsiva + APK Android sempre**: toda tela nasce mobile-first e funciona de
+  360 px a 4K; o mesmo código vira APK via Capacitor. Nenhuma feature entra só na web.
+- **Mídia em altíssima qualidade**: imagens, texturas e vídeos nunca são degradados para
+  "caber" — usa-se compressão moderna e variantes por dispositivo (ver §7.1 e docs/MOBILE.md).
 
 ## 3. Stack
 
 Monorepo **pnpm + Turborepo**, TypeScript estrito em tudo.
 
-| Camada | Tecnologia |
-|---|---|
-| Escritório 3D | Next.js 15 (App Router), React Three Fiber, @react-three/drei, @react-three/postprocessing, Zustand |
-| Assets 3D | GLB/GLTF comprimidos (Draco + KTX2 via gltf-transform), personagens rigados com animações (idle, digitando, andando, falando, comemorando) |
-| UI 2D | Tailwind + shadcn/ui, painéis em glassmorphism sobre a cena |
-| API / Orquestrador | Node 22 + Fastify, WebSocket (eventos em tempo real) |
-| Agentes | Claude Agent SDK (Anthropic) com ferramentas próprias; OpenAI opcional via camada de roteamento |
-| Filas | BullMQ + Redis |
-| Banco | PostgreSQL 16 + Drizzle ORM; pgvector para base de conhecimento |
-| Auth | Better Auth (e-mail + Google/Microsoft), RBAC por tenant |
-| Infra | Docker Compose (dev e produção MVP), Caddy como proxy reverso com HTTPS |
-| Observabilidade | Pino (logs), OpenTelemetry, painel interno de custos |
+| Camada             | Tecnologia                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Escritório 3D      | Next.js 15 (App Router, export estático), React Three Fiber, @react-three/drei, @react-three/postprocessing, Zustand                       |
+| App Android        | Capacitor 8 empacotando o export estático do `apps/office` (APK gerado no GitHub Actions)                                                  |
+| Assets 3D          | GLB/GLTF comprimidos (Draco + KTX2 via gltf-transform), personagens rigados com animações (idle, digitando, andando, falando, comemorando) |
+| UI 2D              | Tailwind + shadcn/ui, painéis em glassmorphism sobre a cena                                                                                |
+| API / Orquestrador | Node 22 + Fastify, WebSocket (eventos em tempo real)                                                                                       |
+| Agentes            | Claude Agent SDK (Anthropic) com ferramentas próprias; OpenAI opcional via camada de roteamento                                            |
+| Filas              | BullMQ + Redis                                                                                                                             |
+| Banco              | PostgreSQL 16 + Drizzle ORM; pgvector para base de conhecimento                                                                            |
+| Auth               | Better Auth (e-mail + Google/Microsoft), RBAC por tenant                                                                                   |
+| Infra              | Docker Compose (dev e produção MVP), Caddy como proxy reverso com HTTPS                                                                    |
+| Observabilidade    | Pino (logs), OpenTelemetry, painel interno de custos                                                                                       |
 
 ## 4. Estrutura do repositório
 
 ```
 apps/
-  office/        # Next.js — escritório 3D + painéis
+  office/        # Next.js — escritório 3D + painéis (web) e projeto Android (Capacitor) em office/android
   api/           # Fastify — REST + WebSocket + workers
 packages/
   agents/        # definição dos agentes, ferramentas, prompts, roteador de modelo
@@ -69,17 +75,18 @@ docs/            # arquitetura, roadmap, infra
 
 Cada agente = `{ id, nome, papel, avatar, modelo, ferramentas[], permissões[], mesa }`.
 
-| Agente | Sala | Faz | Ferramentas |
-|---|---|---|---|
-| **Gestor** | Sala do gestor | Recebe demanda, decompõe, delega, cobra prazo, faz o standup diário | delegar, consultar status, relatório |
-| **Triagem** | Recepção | Lê chamado novo, classifica (categoria, prioridade, SLA), busca duplicados, encaminha | conector de chamados, base de conhecimento |
-| **Suporte N1** | Ilha de suporte | Responde usuário, guia passo a passo, executa ações padrão (reset de senha, desbloqueio, acesso) | conector de chamados, AD/Entra ID, e-mail |
-| **Infra** | Sala de servidores | Monitora alertas, diagnostica, propõe correção | Zabbix/Prometheus, SSH em sandbox, scripts aprovados |
-| **Dev** | Ilha de dev | Implementa correções e features em repositórios, abre PR | GitHub, sandbox de código (container) |
-| **QA** | Ilha de dev | Revisa PR, roda testes, aponta problemas | GitHub, runner de testes |
-| **Documentação** | Biblioteca | Transforma chamados resolvidos em artigos da base de conhecimento | base de conhecimento (pgvector) |
+| Agente           | Sala               | Faz                                                                                              | Ferramentas                                          |
+| ---------------- | ------------------ | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| **Gestor**       | Sala do gestor     | Recebe demanda, decompõe, delega, cobra prazo, faz o standup diário                              | delegar, consultar status, relatório                 |
+| **Triagem**      | Recepção           | Lê chamado novo, classifica (categoria, prioridade, SLA), busca duplicados, encaminha            | conector de chamados, base de conhecimento           |
+| **Suporte N1**   | Ilha de suporte    | Responde usuário, guia passo a passo, executa ações padrão (reset de senha, desbloqueio, acesso) | conector de chamados, AD/Entra ID, e-mail            |
+| **Infra**        | Sala de servidores | Monitora alertas, diagnostica, propõe correção                                                   | Zabbix/Prometheus, SSH em sandbox, scripts aprovados |
+| **Dev**          | Ilha de dev        | Implementa correções e features em repositórios, abre PR                                         | GitHub, sandbox de código (container)                |
+| **QA**           | Ilha de dev        | Revisa PR, roda testes, aponta problemas                                                         | GitHub, runner de testes                             |
+| **Documentação** | Biblioteca         | Transforma chamados resolvidos em artigos da base de conhecimento                                | base de conhecimento (pgvector)                      |
 
 Regras:
+
 - Agentes conversam entre si por **mensagens registradas** (visíveis no front como balões).
 - Todo agente tem `max_steps`, `max_tokens` e timeout.
 - Prompts de sistema ficam em `packages/agents/prompts/*.md`, versionados.
@@ -94,16 +101,28 @@ type OfficeEvent = {
   tenantId: string;
   agentId: string;
   type:
-    | 'agent.idle' | 'agent.thinking' | 'agent.working' | 'agent.walking'
-    | 'agent.talking' | 'agent.waiting_approval' | 'agent.done' | 'agent.error'
-    | 'ticket.created' | 'ticket.updated' | 'ticket.resolved'
-    | 'approval.requested' | 'approval.granted' | 'approval.denied'
-    | 'standup.started' | 'standup.ended';
+    | 'agent.idle'
+    | 'agent.thinking'
+    | 'agent.working'
+    | 'agent.walking'
+    | 'agent.talking'
+    | 'agent.waiting_approval'
+    | 'agent.done'
+    | 'agent.error'
+    | 'ticket.created'
+    | 'ticket.updated'
+    | 'ticket.resolved'
+    | 'approval.requested'
+    | 'approval.granted'
+    | 'approval.denied'
+    | 'standup.started'
+    | 'standup.ended';
   payload: Record<string, unknown>;
 };
 ```
 
 O front mapeia cada `type` para animação + posição:
+
 - `working` → senta na mesa, animação de digitar, monitor acende com o conteúdo
 - `walking` → caminha (pathfinding em navmesh) até a mesa de outro agente
 - `talking` → balão com o texto resumido
@@ -128,6 +147,22 @@ Meta: nível de vídeo publicitário, não de protótipo.
   para degradar qualidade automaticamente. Meta: 60 fps em GPU média, 30 fps em notebook.
 - **Layout editável**: salas e mesas definidas em JSON (`office-layout.json`), com
   modo editor para arrastar móveis.
+
+### 7.1 Multiplataforma e qualidade de mídia
+
+- **Responsivo**: mobile-first com Tailwind; áreas seguras (`env(safe-area-inset-*)`);
+  `100dvh`; alvos de toque ≥ 44 px; sem rolagem horizontal de 360 px a 4K.
+- **APK**: `apps/office` é exportado estático (`output: 'export'`) e empacotado pelo
+  Capacitor. Nada de SSR/route handlers no office — toda lógica fica na API.
+  Auth no app via token bearer (header `Authorization` / `?token=` no WebSocket).
+- **Imagens**: masters em PNG/EXR sem perda em `assets/` (Git LFS); entregues como AVIF +
+  WebP em 1x/2x/3x via `srcset`. Nunca servir JPEG recomprimido de baixa qualidade.
+- **Texturas 3D**: KTX2 (UASTC para normal maps e telas, ETC1S só em texturas difusas
+  secundárias), mipmaps, anisotropia máxima suportada.
+- **Vídeo**: gravação do modo cinematográfico em 4K 60 fps (16:9) e 2160×3840 (9:16);
+  entrega em AV1 + H.264 (fallback) com bitrate alto; `playsInline` e poster em AVIF.
+- **Celular**: `dpr` limitado a `[1, 2]` e qualidade adaptativa via `PerformanceMonitor`
+  (reduz sombras/pós antes de reduzir resolução de textura). WebView com aceleração de hardware.
 
 ## 8. Painéis 2D (sobre a cena)
 

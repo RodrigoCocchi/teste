@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Nexus TI</string>
+    <string name="title_activity_main">Nexus TI</string>
+    <string name="package_name">com.nexusti.office</string>
+    <string name="custom_url_scheme">com.nexusti.office</string>
+</resources>

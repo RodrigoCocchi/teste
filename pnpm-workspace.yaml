@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Segurança de supply chain: só instala versões publicadas há pelo menos 14 dias.
+minimumReleaseAge: 20160
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver
