@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import 'package:syncfusion_flutter_pdf/pdf.dart' as sf;
 
+import '../data/hymn_repository.dart';
 import 'bible_parser.dart';
 
 /// Mensagens de progresso enviadas pelo isolate de extração.
@@ -141,5 +142,30 @@ HymnDetection detectHymnPages(List<List<String>> pages) {
       }
     }
   }
+  _detectChoirs(pages, found, titles);
   return HymnDetection(found, pages.length, withText, titles);
+}
+
+final RegExp _choirHeader = RegExp(r'^coros?$', caseSensitive: false);
+final RegExp _choirLine = RegExp(r'^(?:coro\s*)?(\d)\s*[-–]\s*(.*)$', caseSensitive: false);
+
+/// Coros (481–486): depois do último hino, procura a página com o título
+/// "Coros" e os números 1 a 6 em sequência a partir dela.
+void _detectChoirs(List<List<String>> pages, Map<int, int> found, Map<int, String> titles) {
+  if (!found.containsKey(Hymns.hymnCount)) return;
+  final start = pages.indexWhere(
+      (lines) => lines.take(3).any((l) => _choirHeader.hasMatch(l.replaceAll(smallMark, '').trim())),
+      found[Hymns.hymnCount]!);
+  if (start < 0) return;
+  var next = 1;
+  for (var p = start; p < pages.length && next <= Hymns.choirCount; p++) {
+    for (final raw in pages[p]) {
+      final m = _choirLine.firstMatch(raw.replaceAll(smallMark, '').trim());
+      if (m == null || int.parse(m[1]!) != next) continue;
+      found[Hymns.hymnCount + next] = p + 1;
+      final title = m[2]!.trim();
+      if (title.length >= 3) titles[Hymns.hymnCount + next] = title;
+      next++;
+    }
+  }
 }

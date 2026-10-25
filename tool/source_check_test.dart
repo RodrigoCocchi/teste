@@ -99,7 +99,8 @@ void main() {
         log('${kind.key}: últimos detectados: ${all.skip(all.length > 12 ? all.length - 12 : 0).map((e) => '${e.key}→p${e.value}').join(' ')}');
         final missing = [for (var n = 1; n <= 480; n++) if (!h.pages.containsKey(n)) n];
         log('${kind.key}: faltando ${missing.length}: ${missing.take(40).join(',')}');
-        for (final p in [3, 483, for (var i = 484; i <= pages.length; i++) i]) {
+        log('${kind.key}: coros: ${[for (var c = 481; c <= 486; c++) '${c - 480}→p${h.pages[c]}'].join(' ')}');
+        for (final p in [3, 483]) {
           if (p > pages.length) continue;
           log('--- página $p ---');
           for (final l in pages[p - 1].take(p > 483 ? 3 : 5)) {

@@ -18,4 +18,18 @@ void main() {
     expect(r.titles[1], 'Título de teste um...');
     expect(r.titles[3], 'Terceiro título');
   });
+
+  test('coros depois do hino 480, a partir do título "Coros"', () {
+    final pages = <List<String>>[
+      for (var n = 1; n <= 480; n++) ['$n - Hino $n', '1. primeira estrofe', '2. segunda estrofe'],
+      ['ÍNDICE'],
+      ['1 - número no índice'],
+      ['Coros', '1 - Aleluia! Aleluia!', 'letra', '2 - Segundo coro', '3. não é coro'],
+      ['3 - Terceiro coro', '4 - Quarto', '5 - Quinto', '6 - Sexto'],
+    ];
+    final r = detectHymnPages(pages);
+    expect(r.pages[480], 480);
+    expect([for (var c = 481; c <= 486; c++) r.pages[c]], [483, 483, 484, 484, 484, 484]);
+    expect(r.titles[481], 'Aleluia! Aleluia!');
+  });
 }
