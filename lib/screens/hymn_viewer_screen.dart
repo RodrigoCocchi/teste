@@ -129,8 +129,8 @@ class _HymnViewerScreenState extends State<HymnViewerScreen> {
       case 'unaudio':
         await app.hymns.setAudio(_number, null);
         _load();
-      case 'doc':
-        app.settings.hymnDoc = _doc == 'do' ? 'orgao' : 'do';
+      case final d when d.startsWith('doc:'):
+        app.settings.hymnDoc = d.substring(4);
         setState(() {
           _ready = false;
           _viewer = GlobalKey<PdfPageViewerState>();
@@ -162,7 +162,8 @@ class _HymnViewerScreenState extends State<HymnViewerScreen> {
                 PopupMenuButton<String>(
                   onSelected: _menu,
                   itemBuilder: (_) => [
-                    PopupMenuItem(value: 'doc', child: Text('Trocar para ${_doc == 'do' ? 'órgão' : 'Dó'}')),
+                    for (final d in Hymns.docs)
+                      if (d != _doc) PopupMenuItem(value: 'doc:$d', child: Text('Ver no ${Hymns.docLabel(d)}')),
                     PopupMenuItem(value: 'map', child: Text('Esta página (p. $_page) é o ${Hymn.labelFor(_number)}')),
                     const PopupMenuItem(value: 'title', child: Text('Editar título')),
                     const PopupMenuItem(value: 'audio', child: Text('Associar MP3 local')),

@@ -32,8 +32,9 @@ class SetupService extends ChangeNotifier {
   final bibleIndex = SetupStep('Organizar livros, capítulos e versículos');
   final doDownload = SetupStep('Baixar o Hinário 5 em Dó');
   final orgaoDownload = SetupStep('Baixar o Hinário 5 para órgão');
+  final cantoDownload = SetupStep('Baixar o Hinário 5 só canto');
 
-  List<SetupStep> get steps => [bibleDownload, bibleIndex, doDownload, orgaoDownload];
+  List<SetupStep> get steps => [bibleDownload, bibleIndex, doDownload, orgaoDownload, cantoDownload];
 
   /// Desligado nos testes de interface (sem rede).
   static bool autoStart = true;
@@ -48,7 +49,8 @@ class SetupService extends ChangeNotifier {
       !_app.documents.has(DocKind.bible) ||
       !_app.hasBibleText ||
       !_app.documents.has(DocKind.hymnalDo) ||
-      !_app.documents.has(DocKind.hymnalOrgao);
+      !_app.documents.has(DocKind.hymnalOrgao) ||
+      !_app.documents.has(DocKind.hymnalCanto);
 
   bool get finished => steps.every((s) => s.state == SetupState.done);
 
@@ -83,7 +85,11 @@ class SetupService extends ChangeNotifier {
       if (_app.documents.has(DocKind.bible) && !_app.hasBibleText) {
         await _withRetry(bibleIndex, () => indexBible(step: bibleIndex), attempts: 1);
       }
-      for (final (kind, step) in [(DocKind.hymnalDo, doDownload), (DocKind.hymnalOrgao, orgaoDownload)]) {
+      for (final (kind, step) in [
+        (DocKind.hymnalDo, doDownload),
+        (DocKind.hymnalOrgao, orgaoDownload),
+        (DocKind.hymnalCanto, cantoDownload),
+      ]) {
         if (!_app.documents.has(kind)) {
           await _withRetry(step, () => download(kind, step: step));
         }
@@ -100,6 +106,7 @@ class SetupService extends ChangeNotifier {
     if (_app.hasBibleText) _update(bibleIndex, SetupState.done, '${_app.verseCount} versículos');
     if (_app.documents.has(DocKind.hymnalDo)) _update(doDownload, SetupState.done, 'Concluído');
     if (_app.documents.has(DocKind.hymnalOrgao)) _update(orgaoDownload, SetupState.done, 'Concluído');
+    if (_app.documents.has(DocKind.hymnalCanto)) _update(cantoDownload, SetupState.done, 'Concluído');
   }
 
   Future<void> _withRetry(SetupStep step, Future<void> Function() task, {int attempts = 4}) async {

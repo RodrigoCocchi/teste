@@ -21,4 +21,5 @@ jobs:
       - name: Baixar das fontes e diagnosticar a extração
         env:
           ONLINE_CHECK: '1'
+          ONLY: canto
         run: flutter test tool/source_check_test.dart --reporter expanded 2>&1 | grep -E "\[diag\]|Some tests|All tests" || true

@@ -8,13 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum DocKind {
   bible('bible', 'Bíblia ARC 1969'),
   hymnalDo('do', 'Hinário 5 — em Dó'),
-  hymnalOrgao('orgao', 'Hinário 5 — para órgão');
+  hymnalOrgao('orgao', 'Hinário 5 — para órgão'),
+  hymnalCanto('canto', 'Hinário 5 — só canto');
 
   const DocKind(this.key, this.label);
   final String key;
   final String label;
 
-  static DocKind hymnal(String doc) => doc == 'orgao' ? hymnalOrgao : hymnalDo;
+  static DocKind hymnal(String doc) => switch (doc) { 'orgao' => hymnalOrgao, 'canto' => hymnalCanto, _ => hymnalDo };
 }
 
 class DocInfo {

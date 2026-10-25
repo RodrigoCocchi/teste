@@ -46,7 +46,7 @@ class Settings extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Hinário preferido: 'do' ou 'orgao'.
+  /// Hinário preferido: 'do', 'orgao' ou 'canto'.
   String get hymnDoc => _prefs.getString('hymnDoc') ?? 'do';
   set hymnDoc(String d) {
     _prefs.setString('hymnDoc', d);

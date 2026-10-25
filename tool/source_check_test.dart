@@ -29,6 +29,11 @@ void main() {
 
   for (final kind in DocKind.values) {
     test('fonte: ${kind.label}', () async {
+      final only = Platform.environment['ONLY'];
+      if (only != null && only.isNotEmpty && only != kind.key) {
+        markTestSkipped('ONLY=$only');
+        return;
+      }
       if (!enabled) {
         markTestSkipped('ONLINE_CHECK=1 não definido');
         return;
@@ -90,7 +95,11 @@ void main() {
         final h = detectHymnPages(pages);
         log('${kind.key}: ${h.pages.length} hinos detectados automaticamente');
         log('${kind.key}: primeiros detectados: ${h.pages.entries.take(12).map((e) => '${e.key}→p${e.value}').join(' ')}');
-        for (final p in [9, 10, 11, 12, 50, 51]) {
+        final all = h.pages.entries.toList();
+        log('${kind.key}: últimos detectados: ${all.skip(all.length > 12 ? all.length - 12 : 0).map((e) => '${e.key}→p${e.value}').join(' ')}');
+        final missing = [for (var n = 1; n <= 480; n++) if (!h.pages.containsKey(n)) n];
+        log('${kind.key}: faltando ${missing.length}: ${missing.take(40).join(',')}');
+        for (final p in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 50, 51]) {
           if (p > pages.length) continue;
           log('--- página $p ---');
           for (final l in pages[p - 1].take(5)) {

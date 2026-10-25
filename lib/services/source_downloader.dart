@@ -11,6 +11,8 @@ const Map<DocKind, String> officialSources = {
       'https://cemaad.org.br/wp-content/uploads/2023/01/Biblia-Almeida-Revista-e-Corrigida-1969.pdf',
   DocKind.hymnalDo: 'https://www.ccbempdf.com/2021/06/hinario-n5-ccb-do-em-pdf.html',
   DocKind.hymnalOrgao: 'https://www.ccbempdf.com/2021/07/hinario-n5-ccb-orgao-em-pdf.html',
+  // Link do Google Drive indicado pelo usuário.
+  DocKind.hymnalCanto: 'https://drive.google.com/file/d/1C5lUn5MXrSg20HrfgoQw5cppFiVGhpMQ/view',
 };
 
 class DownloadProgress {

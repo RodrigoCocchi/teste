@@ -110,6 +110,7 @@ class _HymnalScreenState extends State<HymnalScreen> {
                     segments: const [
                       ButtonSegment(value: 'do', label: Text('Em Dó')),
                       ButtonSegment(value: 'orgao', label: Text('Órgão')),
+                      ButtonSegment(value: 'canto', label: Text('Só canto')),
                     ],
                     selected: {doc},
                     onSelectionChanged: (s) => app.settings.hymnDoc = s.first,

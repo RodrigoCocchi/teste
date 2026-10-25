@@ -282,6 +282,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
           const SectionTitle('Hinário 5'),
           _docTile(DocKind.hymnalDo),
           _docTile(DocKind.hymnalOrgao),
+          _docTile(DocKind.hymnalCanto),
           const Padding(
             padding: EdgeInsets.all(16),
             child: Text(

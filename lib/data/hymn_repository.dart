@@ -22,8 +22,9 @@ class Hymns {
   static const hymnCount = 480;
   static const choirCount = 6;
   static const total = hymnCount + choirCount;
-  static const docs = ['do', 'orgao'];
-  static String docLabel(String doc) => doc == 'do' ? 'Hinário em Dó' : 'Hinário para órgão';
+  static const docs = ['do', 'orgao', 'canto'];
+  static String docLabel(String doc) =>
+      switch (doc) { 'orgao' => 'Hinário para órgão', 'canto' => 'Hinário só canto', _ => 'Hinário em Dó' };
 }
 
 /// Mapeamento linear: hino 1 na página [firstPage], [pagesPerHymn] por hino;
