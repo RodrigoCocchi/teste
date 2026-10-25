@@ -32,7 +32,7 @@ adb exec-out screencap -p > smoke/tela2.png
 textos depois
 adb logcat -d > smoke/logcat.txt
 echo "=== Erros do app no logcat ==="
-grep -E "FATAL|AndroidRuntime|E/flutter" smoke/logcat.txt | head -40 || true
+grep -E "FATAL|AndroidRuntime: (FATAL|Caused)|[ /]flutter *:|sqflite|SQLite" smoke/logcat.txt | grep -v uiautomator | head -60 || true
 if grep -q "Não foi possível iniciar" smoke/inicio.xml smoke/depois.xml; then echo "App mostrou erro de inicialização"; exit 1; fi
 if grep -q "FATAL EXCEPTION" smoke/logcat.txt; then echo "App travou"; exit 1; fi
 if ! cat smoke/inicio.xml smoke/depois.xml | grep -q "Preparando o aplicativo\|Tudo pronto\|Início"; then echo "Tela esperada não encontrada"; exit 1; fi
