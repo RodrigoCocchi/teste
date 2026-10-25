@@ -58,6 +58,11 @@ class _BibleIndexScreenState extends State<BibleIndexScreen> {
         title: const Text('Bíblia Sagrada'),
         actions: [
           IconButton(
+            tooltip: app.settings.bookGrid ? 'Mostrar em lista' : 'Mostrar em grade de siglas',
+            icon: Icon(app.settings.bookGrid ? Icons.view_list : Icons.grid_view),
+            onPressed: () => setState(() => app.settings.bookGrid = !app.settings.bookGrid),
+          ),
+          IconButton(
             tooltip: 'Temas bíblicos',
             icon: const Icon(Icons.local_offer_outlined),
             onPressed: () => push(context, const ThemesScreen()),
@@ -110,9 +115,9 @@ class _BibleIndexScreenState extends State<BibleIndexScreen> {
               ),
             ),
           _header('Antigo Testamento', ot.length, 39),
-          _grid(ot),
+          app.settings.bookGrid ? _abbrevGrid(ot) : _grid(ot),
           _header('Novo Testamento', nt.length, 27),
-          _grid(nt),
+          app.settings.bookGrid ? _abbrevGrid(nt) : _grid(nt),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ]),
       ),
@@ -125,6 +130,50 @@ class _BibleIndexScreenState extends State<BibleIndexScreen> {
           child: Text('$title · $shown de $total livros',
               style: const TextStyle(
                   color: AppColors.gold, fontWeight: FontWeight.bold, letterSpacing: 0.8)),
+        ),
+      );
+
+  /// Grade compacta: sigla em destaque e o nome embaixo, vários por linha.
+  Widget _abbrevGrid(List<BibleBook> books) => SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        sliver: SliverGrid.builder(
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 84, mainAxisSpacing: 6, crossAxisSpacing: 6, childAspectRatio: 1.05),
+          itemCount: books.length,
+          itemBuilder: (context, i) {
+            final b = books[i];
+            final scheme = Theme.of(context).colorScheme;
+            return Material(
+              color: scheme.surfaceContainerHigh,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.5)),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () => push(context, ChapterPickerScreen(book: b)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(b.abbrev, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.w600)),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(b.name,
+                            maxLines: 1, style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant)),
+                      ),
+                    ),
+                  ]),
+                ),
+              ),
+            );
+          },
         ),
       );
 

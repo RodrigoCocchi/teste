@@ -17,6 +17,20 @@ class Settings extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Índice da Bíblia em grade de siglas (true) ou em lista.
+  bool get bookGrid => _prefs.getBool('bookGrid') ?? true;
+  set bookGrid(bool v) {
+    _prefs.setBool('bookGrid', v);
+    notifyListeners();
+  }
+
+  /// Velocidade da rolagem automática do leitor (pixels por segundo).
+  double get autoScrollSpeed => _prefs.getDouble('autoScrollSpeed') ?? 30;
+  set autoScrollSpeed(double v) {
+    _prefs.setDouble('autoScrollSpeed', v.clamp(5, 200));
+    notifyListeners();
+  }
+
   double get fontSize => _prefs.getDouble('fontSize') ?? 19;
   set fontSize(double v) {
     _prefs.setDouble('fontSize', v.clamp(13, 34));

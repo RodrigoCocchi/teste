@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../data/bible_books.dart';
 import '../data/bible_repository.dart';
 import '../data/user_repository.dart';
 import '../services/app_services.dart';
+import '../services/auto_scroll.dart';
 import '../services/bible_audio.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
@@ -26,7 +29,7 @@ class ReaderScreen extends StatefulWidget {
   State<ReaderScreen> createState() => _ReaderScreenState();
 }
 
-class _ReaderScreenState extends State<ReaderScreen> {
+class _ReaderScreenState extends State<ReaderScreen> with SingleTickerProviderStateMixin {
   late int _book = widget.book;
   late int _chapter = widget.chapter;
   int? _highlight;
@@ -42,6 +45,14 @@ class _ReaderScreenState extends State<ReaderScreen> {
   final _scroll = ScrollController();
   final _audio = ChapterAudio(DeviceSpeech());
   bool _autoNext = true;
+
+  // Rolagem automática: ligada (barra visível), rolando ou pausada.
+  bool _autoScroll = false;
+  bool _scrolling = false;
+  bool _dragging = false;
+  bool _turning = false;
+  late final Ticker _ticker = createTicker(_tick);
+  Duration _lastTick = Duration.zero;
 
   @override
   void initState() {
@@ -74,6 +85,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
   }
 
   Future<void> _listen({int? from}) async {
+    if (_autoScroll) _stopAutoScroll();
     setState(_selected.clear);
     if (_verses.isEmpty) return;
     final f = _audio.play('${_b.name}, capítulo $_chapter', [for (final v in _verses) (v.verse, v.text)], from: from);
@@ -97,8 +109,77 @@ class _ReaderScreenState extends State<ReaderScreen> {
     await _audio.setSpeed(s);
   }
 
+  // ------------------------------------------------------ rolagem automática
+
+  void _startAutoScroll() {
+    if (_audio.state != AudioState.idle) _audio.stop();
+    setState(() {
+      _selected.clear();
+      _autoScroll = true;
+    });
+    _resumeScroll();
+  }
+
+  void _resumeScroll() {
+    if (_scrolling) return;
+    _scrolling = true;
+    _lastTick = Duration.zero;
+    if (!_ticker.isActive) _ticker.start();
+    WakelockPlus.enable();
+    setState(() {});
+  }
+
+  void _pauseScroll() {
+    _scrolling = false;
+    _ticker.stop();
+    WakelockPlus.disable();
+    if (mounted) setState(() {});
+  }
+
+  void _stopAutoScroll() {
+    _pauseScroll();
+    setState(() => _autoScroll = false);
+  }
+
+  void _tick(Duration elapsed) {
+    final dt = (elapsed - _lastTick).inMicroseconds / 1e6;
+    _lastTick = elapsed;
+    if (_dragging || _turning || !_scroll.hasClients || dt <= 0 || dt > 0.5) return;
+    final pos = _scroll.position;
+    if (pos.pixels >= pos.maxScrollExtent) {
+      _endOfChapter();
+      return;
+    }
+    _scroll.jumpTo((pos.pixels + App.I.settings.autoScrollSpeed * dt).clamp(0, pos.maxScrollExtent));
+  }
+
+  /// No fim do capítulo, espera um pouco e segue para o próximo.
+  Future<void> _endOfChapter() async {
+    if (_book == 66 && _chapter == 22) {
+      _pauseScroll();
+      return;
+    }
+    _turning = true;
+    await Future<void>.delayed(const Duration(seconds: 3));
+    if (!mounted || !_scrolling) {
+      _turning = false;
+      return;
+    }
+    await _go(1);
+    // Mostra o início do novo capítulo por alguns segundos antes de rolar.
+    await Future<void>.delayed(const Duration(seconds: 2));
+    _turning = false;
+  }
+
+  void _changeSpeed(int step) {
+    final s = App.I.settings;
+    setState(() => s.autoScrollSpeed = autoScrollStep(s.autoScrollSpeed, step));
+  }
+
   @override
   void dispose() {
+    _ticker.dispose();
+    if (_scrolling) WakelockPlus.disable();
     if (_readingMode) SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _scroll.dispose();
     _audio.dispose();
@@ -302,6 +383,10 @@ class _ReaderScreenState extends State<ReaderScreen> {
                           icon: const Icon(Icons.headphones),
                           onPressed: _audio.state == AudioState.idle ? () => _listen() : null),
                       IconButton(
+                          tooltip: 'Rolagem automática',
+                          icon: const Icon(Icons.keyboard_double_arrow_down),
+                          onPressed: _autoScroll || _verses.isEmpty ? null : _startAutoScroll),
+                      IconButton(
                           tooltip: 'Fonte', icon: const Icon(Icons.format_size), onPressed: _fontDialog),
                       IconButton(
                           tooltip: 'Modo leitura',
@@ -325,7 +410,9 @@ class _ReaderScreenState extends State<ReaderScreen> {
           ? _selectionBar()
           : _audio.state != AudioState.idle
               ? _playerBar(t)
-              : null,
+              : _autoScroll
+                  ? _scrollBar(t)
+                  : null,
       body: SafeArea(
         child: _loading
             ? const Center(child: CircularProgressIndicator())
@@ -341,7 +428,13 @@ class _ReaderScreenState extends State<ReaderScreen> {
                       onPressed: () => openBiblePdf(context, book: _book, chapter: _chapter),
                     ),
                   )
-                : SingleChildScrollView(
+                : NotificationListener<ScrollNotification>(
+                    onNotification: (n) {
+                      if (n is ScrollStartNotification && n.dragDetails != null) _dragging = true;
+                      if (n is ScrollEndNotification) _dragging = false;
+                      return false;
+                    },
+                    child: SingleChildScrollView(
                     controller: _scroll,
                     padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -387,6 +480,7 @@ class _ReaderScreenState extends State<ReaderScreen> {
                               label: const Text('Próximo')),
                       ]),
                     ]),
+                  ),
                   ),
       ),
     );
@@ -477,6 +571,36 @@ class _ReaderScreenState extends State<ReaderScreen> {
           IconButton(tooltip: 'Anotação', icon: const Icon(Icons.edit_note), onPressed: _note),
         ]),
       );
+
+  Widget _scrollBar(ThemeData t) {
+    final speed = App.I.settings.autoScrollSpeed;
+    final level = autoScrollLevel(speed);
+    return BottomAppBar(
+      child: Row(children: [
+        IconButton.filled(
+          tooltip: _scrolling ? 'Pausar rolagem' : 'Continuar rolagem',
+          icon: Icon(_scrolling ? Icons.pause : Icons.play_arrow),
+          onPressed: _scrolling ? _pauseScroll : _resumeScroll,
+        ),
+        IconButton(tooltip: 'Parar rolagem', icon: const Icon(Icons.stop), onPressed: _stopAutoScroll),
+        const Spacer(),
+        IconButton(
+          tooltip: 'Mais devagar',
+          icon: const Icon(Icons.remove_circle_outline),
+          onPressed: level > 1 ? () => _changeSpeed(-1) : null,
+        ),
+        Column(mainAxisSize: MainAxisSize.min, children: [
+          Text('Velocidade', style: t.textTheme.labelSmall),
+          Text('$level de ${autoScrollSpeeds.length}', style: const TextStyle(fontWeight: FontWeight.bold)),
+        ]),
+        IconButton(
+          tooltip: 'Mais rápido',
+          icon: const Icon(Icons.add_circle_outline),
+          onPressed: level < autoScrollSpeeds.length ? () => _changeSpeed(1) : null,
+        ),
+      ]),
+    );
+  }
 
   Widget _playerBar(ThemeData t) {
     final playing = _audio.state == AudioState.playing;
