@@ -383,8 +383,11 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
           isThreeLine: p.address.isNotEmpty && p.city.isNotEmpty,
           trailing: km == null
               ? null
-              : Text('${km.toStringAsFixed(1).replaceAll('.', ',')} km',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy)),
+              : Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  Text('${km.toStringAsFixed(1).replaceAll('.', ',')} km',
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy)),
+                  const Text('em linha reta', style: TextStyle(fontSize: 11)),
+                ]),
           onTap: () => _detail(p),
         ),
       );
@@ -420,7 +423,10 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
         if (_near.isNotEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Text('${_near.length} casa(s) de oração até $_raio km', style: t.textTheme.bodySmall),
+            child: Text(
+                '${_near.length} casa(s) de oração até $_raio km em linha reta. '
+                'O caminho pelas ruas (Waze, Maps) costuma ser maior.',
+                style: t.textTheme.bodySmall),
           ),
         for (final n in _near) _placeTile(n.place, km: n.km),
         if (!_loading && _near.isEmpty && _error == null)
@@ -520,7 +526,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
         const SizedBox(height: 12),
         Text(
           'Dados do relatório do site oficial da Congregação Cristã no Brasil (precisa de internet). '
-          'Distâncias aproximadas, calculadas pelo endereço.',
+          'Distâncias em linha reta, calculadas pelo endereço; o trajeto pelas ruas é maior.',
           style: t.textTheme.bodySmall,
           textAlign: TextAlign.center,
         ),

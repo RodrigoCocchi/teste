@@ -36,6 +36,8 @@ class _ShellState extends State<Shell> {
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetupScreen()));
         }
       });
+    } else if (SetupService.autoStart) {
+      setup.upgradeHymnTexts();
     }
   }
 

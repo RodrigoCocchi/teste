@@ -32,4 +32,29 @@ void main() {
     expect([for (var c = 481; c <= 486; c++) r.pages[c]], [483, 483, 484, 484, 484, 484]);
     expect(r.titles[481], 'Aleluia! Aleluia!');
   });
+
+  test('extrai a letra de cada hino até o próximo, sem o índice nem número de página', () {
+    final pages = <List<String>>[
+      ['1 - Cristo meu Mestre...', '1. Cristo meu Mestre e meu Senhor,', 'Eu Te adoro', '2. Mestre divino', '3'],
+      ['2 - Segundo', '1. Primeira estrofe', 'continua'],
+      ['segunda página do hino 2'],
+      ['3 - Terceiro', 'letra do três'],
+      ['Índice', '122 Hino do índice'],
+    ];
+    final r = detectHymnPages(pages);
+    expect(r.texts[1], '1. Cristo meu Mestre e meu Senhor,\nEu Te adoro\n2. Mestre divino');
+    expect(r.texts[2], '1. Primeira estrofe\ncontinua\nsegunda página do hino 2');
+    expect(r.texts[3], 'letra do três');
+  });
+
+  test('letra dos coros na mesma página', () {
+    final pages = <List<String>>[
+      for (var n = 1; n <= 480; n++) ['$n - Hino $n', 'letra $n'],
+      ['Coros', '1 - Aleluia!', 'Aleluia! Aleluia!', '2 - Segundo coro', 'letra do segundo'],
+    ];
+    final r = detectHymnPages(pages);
+    expect(r.texts[481], 'Aleluia! Aleluia!');
+    expect(r.texts[482], 'letra do segundo');
+    expect(r.texts[480], 'letra 480');
+  });
 }

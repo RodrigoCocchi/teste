@@ -17,6 +17,11 @@ class Settings extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Hinos cujo título foi editado à mão (não são trocados pela detecção).
+  Set<int> get editedHymnTitles => {for (final s in _prefs.getStringList('editedHymnTitles') ?? <String>[]) int.parse(s)};
+  void markHymnTitleEdited(int number) =>
+      _prefs.setStringList('editedHymnTitles', [for (final n in {...editedHymnTitles, number}) '$n']);
+
   /// Índice da Bíblia em grade de siglas (true) ou em lista.
   bool get bookGrid => _prefs.getBool('bookGrid') ?? true;
   set bookGrid(bool v) {

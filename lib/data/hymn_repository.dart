@@ -91,10 +91,41 @@ class HymnRepository {
       return list.where((h) => h.number == n).toList();
     }
     final words = tokenize(q.replaceFirst(RegExp(r'^hino\s+'), ''));
-    return list.where((h) {
-      final t = tokenize(h.title ?? '');
+    bool matches(String s) {
+      final t = tokenize(s);
       return words.every((w) => t.any((x) => x.startsWith(w)));
-    }).toList();
+    }
+
+    final byTitle = list.where((h) => matches(h.title ?? '')).toList();
+    // Depois dos títulos, os hinos cuja letra contém as palavras.
+    final seen = {for (final h in byTitle) h.number};
+    final texts = await _db.query('hymn_text', columns: ['number', 'body']);
+    final byText = {
+      for (final r in texts)
+        if (!seen.contains(r['number']) && matches(r['body'] as String)) r['number'] as int,
+    };
+    return [...byTitle, ...list.where((h) => byText.contains(h.number))];
+  }
+
+  /// Letra extraída do hinário só com o texto (doc 'canto').
+  static Future<void> ensureTextTable(Database db) => db.execute(
+      'CREATE TABLE IF NOT EXISTS hymn_text(number INTEGER NOT NULL, doc TEXT NOT NULL, body TEXT NOT NULL, '
+      'PRIMARY KEY(number, doc))');
+
+  Future<String?> text(int number, String doc) async {
+    final r = await _db.query('hymn_text', where: 'number = ? AND doc = ?', whereArgs: [number, doc]);
+    return r.isEmpty ? null : r.first['body'] as String;
+  }
+
+  Future<bool> hasTexts(String doc) async =>
+      (Sqflite.firstIntValue(await _db.rawQuery('SELECT COUNT(*) FROM hymn_text WHERE doc = ?', [doc])) ?? 0) > 0;
+
+  Future<void> saveTexts(String doc, Map<int, String> texts) async {
+    final batch = _db.batch()..delete('hymn_text', where: 'doc = ?', whereArgs: [doc]);
+    for (final e in texts.entries) {
+      batch.insert('hymn_text', {'number': e.key, 'doc': doc, 'body': e.value});
+    }
+    await batch.commit(noResult: true);
   }
 
   Future<Map<int, int>> manualPages(String doc) async {

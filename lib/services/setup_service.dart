@@ -158,6 +158,14 @@ class SetupService extends ChangeNotifier {
     }
   }
 
+  /// Quem já tinha o hinário só canto antes de o app guardar a letra: lê o
+  /// PDF de novo, em segundo plano, para extrair a letra e os títulos.
+  Future<void> upgradeHymnTexts() async {
+    if (running || !_app.documents.has(DocKind.hymnalCanto)) return;
+    if (await _app.hymns.hasTexts('canto')) return;
+    await detectHymns(DocKind.hymnalCanto);
+  }
+
   /// Localiza páginas e títulos dos hinos. Retorna quantos foram mapeados.
   Future<int> detectHymns(DocKind kind, {void Function(String, [double?])? onProgress}) async {
     final info = _app.documents.info(kind);

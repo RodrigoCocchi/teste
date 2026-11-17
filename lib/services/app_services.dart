@@ -109,6 +109,7 @@ class App {
     await OrganRepository.ensureTables(db);
     await RehearsalRepository.ensureTable(db);
     await YouthRepository.ensureTables(db);
+    await HymnRepository.ensureTextTable(db);
   }
 
   /// Pasta privada do app; se o path_provider falhar, usa a pasta do sqflite.
@@ -193,10 +194,18 @@ class App {
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
     }
+    // O hinário só com a letra traz os títulos completos: eles substituem os
+    // lidos das partituras (que costumam vir cortados), menos os editados à mão.
+    final edited = settings.editedHymnTitles;
     for (final e in d.titles.entries) {
-      batch.rawUpdate('UPDATE hymn SET title = ? WHERE number = ? AND title IS NULL', [e.value, e.key]);
+      if (doc == 'canto' && !edited.contains(e.key)) {
+        batch.rawUpdate('UPDATE hymn SET title = ? WHERE number = ?', [e.value, e.key]);
+      } else {
+        batch.rawUpdate('UPDATE hymn SET title = ? WHERE number = ? AND title IS NULL', [e.value, e.key]);
+      }
     }
     await batch.commit(noResult: true);
+    if (doc == 'canto') await hymns.saveTexts(doc, d.texts);
     settings.touch();
     return d.pages.length;
   }
